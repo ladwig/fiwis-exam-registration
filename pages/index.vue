@@ -4,6 +4,7 @@
     <v-row v-if="roomName!=null">
       <v-col>
         <display-exam-name></display-exam-name>
+        <next-exam-info v-if!="examInProgress"></next-exam-info>
       </v-col>
       <v-col>hha</v-col>
     </v-row>
@@ -16,12 +17,14 @@ import SetExamRoom from "../components/SetExamRoom";
 import DisplayRoomTest from "../components/DisplayRoomTest";
 import {mapState} from "vuex";
 import DisplayExamName from "../components/DisplayExamName";
+import NextExamInfo from "../components/NextExamInfo";
 
 export default {
-  components: {DisplayExamName, DisplayRoomTest, SetExamRoom},
+  components: {NextExamInfo, DisplayExamName, DisplayRoomTest, SetExamRoom},
   computed: {
     ...mapState([
-      "roomName"
+      "roomName",
+      "examInProgress"
     ])
   },
 }

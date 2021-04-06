@@ -3,6 +3,7 @@ export const state = () => ({
     roomName: null,
     checkMode: true,
     examInProgress: false,
+    isThereNextExam: true,
     cardNumber: null,
   }
 )
@@ -13,7 +14,11 @@ export const mutations = {
   },
 
 
-  toggle(state, examInProgress) {
+  toggleExamInProgress(state, examInProgress) {
     state.examInProgress = !state.examInProgress
+  },
+
+  toggleNextExam(state, isThereNextExam) {
+    state.isThereNextExam = !state.isThereNextExam
   }
 }

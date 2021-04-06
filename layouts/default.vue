@@ -12,6 +12,8 @@
         max-width="100"
         contain
       ></v-img>
+      <v-btn @click="toggleExamInProgress">In Progress</v-btn>
+      <v-btn @click="toggleNextExam">Next Exam</v-btn>
       <v-spacer></v-spacer>
       <v-toolbar-title class="white--text font-weight-bold">{{ roomName }}</v-toolbar-title>
     </v-app-bar>
@@ -24,7 +26,7 @@
 </template>
 
 <script>
-import {mapState} from "vuex";
+import {mapMutations, mapState} from "vuex";
 
 export default {
   computed: {
@@ -32,5 +34,11 @@ export default {
       "roomName"
     ])
   },
+  methods: {
+    ...mapMutations({
+      toggleExamInProgress: 'toggleExamInProgress', // To set examInProgress to true/false for testing
+      toggleNextExam: 'toggleNextExam' // To set isThereNextExam to true/false for testing
+    })
+  }
 }
 </script>
