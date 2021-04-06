@@ -15,7 +15,7 @@
       <v-btn @click="toggleExamInProgress">In Progress</v-btn>
       <v-btn @click="toggleNextExam">Next Exam</v-btn>
       <v-spacer></v-spacer>
-      <v-toolbar-title class="white--text font-weight-bold">{{ roomName }}</v-toolbar-title>
+      <v-toolbar-title class="white--text font-weight-bold display-1">{{ roomName }}</v-toolbar-title>
     </v-app-bar>
     <v-main>
       <v-container>
