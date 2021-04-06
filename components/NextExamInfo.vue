@@ -8,26 +8,42 @@
     >
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title>Single-line item</v-list-item-title>
+          <v-list-item-title class="font-weight-bold">Ihre nächste Prüfung:</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 
-      <v-list-item two-line>
+      <v-list-item>
         <v-list-item-content>
-          <v-list-item-title>Two-line item</v-list-item-title>
-          <v-list-item-subtitle>Secondary text</v-list-item-subtitle>
+          <v-list-item-title>
+            <v-icon left>
+              mdi-school-outline
+            </v-icon>
+            {{ examName }}
+          </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 
-      <v-list-item three-line>
+      <v-list-item>
         <v-list-item-content>
-          <v-list-item-title>Three-line item</v-list-item-title>
-          <v-list-item-subtitle>
-            Secondary line text Lorem ipsum dolor sit amet,
-          </v-list-item-subtitle>
-          <v-list-item-subtitle>
-            consectetur adipiscing elit.
-          </v-list-item-subtitle>
+          <v-list-item-title>
+            <v-icon left>
+              mdi-clock-time-four-outline
+            </v-icon>
+            {{ getStartTimeWithDate }} - {{ getStopTimeWithoutDate }} Uhr
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-list-item>
+        <v-list-item-content>
+
+          <v-list-item-title>
+
+            <v-icon left>
+              mdi-map-marker-outline
+            </v-icon>
+            {{ rooms }}
+          </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-card>
@@ -43,8 +59,18 @@ export default {
   computed: {
     ...mapState([
       "isThereNextExam",
-      "examInProgress"
-    ])
+      "examInProgress",
+    ]),
+    ...mapState({
+      examName: state => state.exam.examName,
+      rooms: state => state.exam.rooms
+    }),
+    getStartTimeWithDate(state) {
+      return this.$store.getters["exam/getStartTimeWithDate"]
+    },
+    getStopTimeWithoutDate(state) {
+      return this.$store.getters["exam/getStopTimeWithoutDate"]
+    }
   }
 }
 </script>

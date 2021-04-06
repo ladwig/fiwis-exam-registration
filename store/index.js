@@ -13,7 +13,6 @@ export const mutations = {
     state.roomName = roomName;
   },
 
-
   toggleExamInProgress(state, examInProgress) {
     state.examInProgress = !state.examInProgress
   },
