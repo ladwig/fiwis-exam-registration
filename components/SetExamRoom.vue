@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container>
     <h3>Raum auswählen</h3>
     <v-row>
       <v-col

@@ -18,7 +18,7 @@
       <v-toolbar-title class="white--text font-weight-bold display-1">{{ roomName }}</v-toolbar-title>
     </v-app-bar>
     <v-main>
-      <v-container>
+      <v-container class="ma-0 pa-0" fluid>
         <nuxt/>
       </v-container>
     </v-main>

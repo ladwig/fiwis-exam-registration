@@ -1,12 +1,25 @@
 <template>
-  <v-container fluid>
+  <v-container fluid class="ma-0 pa-0">
+
+    <!-- Registierung eines Raumes, Startseite -->
     <set-exam-room v-if="roomName===null"></set-exam-room>
+
+    <!-- Display, wenn Raum ausgewählt -->
     <v-row v-if="roomName!=null">
-      <v-col cols="10" align="center">
-        <display-exam-name></display-exam-name>
+      <!-- linke, große Spalte -->
+      <v-col cols="8" align="left" class="pa-5">
+        <current-exam-time v-if="examInProgress"></current-exam-time>
+        <current-exam-name></current-exam-name>
+        <v-divider></v-divider>
         <next-exam-info v-if="!examInProgress"></next-exam-info>
       </v-col>
-      <v-col cols="2">hha</v-col>
+
+      <!-- rechte, kleine Spalte -->
+      <v-col cols="4" class="test pa-5">
+        <students-in-room v-if="examInProgress"></students-in-room>
+        <more-information></more-information>
+        <display-clock></display-clock>
+      </v-col>
     </v-row>
   </v-container>
 </template>
@@ -14,11 +27,18 @@
 <script>
 import SetExamRoom from "../components/SetExamRoom";
 import {mapState} from "vuex";
-import DisplayExamName from "../components/DisplayExamName";
+import CurrentExamName from "../components/CurrentExamName";
 import NextExamInfo from "../components/NextExamInfo";
+import CurrentExamTime from "../components/CurrentExamTime";
+import MoreInformation from "../components/MoreInformation";
+import DisplayClock from "../components/DisplayClock";
+import StudentsInRoom from "../components/StudentsInRoom";
 
 export default {
-  components: {NextExamInfo, DisplayExamName, SetExamRoom},
+  components: {
+    StudentsInRoom,
+    DisplayClock, MoreInformation, CurrentExamTime, NextExamInfo, CurrentExamName, SetExamRoom
+  },
   computed: {
     ...mapState([
       "roomName",
@@ -28,3 +48,8 @@ export default {
 }
 
 </script>
+<style scoped>
+.test {
+  background: lightgray;
+}
+</style>

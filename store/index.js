@@ -1,9 +1,8 @@
 export const state = () => ({
-    date: null,
     roomName: null,
-    checkMode: true,
-    examInProgress: false,
+    examInProgress: false, // Prüfungszeit und Vor-/Nachlaufzeit
     isThereNextExam: true,
+    isExaminer: false, // Prüfer, der Registrierung starten kann
     cardNumber: null,
   }
 )
