@@ -18,9 +18,7 @@
       <v-toolbar-title class="white--text font-weight-bold display-1">{{ roomName }}</v-toolbar-title>
     </v-app-bar>
     <v-main>
-      <v-container class="ma-0 pa-0" fluid>
-        <nuxt/>
-      </v-container>
+      <nuxt/>
     </v-main>
   </v-app>
 </template>
@@ -42,3 +40,7 @@ export default {
   }
 }
 </script>
+<style>
+
+
+</style>

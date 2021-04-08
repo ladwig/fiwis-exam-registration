@@ -1,8 +1,12 @@
 <template>
-  <div>{{ time }}</div>
+  <div>{{ time }}
+  </div>
+
 </template>
 
 <script>
+import {mapMutations} from "vuex";
+
 export default {
   name: "DisplayClock",
   data() {
@@ -28,6 +32,9 @@ export default {
       }).format()
     }, 1000)
   },
+  methods: {
+    ...mapMutations({})
+  }
 }
 </script>
 
