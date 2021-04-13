@@ -5,9 +5,16 @@ export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
-  axios: {
-    // extra config e.g
-    baseURL: process.env.API_BASEURL,
+  publicRuntimeConfig: {
+    axios: {
+      browserBaseURL: process.env.BROWSER_BASE_URL
+    }
+  },
+
+  privateRuntimeConfig: {
+    axios: {
+      baseURL: process.env.BASE_URL
+    }
   },
 
 

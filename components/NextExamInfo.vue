@@ -63,7 +63,7 @@ export default {
     ]),
     ...mapState({
       examName: state => state.exam.examName,
-      rooms: state => state.exam.rooms
+      rooms: state => state.exam.examRooms
     }),
     getStartTimeWithDate(state) {
       return this.$store.getters["exam/getStartTimeWithDate"]

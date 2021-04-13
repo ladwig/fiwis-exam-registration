@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import {mapState} from "vuex";
+import {mapActions, mapState} from "vuex";
 
 export default {
   name: "CurrentExamName",
@@ -16,7 +16,14 @@ export default {
       examInProgress: state => state.examInProgress
     })
   },
-  methods: {}
+  methods: {
+    ...mapActions(['exam/loadNextExam'])
+  },
+  created() {
+    this['exam/loadNextExam']();
+    // nach 1 Min. neue Prüfung suchen
+    console.log(this['exam/loadNextExam']())
+  }
 
 }
 </script>

@@ -8,8 +8,8 @@
       <v-img
         class="mx-3"
         src="../logo.png"
-        max-height="100"
-        max-width="100"
+        max-height="150"
+        max-width="150"
         contain
       ></v-img>
       <v-btn @click="toggleExamInProgress">In Progress</v-btn>
@@ -36,7 +36,27 @@ export default {
     ...mapMutations({
       toggleExamInProgress: 'toggleExamInProgress', // To set examInProgress to true/false for testing
       toggleNextExam: 'toggleNextExam' // To set isThereNextExam to true/false for testing
-    })
+    }),
+    axiosTestFunction() {
+      this.$axios.get('', {
+        params: {
+          room: 'H.1.1'
+        }
+      })
+        .then(function (response) {
+          console.log(response.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+        .then(function () {
+          // always executed
+        });
+
+    }
+  },
+  created() {
+
   }
 }
 </script>

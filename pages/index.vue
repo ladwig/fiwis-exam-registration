@@ -6,7 +6,7 @@
     <!-- Display, wenn Raum ausgewählt -->
     <v-row class="full" v-if="roomName!=null">
       <!-- linke, große Spalte -->
-      <v-col cols="8" align="left" class="pa-10">
+      <v-col cols="8" align="left" class="pa-10 ">
         <v-container fill-height>
           <v-row align="center" justify="center">
             <current-exam-time v-if="examInProgress"></current-exam-time>

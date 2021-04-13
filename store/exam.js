@@ -1,10 +1,10 @@
 export const state = () => ({
-  id: null,
-  examName: "Grundlagen der Wirtschaftswissenschaften",
-  startTime: "2021-04-02T20:00:00+02:00",
-  stopTime: "2021-04-02T21:00:00+02:00",
-  rooms: "H.1.2, H.1.3",
-  numberOfParticipants: 80,
+  examID: null,
+  examName: null,
+  startTime: null, // "2021-04-02T20:00:00+02:00"
+  stopTime: null,
+  examRooms: null, // "H.1.2, H.1.3"
+  numberOfParticipants: null,
   examDuration: null,
 })
 
@@ -13,6 +13,27 @@ export const mutations = {
     const diff = ((new Date(state.startTime).getTime() - new Date(state.stopTime).getTime()) / 1000) / 60;
     state.examDuration = Math.abs(Math.round(diff));
   },
+
+  setExamName(state, examName) {
+    state.examName = examName;
+  },
+
+  setStartTime(state, startTime) {
+    state.startTime = startTime;
+  },
+
+  setStopTime(state, stopTime) {
+    state.stopTime = stopTime;
+  },
+
+  setNumberOfParticipants(state, numberOfParticipants) {
+    state.numberOfParticipants = numberOfParticipants;
+  },
+
+  setExamRooms(state, rooms) {
+    state.rooms = rooms;
+  },
+
 }
 
 export const getters = {
@@ -41,5 +62,27 @@ export const getters = {
       minute: 'numeric',
 
     })
+  },
+}
+
+export const actions = {
+  async loadNextExam(context, rootState) {
+    const exam = (
+      await this.$axios.get('', {
+        params: {
+          room: rootState.roomName
+        }
+      })
+    ).data;
+
+    if (exam.length > 0) {
+      const e = exam[0]
+      context.commit("setExamID", e.id)
+      context.commit("setExamName", e.names)
+      context.commit("setExamStartTime", e.startTime)
+      context.commit("setExamEndTime", e.stopTime)
+      context.commit("setExamRooms", e.roomNames)
+      context.commit("setNumberOfParticipants", e.totalNumberOfParticipants)
+    }
   },
 }
