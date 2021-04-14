@@ -42,7 +42,7 @@
           <v-icon left>
             mdi-map-marker-outline
           </v-icon>
-          {{ rooms }}
+          {{ examRooms }}
         </v-list-item-title>
       </v-list-item-content>
     </v-list-item>
@@ -63,7 +63,7 @@ export default {
     ]),
     ...mapState({
       examName: state => state.exam.examName,
-      rooms: state => state.exam.examRooms
+      examRooms: state => state.exam.examRooms
     }),
     getStartTimeWithDate(state) {
       return this.$store.getters["exam/getStartTimeWithDate"]

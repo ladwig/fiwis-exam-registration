@@ -20,7 +20,8 @@ export default {
     ...mapActions(['exam/loadNextExam'])
   },
   created() {
-    this['exam/loadNextExam']();
+
+    // this['exam/loadNextExam']();
     // nach 1 Min. neue Prüfung suchen
     console.log(this['exam/loadNextExam']())
   }

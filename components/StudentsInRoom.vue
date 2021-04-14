@@ -2,7 +2,7 @@
   <v-container fluid>
     <div v-if="numberOfStudentsPresentInRoom == numberOfStudentsPlannedInRoom">Keine Plätze mehr frei, bitte nutzen Sie
       alternativ:<b> {{
-          rooms
+          examRooms
         }}</b></div>
     <div v-else>Raumbelegung: <b>{{ numberOfStudentsPlannedInRoom - numberOfStudentsPresentInRoom }}</b> von
       <b>{{ numberOfStudentsPlannedInRoom }}</b> Plätzen frei
@@ -24,7 +24,7 @@ export default {
   },
   computed: {
     ...mapState({
-      rooms: state => state.exam.rooms
+      examRooms: state => state.exam.examRooms
     })
   },
 }

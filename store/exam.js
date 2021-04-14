@@ -14,6 +14,10 @@ export const mutations = {
     state.examDuration = Math.abs(Math.round(diff));
   },
 
+  setExamID(state, examID) {
+    state.examID = examID;
+  },
+
   setExamName(state, examName) {
     state.examName = examName;
   },
@@ -30,8 +34,8 @@ export const mutations = {
     state.numberOfParticipants = numberOfParticipants;
   },
 
-  setExamRooms(state, rooms) {
-    state.rooms = rooms;
+  setExamRooms(state, examRooms) {
+    state.examRooms = examRooms;
   },
 
 }
@@ -70,7 +74,7 @@ export const actions = {
     const exam = (
       await this.$axios.get('', {
         params: {
-          room: rootState.roomName
+          room: context.rootState.roomName
         }
       })
     ).data;
@@ -79,8 +83,8 @@ export const actions = {
       const e = exam[0]
       context.commit("setExamID", e.id)
       context.commit("setExamName", e.names)
-      context.commit("setExamStartTime", e.startTime)
-      context.commit("setExamEndTime", e.stopTime)
+      context.commit("setStartTime", e.startTime)
+      context.commit("setStopTime", e.stopTime)
       context.commit("setExamRooms", e.roomNames)
       context.commit("setNumberOfParticipants", e.totalNumberOfParticipants)
     }
