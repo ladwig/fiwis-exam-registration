@@ -1,6 +1,11 @@
 <template>
-  <div>{{ time }}
-  </div>
+  <v-container fluid class="clock-container">
+    <v-row class="clock justify-center">
+      {{ date }} <br>
+      {{ time }} Uhr
+    </v-row>
+
+  </v-container>
 
 </template>
 
@@ -12,7 +17,8 @@ export default {
   data() {
     return {
       interval: null,
-      time: null
+      time: null,
+      date: null,
     }
   },
   beforeDestroy() {
@@ -24,11 +30,15 @@ export default {
     this.interval = setInterval(() => {
 
       this.time = Intl.DateTimeFormat('de-DE', {
-        month: 'short',
-        day: 'numeric',
         hour: 'numeric',
         minute: 'numeric',
         second: 'numeric'
+      }).format()
+
+      this.date = Intl.DateTimeFormat('de-DE', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
       }).format()
     }, 1000)
   },
@@ -39,5 +49,12 @@ export default {
 </script>
 
 <style scoped>
+.clock-container {
 
+}
+
+.clock {
+  text-align: center;
+  border: 2px solid var(--v-primary-base);
+}
 </style>

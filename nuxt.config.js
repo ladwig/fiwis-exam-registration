@@ -60,6 +60,9 @@ export default {
     customVariables: ['~/assets/variables.scss'],
     treeShake: true,
     theme: {
+      options: {
+        customProperties: true,
+      },
       dark: false,
       themes: {
         light: {

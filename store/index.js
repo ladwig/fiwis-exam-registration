@@ -38,3 +38,9 @@ export const mutations = {
   }
 }
 
+export const getters = {
+  getCardNumber(state) {
+    return state.cardNumber
+  }
+}
+
