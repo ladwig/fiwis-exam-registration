@@ -6,19 +6,21 @@
     <!-- Display, wenn Raum ausgewählt -->
     <v-row class="full" v-if="roomName!=null">
       <!-- linke, große Spalte -->
-      <v-col cols="8" align="left" class="pa-10 ">
+      <v-col cols="8" class="pa-10">
         <v-container fill-height>
-          <v-row align="center" justify="center">
-            <current-exam-time v-if="examInProgress"></current-exam-time>
+          <v-row>
+            <current-exam-time v-if="modeExamInProgress"></current-exam-time>
             <current-exam-name></current-exam-name>
-            <next-exam-info v-if="!examInProgress"></next-exam-info>
+            <next-exam-info v-if="!modeExamInProgress"></next-exam-info>
+            <current-exam-info v-if="modeExamInProgress"></current-exam-info>
+            <card-reader></card-reader>
           </v-row>
         </v-container>
       </v-col>
 
       <!-- rechte, kleine Spalte -->
       <v-col cols="4" class="right pa-5">
-        <students-in-room v-if="examInProgress"></students-in-room>
+        <students-in-room v-if="modeExamInProgress"></students-in-room>
         <v-divider></v-divider>
         <more-information></more-information>
         <v-divider></v-divider>
@@ -37,16 +39,20 @@ import CurrentExamTime from "../components/CurrentExamTime";
 import MoreInformation from "../components/MoreInformation";
 import DisplayClock from "../components/DisplayClock";
 import StudentsInRoom from "../components/StudentsInRoom";
+import CurrentExamInfo from "../components/CurrentExamInfo";
+import CardReader from "../components/CardReader";
 
 export default {
   components: {
+    CardReader,
+    CurrentExamInfo,
     StudentsInRoom,
     DisplayClock, MoreInformation, CurrentExamTime, NextExamInfo, CurrentExamName, SetExamRoom
   },
   computed: {
     ...mapState([
       "roomName",
-      "examInProgress"
+      "modeExamInProgress"
     ])
   },
 }
@@ -60,4 +66,5 @@ export default {
 .full {
   height: 100%;
 }
+
 </style>
