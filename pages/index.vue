@@ -7,12 +7,20 @@
     <v-row class="full" v-if="roomName!=null">
       <!-- linke, große Spalte -->
       <v-col cols="8" class="pa-10">
-        <v-container fill-height>
+        <v-container style="margin-top: 30vh">
           <v-row>
             <current-exam-time v-if="modeExamInProgress"></current-exam-time>
+          </v-row>
+          <v-row>
             <current-exam-name></current-exam-name>
+          </v-row>
+          <v-row>
             <next-exam-info v-if="!modeExamInProgress"></next-exam-info>
+          </v-row>
+          <v-row>
             <current-exam-info v-if="modeExamInProgress"></current-exam-info>
+          </v-row>
+          <v-row>
             <card-reader></card-reader>
           </v-row>
         </v-container>
