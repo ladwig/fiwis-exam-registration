@@ -15,7 +15,6 @@
       <v-btn @click="toggleExamInProgress">In Progress</v-btn>
       <v-btn @click="toggleNextExam">Next Exam</v-btn>
       <v-btn @click="toogleModeExamRegister">Register/Check</v-btn>
-      <v-btn @click="setCardNumber">Scan Card</v-btn>
       <v-spacer></v-spacer>
       <v-toolbar-title class="white--text font-weight-bold display-1">{{ roomName }}</v-toolbar-title>
     </v-app-bar>
@@ -39,7 +38,6 @@ export default {
       toggleExamInProgress: 'toggleExamInProgress', // To set examInProgress to true/false for testing
       toggleNextExam: 'toggleNextExam', // To set isThereNextExam to true/false for testing
       toogleModeExamRegister: 'toogleModeExamRegister', //Test
-      setCardNumber: 'setCardNumber', //Test
     }),
     axiosTestFunction() {
       this.$axios.get('', {

@@ -70,7 +70,7 @@ export const getters = {
 }
 
 export const actions = {
-  async loadNextExam(context, rootState) {
+  async loadNextExam(context) {
     const exam = (
       await this.$axios.get('', {
         params: {
@@ -87,6 +87,17 @@ export const actions = {
       context.commit("setStopTime", e.stopTime)
       context.commit("setExamRooms", e.roomNames)
       context.commit("setNumberOfParticipants", e.totalNumberOfParticipants)
+      context.commit("setExamDuration")
+      // context.commit("setModeExamInProgressTrue", null, {root: true})
+      console.log("works -> exam")
+      const now = new Date();
+      if (now.getTime() >= (new Date(context.state.startTime).getTime() - 3600000)) {
+        context.commit("setModeExamInProgressTrue", null, {root: true})
+      } else {
+        context.commit("setModeExamInProgressFalse", null, {root: true})
+        console.log("test")
+      }
     }
-  },
+  }
+  ,
 }

@@ -45,14 +45,16 @@ export default {
     },
 
     typeNFC(event) {
-      if (event.target.value === "") {
+      if (event.target.value == "") {
         setTimeout(() => {
           this.setCardNumber(event.target.value);
+          console.log("value" + event.target.value)
         }, 420);
         setTimeout(() => {
-          console.log(event.target.value)
+
           event.target.value = "";
-        }, 4000);
+          this.setCardNumber(null)
+        }, 5000);
       }
     }
   }

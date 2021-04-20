@@ -24,9 +24,11 @@ export default {
   },
   created() {
 
-    // this['exam/loadNextExam']();
     // nach 1 Min. neue Prüfung suchen
-    console.log(this['exam/loadNextExam']())
+    this['exam/loadNextExam']()
+    window.setInterval(() => {
+      this['exam/loadNextExam']()
+    }, 6000)
   }
 
 }

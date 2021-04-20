@@ -1,5 +1,5 @@
 <template>
-  <div v-if="cardNumber">
+  <div v-if="getCardNumber">
     <v-card
       class="mx-auto"
       max-width="400"
@@ -64,7 +64,7 @@ export default {
   computed: {
     ...mapState([
       "isThereNextExam",
-      "modeExamInProgressam",
+      "modeExamInProgress",
       "cardNumber",
     ]),
     ...mapState({
@@ -76,8 +76,11 @@ export default {
     },
     getStopTimeWithoutDate(state) {
       return this.$store.getters["exam/getStopTimeWithoutDate"]
+    },
+    getCardNumber(state) {
+      return this.$store.getters["getCardNumber"]
     }
-  }
+  },
 }
 </script>
 
