@@ -6,6 +6,7 @@ export const state = () => ({
   examRooms: null, // "H.1.2, H.1.3"
   numberOfParticipants: null,
   examDuration: null,
+  timeBeforeAfterExam: 3600000,
 })
 
 export const mutations = {
@@ -91,7 +92,7 @@ export const actions = {
       // context.commit("setModeExamInProgressTrue", null, {root: true})
       console.log("works -> exam")
       const now = new Date();
-      if (now.getTime() >= (new Date(context.state.startTime).getTime() - 3600000)) {
+      if (now.getTime() >= (new Date(context.state.startTime).getTime() - context.state.timeBeforeAfterExam)) {
         context.commit("setModeExamInProgressTrue", null, {root: true})
       } else {
         context.commit("setModeExamInProgressFalse", null, {root: true})
