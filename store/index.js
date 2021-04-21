@@ -3,9 +3,10 @@ export const state = () => ({
     modeJustCheck: true, // Keine Prüfung
     modeExamInProgress: null, // Prüfungszeit + 1h vorher +1h nachher
     modeExamRegister: false,
-    isThereNextExam: true,
+    isThereNextExam: false,
     isExaminer: false, // Prüfer, der Registrierung starten kann
     cardNumber: null,
+    cardIsLoading: false,
   }
 )
 
@@ -26,14 +27,17 @@ export const mutations = {
     state.modeExamInProgress = false
   },
 
+  setCardIsLoading(state, cardIsLoading) {
+    state.cardIsLoading = cardIsLoading
+  },
+
   //For manual testing
   toggleExamInProgress(state) {
     state.modeExamInProgress = !state.modeExamInProgress
   },
 
-  //For manual testing
-  toggleNextExam(state, isThereNextExam) {
-    state.isThereNextExam = !state.isThereNextExam
+  setIsThereNextExam(state, isThereNextExam) {
+    state.isThereNextExam = isThereNextExam
   },
 
   //For manual testing

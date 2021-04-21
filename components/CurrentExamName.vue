@@ -20,14 +20,14 @@ export default {
   },
 
   methods: {
-    ...mapActions(['exam/loadNextExam'])
+    ...mapActions(['exam/checkRoomForExam'])
   },
   created() {
 
     // nach 1 Min. neue Prüfung suchen
-    this['exam/loadNextExam']()
+    this['exam/checkRoomForExam']()
     window.setInterval(() => {
-      this['exam/loadNextExam']()
+      this['exam/checkRoomForExam']()
     }, 6000)
   }
 

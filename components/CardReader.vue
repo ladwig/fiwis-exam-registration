@@ -1,31 +1,36 @@
 <template>
   <div>
-    <v-img
-
-      src="../read_card.png"
-      max-height="220"
-      max-width="220"
-    ></v-img>
+    <div class="scan-container" v-if="cardIsLoading">
+      <v-progress-circular
+        :size="90"
+        :width="7"
+        indeterminate
+        color="primary"
+      ></v-progress-circular>
+    </div>
+    <div v-else>
+      <v-img
+        src="../read_card.png"
+        max-height="220"
+        max-width="220"
+      ></v-img>
+    </div>
     <div>
       <input v-on:keydown="typeNFC($event)" id="NFC_CARDNUMBER" type="text" autocomplete="off"/>
     </div>
   </div>
-
 </template>
 
 <script>
-import {mapMutations, mapState} from "vuex";
+import {mapActions, mapMutations, mapState} from "vuex";
 
 export default {
-  data() {
-    return {
-      componentKey: 0,
-    }
-  },
   name: "CardReader",
   computed: {
     ...mapState([
-      "cardNumber"
+      "cardNumber",
+      "modeExamInProgress",
+      "cardIsLoading",
     ])
   },
   mounted() {
@@ -39,28 +44,52 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["setCardNumber"]),
+    ...mapMutations([
+        "setCardNumber",
+        "setCardIsLoading"
+      ]
+    ),
+    ...mapActions(['exam/checkCardForExam']),
     setFocus() {
       document.getElementById("NFC_CARDNUMBER").focus();
     },
 
     typeNFC(event) {
       if (event.target.value == "") {
+        this.setCardIsLoading(true);
         setTimeout(() => {
-          this.setCardNumber(event.target.value);
-          console.log("value" + event.target.value)
+          this.checkCard(event.target.value);
         }, 420);
         setTimeout(() => {
-
           event.target.value = "";
+          this.setCardIsLoading(false)
           this.setCardNumber(null)
         }, 5000);
       }
+    },
+
+    checkCard(cardnumber) {
+      if (this.modeExamInProgress) {
+      } else {
+        console.log("test")
+        this['exam/checkCardForExam'](cardnumber)
+      }
+
     }
+
+
   }
 }
 </script>
 
 <style scoped>
+#NFC_CARDNUMBER {
+  opacity: 0;
+  height: 0;
+  width: 0;
+}
 
+scan-container {
+  height: 10vh;
+}
 </style>

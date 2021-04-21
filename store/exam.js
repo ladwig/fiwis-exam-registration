@@ -6,7 +6,7 @@ export const state = () => ({
   examRooms: null, // "H.1.2, H.1.3"
   numberOfParticipants: null,
   examDuration: null,
-  timeBeforeAfterExam: 3600000,
+  timeBeforeAfterExam: 3600000, //1h before, 1h after exam -> modeExamInProgress
 })
 
 export const mutations = {
@@ -71,7 +71,7 @@ export const getters = {
 }
 
 export const actions = {
-  async loadNextExam(context) {
+  async checkRoomForExam(context) {
     const exam = (
       await this.$axios.get('', {
         params: {
@@ -89,16 +89,36 @@ export const actions = {
       context.commit("setExamRooms", e.roomNames)
       context.commit("setNumberOfParticipants", e.totalNumberOfParticipants)
       context.commit("setExamDuration")
-      // context.commit("setModeExamInProgressTrue", null, {root: true})
       console.log("works -> exam")
       const now = new Date();
       if (now.getTime() >= (new Date(context.state.startTime).getTime() - context.state.timeBeforeAfterExam)) {
         context.commit("setModeExamInProgressTrue", null, {root: true})
+        console.log("ist drunter")
       } else {
         context.commit("setModeExamInProgressFalse", null, {root: true})
-        console.log("test")
       }
     }
+  },
+
+  async checkCardForExam(context, cardnumber) {
+    const response = (
+      await this.$axios.get('', {
+        params: {
+          cardnumber: cardnumber
+        }
+      })
+    ).data;
+    context.commit("setCardNumber", cardnumber, {root: true})
+    if (response.length > 0) {
+      context.commit("setIsThereNextExam", true, {root: true})
+      const e = response[0]
+      context.commit("setExamName", e.names)
+      context.commit("setStartTime", e.startTime)
+      context.commit("setStopTime", e.stopTime)
+      context.commit("setExamRooms", e.roomNames)
+    } else {
+      context.commit("setIsThereNextExam", false, {root: true})
+    }
+
   }
-  ,
 }
