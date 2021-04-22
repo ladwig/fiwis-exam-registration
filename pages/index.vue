@@ -1,13 +1,13 @@
 <template>
   <v-container fluid class="ma-0 pa-0 full">
-    <!-- Registierung eines Raumes, Startseite -->
+    <!-- Select a room, first page -->
     <set-exam-room v-if="roomName===null"></set-exam-room>
 
     <!-- Popup to ask for exam start -->
     <start-exam-register-alert v-if="isExaminer"></start-exam-register-alert>
-    <!-- Display, wenn Raum ausgewählt -->
+    <!-- Screen when room has been selected  -->
     <v-row class="full" v-if="roomName!=null">
-      <!-- linke, große Spalte -->
+      <!-- left, big col -->
       <v-col cols="8" class="pa-10">
         <v-container style="margin-top: 30vh">
           <v-row>
@@ -28,7 +28,7 @@
         </v-container>
       </v-col>
 
-      <!-- rechte, kleine Spalte -->
+      <!-- right, small col -->
       <v-col cols="4" class="right pa-5">
         <students-in-room v-if="modeExamInProgress"></students-in-room>
         <v-divider></v-divider>

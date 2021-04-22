@@ -19,12 +19,8 @@ export const mutations = {
     state.cardNumber = cardNumber
   },
 
-  setModeExamInProgressTrue(state) {
-    state.modeExamInProgress = true
-  },
-
-  setModeExamInProgressFalse(state) {
-    state.modeExamInProgress = false
+  setModeExamInProgress(state, modeExamInProgress) {
+    state.modeExamInProgress = modeExamInProgress
   },
 
   setIsExaminer(state, isExaminer) {
@@ -35,13 +31,17 @@ export const mutations = {
     state.cardIsLoading = cardIsLoading
   },
 
+  setIsThereNextExam(state, isThereNextExam) {
+    state.isThereNextExam = isThereNextExam
+  },
+
+  setModeExamRegister(state, modeExamRegister) {
+    state.modeExamRegister = modeExamRegister
+  },
+
   //For manual testing
   toggleExamInProgress(state) {
     state.modeExamInProgress = !state.modeExamInProgress
-  },
-
-  setIsThereNextExam(state, isThereNextExam) {
-    state.isThereNextExam = isThereNextExam
   },
 
   //For manual testing

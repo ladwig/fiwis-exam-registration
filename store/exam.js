@@ -92,9 +92,9 @@ export const actions = {
       console.log("works -> exam")
       const now = new Date();
       if (now.getTime() >= (new Date(context.state.startTime).getTime() - context.state.timeBeforeAfterExam)) {
-        context.commit("setModeExamInProgressTrue", null, {root: true})
+        context.commit("setModeExamInProgress", true, {root: true})
       } else {
-        context.commit("setModeExamInProgressFalse", null, {root: true})
+        context.commit("setModeExamInProgress", false, {root: true})
       }
     }
   },

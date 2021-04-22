@@ -17,13 +17,13 @@
           <v-btn
             color="secondary darken-4"
             text
-            @click="dialog = false"
+            @click="closePopup(0)"
           >
             Abbrechen
           </v-btn>
           <v-btn
             color="primary"
-            @click="dialog = false"
+            @click="closePopup(1)"
           >
             Starten
           </v-btn>
@@ -34,13 +34,30 @@
 </template>
 
 <script>
+import {mapMutations} from "vuex";
+
 export default {
   name: "StartExamRegisterAlert",
   data() {
     return {
       dialog: true
     }
+  },
+  methods: {
+    ...mapMutations([
+        "setIsExaminer",
+        "setModeExamRegister",
+      ]
+    ),
+    //It will always close the modal and removes examiner data. Case 1 -> Starts exam register mode
+    closePopup(action) {
+      if (action == 1) {
+        this.setModeExamRegister(true)
+      }
+      this.setIsExaminer(false)
+      this.dialog = false
 
+    }
   }
 }
 </script>
