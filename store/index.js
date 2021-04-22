@@ -27,6 +27,10 @@ export const mutations = {
     state.modeExamInProgress = false
   },
 
+  setIsExaminer(state, isExaminer) {
+    state.isExaminer = isExaminer
+  },
+
   setCardIsLoading(state, cardIsLoading) {
     state.cardIsLoading = cardIsLoading
   },

@@ -67,6 +67,7 @@ export default {
       themes: {
         light: {
           primary: "#EA6105",
+          secondary: "#F5F5F5",
           light: "#FFF"
         },
         dark: {

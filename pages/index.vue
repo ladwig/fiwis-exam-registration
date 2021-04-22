@@ -3,6 +3,8 @@
     <!-- Registierung eines Raumes, Startseite -->
     <set-exam-room v-if="roomName===null"></set-exam-room>
 
+    <!-- Popup to ask for exam start -->
+    <start-exam-register-alert v-if="isExaminer"></start-exam-register-alert>
     <!-- Display, wenn Raum ausgewählt -->
     <v-row class="full" v-if="roomName!=null">
       <!-- linke, große Spalte -->
@@ -49,9 +51,11 @@ import DisplayClock from "../components/DisplayClock";
 import StudentsInRoom from "../components/StudentsInRoom";
 import CurrentExamInfo from "../components/CurrentExamInfo";
 import CardReader from "../components/CardReader";
+import StartExamRegisterAlert from "../components/StartExamRegisterAlert";
 
 export default {
   components: {
+    StartExamRegisterAlert,
     CardReader,
     CurrentExamInfo,
     StudentsInRoom,
@@ -60,7 +64,8 @@ export default {
   computed: {
     ...mapState([
       "roomName",
-      "modeExamInProgress"
+      "modeExamInProgress",
+      "isExaminer"
     ])
   },
 }

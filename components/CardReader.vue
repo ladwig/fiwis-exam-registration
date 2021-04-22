@@ -49,7 +49,11 @@ export default {
         "setCardIsLoading"
       ]
     ),
-    ...mapActions(['exam/checkCardForExam']),
+    ...mapActions([
+        'exam/checkCardForExam',
+        'exam/checkRegistForExam',
+      ]
+    ),
     setFocus() {
       document.getElementById("NFC_CARDNUMBER").focus();
     },
@@ -69,8 +73,13 @@ export default {
     },
 
     checkCard(cardnumber) {
+      //If exam is in progress right now +-1h
       if (this.modeExamInProgress) {
-      } else {
+        console.log("exam in progress")
+        this['exam/checkRegistForExam'](cardnumber)
+      }
+      //If no exam (+-1h) found -> Students can check there next exam today
+      else {
         console.log("test")
         this['exam/checkCardForExam'](cardnumber)
       }

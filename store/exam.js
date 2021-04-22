@@ -93,7 +93,6 @@ export const actions = {
       const now = new Date();
       if (now.getTime() >= (new Date(context.state.startTime).getTime() - context.state.timeBeforeAfterExam)) {
         context.commit("setModeExamInProgressTrue", null, {root: true})
-        console.log("ist drunter")
       } else {
         context.commit("setModeExamInProgressFalse", null, {root: true})
       }
@@ -119,6 +118,28 @@ export const actions = {
     } else {
       context.commit("setIsThereNextExam", false, {root: true})
     }
+  },
 
+  checkRegistForExam(context, cardnumber) {
+    const body = {
+      idcardnumber: cardnumber,
+      room: context.rootState.roomName,
+      parameter: 1,
+    }
+    console.log(body)
+    this.$axios.post(`${context.state.examID}/scannedcards`, body, {})
+      .then((response) => {
+        const resURL = response.headers.location
+        this.$axios.get(resURL, {})
+          .then((response) => {
+            const data = response.data
+
+            if (data.returnCode === 300) {
+              context.commit("setIsExaminer", true, {root: true})
+              console.log(context.rootState.isExaminer)
+            }
+            console.log(response.data.returnText)
+          })
+      })
   }
 }
