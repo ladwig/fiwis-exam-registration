@@ -5,6 +5,9 @@
 
     <!-- Popup to ask for exam start -->
     <start-exam-register-alert v-if="isExaminer && !modeExamRegister"></start-exam-register-alert>
+
+    <!-- Popup when there is an erorr -->
+    <error-message-alert v-if="errorMessage.error"></error-message-alert>
     <!-- Screen when room has been selected  -->
     <v-row class="full" v-if="roomName!=null">
       <!-- left, big col -->
@@ -22,19 +25,25 @@
           <v-row>
             <current-exam-info v-if="modeExamInProgress"></current-exam-info>
           </v-row>
-          <v-row>
-            <card-reader></card-reader>
-          </v-row>
         </v-container>
       </v-col>
 
       <!-- right, small col -->
       <v-col cols="4" class="right pa-5">
-        <students-in-room v-if="modeExamInProgress"></students-in-room>
-        <v-divider></v-divider>
-        <more-information></more-information>
-        <v-divider></v-divider>
-        <display-clock></display-clock>
+        <v-container>
+         <v-row>
+          <students-in-room v-if="modeExamInProgress"></students-in-room>
+         </v-row>
+          <v-row>
+            <more-information></more-information>
+          </v-row>
+          <v-row>
+            <display-clock></display-clock>
+          </v-row>
+          <v-row justify="center">
+            <card-reader></card-reader>
+          </v-row>
+        </v-container>
       </v-col>
     </v-row>
   </v-container>
@@ -52,9 +61,11 @@ import StudentsInRoom from "../components/StudentsInRoom";
 import CurrentExamInfo from "../components/CurrentExamInfo";
 import CardReader from "../components/CardReader";
 import StartExamRegisterAlert from "../components/StartExamRegisterAlert";
+import ErrorMessageAlert from "../components/ErrorMessageAlert";
 
 export default {
   components: {
+    ErrorMessageAlert,
     StartExamRegisterAlert,
     CardReader,
     CurrentExamInfo,
@@ -66,7 +77,8 @@ export default {
       "roomName",
       "modeExamInProgress",
       "isExaminer",
-      "modeExamRegister"
+      "modeExamRegister",
+      "errorMessage",
     ])
   },
 }

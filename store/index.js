@@ -9,6 +9,11 @@ export const state = () => ({
     attendanceConfirmed: false,
     cardNumber: null,
     cardIsLoading: false,
+    errorMessage: {
+      error: false,
+      msgNmbr: null,
+      response: null
+    }
   }
 )
 
@@ -43,6 +48,12 @@ export const mutations = {
 
   setModeExamRegister(state, modeExamRegister) {
     state.modeExamRegister = modeExamRegister
+  },
+
+  setErrorMessage(state, data) {
+    state.errorMessage.error = data[0]
+    state.errorMessage.msgNmbr = data[1]
+    state.errorMessage.response = data[2]
   },
 
   //For manual testing

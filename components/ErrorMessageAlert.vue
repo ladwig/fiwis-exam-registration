@@ -7,25 +7,20 @@
     >
       <v-card>
         <v-card-title class="headline">
-          Prüfungsregistrierung starten
+          Fehler aufgetreten
         </v-card-title>
-        <v-card-text>Starten Sie die Prüfungsregistierung, sodass Studierende ihre Anwesenheit ab sofort bestätigen
-          können.
+        <v-card-text>
+          {{messages[errorMessage.msgNmbr]}}
+          {{errorMessage.response}}
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
-            color="secondary darken-4"
+            color="red"
             text
-            @click="closePopup(0)"
+            @click="closePopup()"
           >
-            Abbrechen
-          </v-btn>
-          <v-btn
-            color="primary"
-            @click="closePopup(1)"
-          >
-            Starten
+            Okay
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -34,29 +29,32 @@
 </template>
 
 <script>
-import {mapMutations} from "vuex";
+import {mapMutations, mapState} from "vuex";
 
 export default {
-  name: "StartExamRegisterAlert",
+  name: "ErrorMessageAlert",
   data() {
     return {
-      dialog: true
+      dialog: true,
+      messages: [
+      "Keine Verbindung zur FIWIS API möglich. Bitte nochmals probieren. Falls der Fehler weiterhin auftritt, überprüfen Sie die Internetverbindung oder kontaktieren Sie einen Administrator.",
+        "Fehlermeldung vom Server:",
+      ]
     }
+  },
+  computed: {
+    ...mapState([
+      "errorMessage"
+    ])
   },
   methods: {
     ...mapMutations([
-        "setIsExaminer",
-        "setModeExamRegister",
+      "setErrorMessage"
       ]
     ),
-    //It will always close the modal and removes examiner data. Case 1 -> Starts exam register mode
-    closePopup(action) {
-      if (action == 1) {
-        this.setModeExamRegister(true)
-      }
-      this.setIsExaminer(false)
+    closePopup() {
       this.dialog = false
-
+      this.setErrorMessage([false, null, null])
     }
   }
 }

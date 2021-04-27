@@ -73,6 +73,7 @@ export const getters = {
 
 export const actions = {
   async checkRoomForExam(context) {
+    try {
     const exam = (
       await this.$axios.get('', {
         params: {
@@ -93,37 +94,58 @@ export const actions = {
       console.log("works -> exam")
       const now = new Date();
 
-      if (now.getTime() >= (new Date(context.state.startTime).getTime() - context.state.timeBeforeAfterExam)) {
+      if (now.getTime() >= (new Date(context.state.startTime).getTime() - context.state.timeBeforeAfterExam) && now.getTime() <= (new Date(context.state.stopTime).getTime()) + context.state.timeBeforeAfterExam) {
         context.commit("setModeExamInProgress", true, {root: true})
-      }
-      else if(1) {
-
       }
       else
        {
         context.commit("setModeExamInProgress", false, {root: true})
       }
     }
+    } catch(err) {
+      if (err.response) {
+        context.commit("setErrorMessage", [true, 1, err.response], {root: true})
+        console.error(err.response)
+      } else if (err.request) {
+        context.commit("setErrorMessage", [true, 0], {root: true})
+        console.error("Can't get a response, maybe the connection to the API failed!")
+        console.log(context.rootState.errorMessage)
+      } else {
+        console.error(err.message);
+      }
+    }
   },
 
   async checkCardForExam(context, cardnumber) {
-    const response = (
-      await this.$axios.get('', {
-        params: {
-          cardnumber: cardnumber
-        }
-      })
-    ).data;
-    context.commit("setCardNumber", cardnumber, {root: true})
-    if (response.length > 0) {
-      context.commit("setIsThereNextExam", true, {root: true})
-      const e = response[0]
-      context.commit("setExamName", e.names)
-      context.commit("setStartTime", e.startTime)
-      context.commit("setStopTime", e.stopTime)
-      context.commit("setExamRooms", e.roomNames)
-    } else {
-      context.commit("setIsThereNextExam", false, {root: true})
+    try {
+      const response = (
+        await this.$axios.get('', {
+          params: {
+            cardnumber: cardnumber
+          }
+        })
+      ).data;
+      context.commit("setCardNumber", cardnumber, {root: true})
+      if (response.length > 0) {
+        context.commit("setIsThereNextExam", true, {root: true})
+        const e = response[0]
+        context.commit("setExamName", e.names)
+        context.commit("setStartTime", e.startTime)
+        context.commit("setStopTime", e.stopTime)
+        context.commit("setExamRooms", e.roomNames)
+      } else {
+        context.commit("setIsThereNextExam", false, {root: true})
+      }
+    } catch(err) {
+      if (err.response) {
+        console.error(err.response)
+      } else if (err.request) {
+        context.commit("setErrorMessage", [true, 0], {root: true})
+        console.error("Can't get a response, maybe the connection to the API failed!")
+        console.log(context.rootState.errorMessage)
+      } else {
+        console.error(err.message);
+      }
     }
   },
 
@@ -133,7 +155,6 @@ export const actions = {
       room: context.rootState.roomName,
       parameter: 1,
     }
-    console.log(body)
     this.$axios.post(`${context.state.examID}/scannedcards`, body, {})
       .then((response) => {
         const resURL = response.headers.location
@@ -150,8 +171,21 @@ export const actions = {
             else {
               context.commit("setIsRegisteredStudent", false, {root: true})  //To remove clipping "Angemeldet / nicht angemeldet" in CurrentExamInfo
             }
-            console.log(response.data.returnText)
+            console.log(response.data.returnCode)
           })
+      })
+      .catch(err => {
+        if(err.response) {
+          console.error(err.response)
+        }
+        else if(err.request) {
+          context.commit("setErrorMessage", [true, 0], {root: true})
+          console.error("Can't get a response, maybe the connection to the API failed!")
+          console.log(context.rootState.errorMessage)
+        }
+        else {
+          console.error(err.message);
+        }
       })
   }
 }
