@@ -5,6 +5,8 @@ export const state = () => ({
     modeExamRegister: false,
     isThereNextExam: false,
     isExaminer: false, // Prüfer, der Registrierung starten kann
+    isRegisteredStudent: false,
+    attendanceConfirmed: false,
     cardNumber: null,
     cardIsLoading: false,
   }
@@ -25,6 +27,10 @@ export const mutations = {
 
   setIsExaminer(state, isExaminer) {
     state.isExaminer = isExaminer
+  },
+
+  setIsRegisteredStudent(state, isRegisteredStudent) {
+    state.isRegisteredStudent = isRegisteredStudent
   },
 
   setCardIsLoading(state, cardIsLoading) {

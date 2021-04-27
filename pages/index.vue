@@ -4,7 +4,7 @@
     <set-exam-room v-if="roomName===null"></set-exam-room>
 
     <!-- Popup to ask for exam start -->
-    <start-exam-register-alert v-if="isExaminer"></start-exam-register-alert>
+    <start-exam-register-alert v-if="isExaminer && !modeExamRegister"></start-exam-register-alert>
     <!-- Screen when room has been selected  -->
     <v-row class="full" v-if="roomName!=null">
       <!-- left, big col -->
@@ -65,7 +65,8 @@ export default {
     ...mapState([
       "roomName",
       "modeExamInProgress",
-      "isExaminer"
+      "isExaminer",
+      "modeExamRegister"
     ])
   },
 }

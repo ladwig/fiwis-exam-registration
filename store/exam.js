@@ -91,9 +91,15 @@ export const actions = {
       context.commit("setExamDuration")
       console.log("works -> exam")
       const now = new Date();
+
       if (now.getTime() >= (new Date(context.state.startTime).getTime() - context.state.timeBeforeAfterExam)) {
         context.commit("setModeExamInProgress", true, {root: true})
-      } else {
+      }
+      else if(1) {
+
+      }
+      else
+       {
         context.commit("setModeExamInProgress", false, {root: true})
       }
     }
@@ -136,7 +142,12 @@ export const actions = {
 
             if (data.returnCode === 300) {
               context.commit("setIsExaminer", true, {root: true})
-              console.log(context.rootState.isExaminer)
+            }
+            else if (data.returnCode === 100) {
+              context.commit("setIsRegisteredStudent", true, {root: true})
+              setTimeout(() => {
+                context.commit("setIsRegisteredStudent", false, {root: true})
+              }, 5000);
             }
             console.log(response.data.returnText)
           })
