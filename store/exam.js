@@ -6,6 +6,7 @@ export const state = () => ({
   examRooms: null, // "H.1.2, H.1.3"
   numberOfParticipants: null,
   examDuration: null,
+  moreInformationMsg: null,
   timeBeforeAfterExam: 3600000, //1h before, 1h after exam -> modeExamInProgress
 })
 
@@ -145,9 +146,9 @@ export const actions = {
             }
             else if (data.returnCode === 100) {
               context.commit("setIsRegisteredStudent", true, {root: true})
-              setTimeout(() => {
-                context.commit("setIsRegisteredStudent", false, {root: true})
-              }, 5000);
+            }
+            else {
+              context.commit("setIsRegisteredStudent", false, {root: true})  //To remove clipping "Angemeldet / nicht angemeldet" in CurrentExamInfo
             }
             console.log(response.data.returnText)
           })

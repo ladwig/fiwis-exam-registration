@@ -1,5 +1,5 @@
 <template>
-  <div v-if="cardIsLoading">
+  <div v-if="cardIsLoading && (isRegisteredStudent != null) && (isRegisteredStudent || !isRegisteredStudent)">
     <div v-if="isRegisteredStudent">
       <h4 class="display-1 primary--text">Sie sind angemeldet!</h4>
       <p>Es liegt eine Anmeldung für diese Prüfung vor. Bestätigen Sie vor Prüfungsbeginn Ihre Anwesenheit.</p>

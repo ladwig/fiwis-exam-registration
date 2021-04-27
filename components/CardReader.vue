@@ -46,7 +46,8 @@ export default {
   methods: {
     ...mapMutations([
         "setCardNumber",
-        "setCardIsLoading"
+        "setCardIsLoading",
+        "setIsRegisteredStudent",
       ]
     ),
     ...mapActions([
@@ -68,6 +69,7 @@ export default {
           event.target.value = "";
           this.setCardIsLoading(false)
           this.setCardNumber(null)
+          this.setIsRegisteredStudent(null)
         }, 5000);
       }
     },

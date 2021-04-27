@@ -76,6 +76,10 @@ export default {
       }
     }
   },
+  loading: {
+    color: '#fff',
+    height: '2px'
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {}

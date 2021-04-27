@@ -5,7 +5,7 @@ export const state = () => ({
     modeExamRegister: false,
     isThereNextExam: false,
     isExaminer: false, // Prüfer, der Registrierung starten kann
-    isRegisteredStudent: false,
+    isRegisteredStudent: null,
     attendanceConfirmed: false,
     cardNumber: null,
     cardIsLoading: false,
