@@ -2,8 +2,7 @@
   <p v-if="moreInformationMsg">
     {{moreInformationMsg}}
   </p>
-  <p v-else>Seit 01.10.2019 gilt die neue APO, hiernach ist für die Teilnahme an einer Prüfung die form- und fristgerechte
-    Anmeldung Voraussetzung.</p>
+  <p v-else>{{ $t('moreInformationStandardText') }}</p>
 </template>
 
 <script>

@@ -6,11 +6,11 @@
     <!-- Popup to ask for exam start -->
     <start-exam-register-alert v-if="isExaminer && !modeExamRegister"></start-exam-register-alert>
 
-    <!-- Popup when there is an erorr -->
+    <!-- Popup when there is an eror -->
     <error-message-alert v-if="errorMessage.error"></error-message-alert>
     <!-- Screen when room has been selected  -->
     <v-row class="full" v-if="roomName!=null">
-      <!-- left, big col -->
+      <!-- Left, big col -->
       <v-col cols="8" class="pa-10">
         <v-container style="margin-top: 30vh">
           <v-row>
@@ -28,7 +28,7 @@
         </v-container>
       </v-col>
 
-      <!-- right, small col -->
+      <!-- Right, small col -->
       <v-col cols="4" class="right pa-5">
         <v-container>
          <v-row>
@@ -40,8 +40,8 @@
           <v-row>
             <display-clock></display-clock>
           </v-row>
-          <v-row justify="center">
-            <card-reader></card-reader>
+          <v-row justify="end">
+            <card-reader style="position: absolute; bottom: 0"></card-reader>
           </v-row>
         </v-container>
       </v-col>

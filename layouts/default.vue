@@ -12,6 +12,7 @@
         max-width="150"
         contain
       ></v-img>
+      <v-icon v-if="$nuxt.isOffline" color="light">mdi-wifi-strength-alert-outline</v-icon>
       <v-spacer></v-spacer>
       <v-toolbar-title class="white--text font-weight-bold display-1">{{ roomName }}</v-toolbar-title>
     </v-app-bar>

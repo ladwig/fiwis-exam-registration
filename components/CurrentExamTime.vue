@@ -1,8 +1,15 @@
 <template>
 
   <v-container class="ma-0 pa-0">
-    <div>{{ getStartTimeWithoutDate }} - {{ getStopTimeWithoutDate }}</div>
     <div v-if="new Date(startTime) < new Date()">Prüfung, bitte nicht stören!</div>
+    <v-chip
+      color="primary"
+      label
+      outlined
+    >
+      {{ getStartTimeWithoutDate }} – {{ getStopTimeWithoutDate }} Uhr
+    </v-chip>
+
   </v-container>
 </template>
 

@@ -31,6 +31,7 @@ export default {
       "cardNumber",
       "modeExamInProgress",
       "cardIsLoading",
+      "modeExamRegister"
     ])
   },
   mounted() {
@@ -76,9 +77,12 @@ export default {
 
     checkCard(cardnumber) {
       //If exam is in progress right now +-1h
-      if (this.modeExamInProgress) {
+      if (this.modeExamInProgress && !this.modeExamRegister) {
         console.log("exam in progress")
         this['exam/checkRegistForExam'](cardnumber)
+      }
+      else if(this.modeExamRegister) {
+        alert("Funktion fehlt")
       }
       //If no exam (+-1h) found -> Students can check there next exam today
       else {
