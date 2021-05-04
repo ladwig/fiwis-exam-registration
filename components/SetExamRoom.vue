@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h3>{{ $t('pleaseSelectRoom') }}</h3>
+    <h3>{{ $t('setExamRoom.pleaseSelectRoom') }}</h3>
     <v-row>
       <v-col
         v-for="room in rooms"

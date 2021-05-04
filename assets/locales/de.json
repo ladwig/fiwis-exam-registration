@@ -1,8 +1,46 @@
 {
-  "pleaseSelectRoom": "Bitte wählen Sie einen Raum:",
-  "moreInformationStandardText": "Seit 01.10.2019 gilt die neue APO, hiernach ist für die Teilnahme an einer Prüfung die form- und fristgerechten Anmeldung Voraussetzung.",
-  "login": {
-    "username": "User Name",
-    "password": "Password"
-  }
+  "currentExamInfo": {
+    "isRegisteredStudentHeadline": "Sie sind angemeldet!",
+    "isRegisteredStudentMore": "Es liegt eine Anmeldung für diese Prüfung vor. Bestätigen Sie vor Prüfungsbeginn Ihre Anwesenheit.",
+    "isNotRegisteredStudentHeadline": "Sie sind nicht angemeldet!",
+    "isNotRegisteredStudentMore": "Es liegt keine Anmeldung für diese Prüfung vor. Bei Unklarheiten wenden Sie sich bitte an einen Mitarbeitenden der Hochschule.",
+    "registerForExamNowHeadline": "Jetzt zur Prüfung anmelden",
+    "registerForExamNowMore": "Beim Scannen Ihres Ausweises bestätigen Sie die Teilnahme an der Prüfung!",
+    "checkStatusHeadline": "Anmeldung prüfen",
+    "checkStatusMore": "Scannen Sie Ihren Ausweis, um zu prüfen, ob Sie für diese Prüfung angemeldet sind."
+  },
+  "currentExamName": {
+    "noExamInRoom": "Derzeit findet keine Prüfung in diesem Raum statt"
+  },
+  "currentExamTime": {
+    "dontDisturb": "Prüfung: Bitte nicht stören!"
+  },
+  "displayClock": {
+    "suffix": "Uhr"
+  },
+  "errorMessageAlert": {
+    "itsAError": "Fehler aufgetreten"
+  },
+  "startExamRegisterAlert": {
+    "startExamRegisterHeadline": "Prüfungsregistrierung starten",
+    "startExamRegisterMore": "Starten Sie die Prüfungsregistierung, sodass Studierende ihre Anwesenheit ab sofort bestätigen können.",
+    "cancel": "Abbrechen",
+    "start": "Start"
+  },
+  "studentsInRoom": {
+    "noSeats": "Keine Plätze mehr frei, bitte nutzen Sie alternativ:",
+    "roomOccupation": "Raumbelegung",
+    "connective": "von",
+    "freeSeats": "Plätzen frei"
+  },
+  "nextExamInfo": {
+    "yourNextExam": "Ihre nächste Prüfung:",
+    "noExamToday": "Sie sind heute für keine weitere Prüfung angemeldet",
+    "showNextExamHeadline": "Ihre nächste Prüfung anzeigen",
+    "showNextExamMore": "Scannen Sie Ihren Ausweis, um Ihre nächste Prüfung anzuzeigen"
+  },
+  "setExamRoom": {
+    "pleaseSelectRoom": "Bitte wählen Sie einen Raum:"
+    },
+  "moreInformationStandardText": "Seit 01.10.2019 gilt die neue APO, hiernach ist für die Teilnahme an einer Prüfung die form- und fristgerechten Anmeldung Voraussetzung."
 }

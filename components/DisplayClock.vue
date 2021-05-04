@@ -2,7 +2,7 @@
   <v-container fluid class="clock-container">
     <v-row class="clock justify-center">
       {{ date }} <br>
-      {{ time }} Uhr
+      {{ time }} {{ $t('displayClock.suffix') }}
     </v-row>
 
   </v-container>

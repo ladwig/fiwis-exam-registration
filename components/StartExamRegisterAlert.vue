@@ -7,10 +7,9 @@
     >
       <v-card>
         <v-card-title class="headline">
-          Prüfungsregistrierung starten
+          {{ $t('startExamRegisterAlert.startExamRegisterHeadline') }}
         </v-card-title>
-        <v-card-text>Starten Sie die Prüfungsregistierung, sodass Studierende ihre Anwesenheit ab sofort bestätigen
-          können.
+        <v-card-text>{{ $t('startExamRegisterAlert.startExamRegisterMore') }}
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -19,13 +18,13 @@
             text
             @click="closePopup(0)"
           >
-            Abbrechen
+            {{ $t('startExamRegisterAlert.cancel') }}
           </v-btn>
           <v-btn
             color="primary"
             @click="closePopup(1)"
           >
-            Starten
+            {{ $t('startExamRegisterAlert.start') }}
           </v-btn>
         </v-card-actions>
       </v-card>

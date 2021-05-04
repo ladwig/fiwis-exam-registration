@@ -1,6 +1,6 @@
 <template>
   <h3 v-if="modeExamInProgress" class="display-2">{{ examName }}</h3>
-  <h3 v-else class="display-2">Derzeit findet keine Prüfung in diesem Raum statt</h3>
+  <h3 v-else class="display-2">{{ $t('currentExamName.noExamInRoom') }}</h3>
 
 </template>
 

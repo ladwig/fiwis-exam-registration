@@ -1,11 +1,11 @@
 <template>
   <v-container fluid>
-    <div v-if="numberOfStudentsPresentInRoom == numberOfStudentsPlannedInRoom">Keine Plätze mehr frei, bitte nutzen Sie
-      alternativ:<b> {{
-          examRooms
-        }}</b></div>
-    <div v-else>Raumbelegung: <b>{{ numberOfStudentsPlannedInRoom - numberOfStudentsPresentInRoom }}</b> von
-      <b>{{ numberOfStudentsPlannedInRoom }}</b> Plätzen frei
+    <div v-if="numberOfStudentsPresentInRoom == numberOfStudentsPlannedInRoom">
+      {{ $t('studentsInRoom.noSeats') }}<b> {{
+        examRooms
+      }}</b></div>
+    <div v-else>{{ $t('studentsInRoom.roomOccupation') }} <b>{{ numberOfStudentsPlannedInRoom - numberOfStudentsPresentInRoom }}</b> {{ $t('studentsInRoom.connective') }}
+      <b>{{ numberOfStudentsPlannedInRoom }}</b> {{ $t('studentsInRoom.freeSeats') }}
     </div>
   </v-container>
 </template>

@@ -1,7 +1,7 @@
 <template>
 
   <v-container class="ma-0 pa-0">
-    <div v-if="new Date(startTime) < new Date()">Prüfung, bitte nicht stören!</div>
+    <div v-if="new Date(startTime) < new Date()">{{ $t('currentExamTime.dontDisturb') }}</div>
     <v-chip
       color="primary"
       label

@@ -8,7 +8,7 @@
     >
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title class="font-weight-bold">Ihre nächste Prüfung:</v-list-item-title>
+          <v-list-item-title class="font-weight-bold">{{ $t('nextExamInfo.yourNextExam') }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 
@@ -29,7 +29,7 @@
             <v-icon left>
               mdi-clock-time-four-outline
             </v-icon>
-            {{ getStartTimeWithDate }} - {{ getStopTimeWithoutDate }} Uhr
+            {{ getStartTimeWithDate }} - {{ getStopTimeWithoutDate }}  {{ $t('displayClock.suffix') }}
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
@@ -47,11 +47,11 @@
         </v-list-item-content>
       </v-list-item>
     </v-card>
-    <h4 v-else class="display-1"> Sie sind heute für keine weitere Prüfung angemeldet</h4>
+    <h4 v-else class="display-1">{{ $t('nextExamInfo.noExamToday') }}</h4>
   </div>
   <div v-else>
-    <h4 class="display-1 primary--text">Ihre nächste Prüfung anzeigen</h4>
-    <p>Scannen Sie Ihren Ausweis, um anzuzeigen zu welcher Prüfung Sie heute als nächstes angemeldet sind.</p>
+    <h4 class="display-1 primary--text">{{ $t('nextExamInfo.showNextExamHeadline') }}</h4>
+    <p>{{ $t('nextExamInfo.showNextExamMore') }}</p>
   </div>
 
 </template>

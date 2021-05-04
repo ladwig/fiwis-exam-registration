@@ -1,22 +1,22 @@
 <template>
   <div v-if="cardIsLoading && (isRegisteredStudent != null) && (isRegisteredStudent || !isRegisteredStudent)">
     <div v-if="isRegisteredStudent">
-      <h4 class="display-1 primary--text">Sie sind angemeldet!</h4>
-      <p>Es liegt eine Anmeldung für diese Prüfung vor. Bestätigen Sie vor Prüfungsbeginn Ihre Anwesenheit.</p>
+      <h4 class="display-1 primary--text">{{ $t('currentExamInfo.isRegisteredStudentHeadline') }}</h4>
+      <p>{{ $t('currentExamInfo.isRegisteredStudentMore') }}</p>
     </div>
     <div v-else>
-      <h4 class="display-1 primary--text">Sie sind nicht angemeldet!</h4>
-      <p>Es liegt keine Anmeldung für diese Prüfung vor. Bei Unklarheiten wenden Sie sich bitte an einen Mitarbeitenden der Hochschule.</p>
+      <h4 class="display-1 primary--text">{{ $t('currentExamInfo.isNotRegisteredStudentHeadline') }}</h4>
+      <p>{{ $t('currentExamInfo.isNotRegisteredStudentMore') }}</p>
     </div>
   </div>
   <div v-else>
     <div v-if="modeExamRegister">
-    <h4 class="display-1 primary--text">Jetzt zur Prüfung anmelden</h4>
-    <p>Beim Scannen Ihres Ausweises bestätigen Sie die Teilnahme an der Prüfung!</p>
+    <h4 class="display-1 primary--text">{{ $t('currentExamInfo.registerForExamNowHeadline') }}</h4>
+    <p>{{ $t('currentExamInfo.registerForExamNowMore') }}</p>
   </div>
     <div v-else>
-      <h4 class="display-1 primary--text">Anmeldung prüfen</h4>
-      <p>Scannen Sie Ihren Ausweis, um zu prüfen, ob Sie für diese Prüfung angemeldet sind.</p>
+      <h4 class="display-1 primary--text">{{ $t('currentExamInfo.checkStatusHeadline') }}</h4>
+      <p>{{ $t('currentExamInfo.checkStatusMore') }}</p>
     </div></div>
 </template>
 

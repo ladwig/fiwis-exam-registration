@@ -7,7 +7,7 @@
     >
       <v-card>
         <v-card-title class="headline">
-          Fehler aufgetreten
+          {{ $t('errorMessageAlert.itsAError') }}
         </v-card-title>
         <v-card-text>
           {{messages[errorMessage.msgNmbr]}}
