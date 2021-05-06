@@ -1,0 +1,364 @@
+package de.fhws.fiw.fiwis.extensions.exams.states;
+
+import de.fhws.fiw.fiwis.api.states.PostSingleCardScanInExamGroupState;
+import de.fhws.fiw.fiwis.database.dao.*;
+import de.fhws.fiw.fiwis.database.tables.ExamgroupExamroomExamroomRelationTable;
+import de.fhws.fiw.fiwis.database.tables.ExamroomTable;
+import de.fhws.fiw.fiwis.database.tables.LecturerTable;
+import de.fhws.fiw.fiwis.extensions.exams.utils.ExamDatabaseUtils;
+import de.fhws.fiw.fiwis.extensions.utils.DatabaseUtils;
+import de.fhws.fiw.fiwis.models.Examgroup;
+import de.fhws.fiw.fiwis.models.Examroom;
+import de.fhws.fiw.fiwis.models.Examstudent;
+import de.fhws.fiw.fiwis.models.Lecturer;
+import org.apache.commons.lang.StringUtils;
+
+import javax.inject.Inject;
+import java.util.*;
+
+public class PostScannedIdCardInExamGroupState extends PostSingleCardScanInExamGroupState
+{
+    @Inject ExamgroupDAO examgroupDAO;
+
+    @Inject ExamgroupExamroomExamroomDAO examgroupExamroomExamroomDAO;
+
+    @Inject ExamroomDAO examroomDAO;
+
+    @Inject ScannedcardDAO scannedcardDAO;
+
+    @Inject ExamstudentDAO examstudentDAO;
+
+    @Inject LecturerDAO lecturerDAO;
+
+    protected Examgroup theExamGroup;
+
+    protected Optional<Examroom> theExamRoom;
+
+    protected Optional<Examstudent> theExamStudent;
+
+    protected Optional<Lecturer> theLecturer;
+
+    public PostScannedIdCardInExamGroupState( )
+    {
+    }
+
+    @Override protected void afterModelHasBeenCreatedInDatabase( )
+    {
+        super.afterModelHasBeenCreatedInDatabase( );
+
+        loadExamGroup( );
+        loadExamRoom( );
+
+        if ( theExamRoom.isPresent( ) )
+        {
+            handleCardNumber( );
+        }
+        else
+        {
+            handleRoomNotFoundError( );
+        }
+    }
+
+    protected void handleCardNumber( )
+    {
+        if ( givenIdCardBelongsToLecturer( ) )
+        {
+            handleCardNumberOfLecturer( );
+        }
+        else if ( givenIdCardBelongsToExamStudent( ) )
+        {
+            handleCardNumberOfExamStudent( );
+        }
+        else
+        {
+            handleIdCardNumberNotKnown( );
+        }
+    }
+
+    protected boolean givenIdCardBelongsToLecturer( )
+    {
+        loadLecturerByCardNumber( );
+        return this.theLecturer.isPresent( );
+    }
+
+    protected boolean givenIdCardBelongsToExamStudent( )
+    {
+        loadExamStudentByCardNumber( );
+        return this.theExamStudent.isPresent( );
+    }
+
+    protected void handleCardNumberOfLecturer( )
+    {
+        addSuperVisorCn( );
+        openRegistrationInThisRoom( );
+        saveExamRoom( );
+    }
+
+    protected void openRegistrationInThisRoom( )
+    {
+        if ( isExamRoomInStateCheckingAndFirstScanOfLecturerCard( ) )
+        {
+            handlePrepareToOpenRegistration( );
+        }
+        else if ( isExamRoomInStateCheckingAndSwitchToOpenRegistration( ) )
+        {
+            handleOpenRegistration( );
+        }
+        else if ( isExamRoomInStateRegistrationOpen( ) )
+        {
+            closeRegistration( );
+        }
+    }
+
+    protected boolean isExamRoomInStateCheckingAndFirstScanOfLecturerCard( )
+    {
+        return this.theExamRoom.get( ).getExamRegistrationState( ) == 0
+            && this.modelToStoreInDatabase.getParameter( ) == 0;
+    }
+
+    protected boolean isExamRoomInStateCheckingAndSwitchToOpenRegistration( )
+    {
+        return this.theExamRoom.get( ).getExamRegistrationState( ) == 0
+            && this.modelToStoreInDatabase.getParameter( ) == 1;
+    }
+
+    protected boolean isExamRoomInStateRegistrationOpen( )
+    {
+        return this.theExamRoom.get( ).getExamRegistrationState( ) == 1;
+    }
+
+    protected void handleCardNumberOfExamStudent( )
+    {
+        if ( this.theExamRoom.get( ).getExamRegistrationState( ) == 0 )
+        {
+            if ( isStudentAssignedToSpecificRoom( ) )
+            {
+                if ( isStudentInFrontOfCorrectRoom( ) )
+                {
+                    handlePositiveCheckOfExamRegistration( );
+                }
+                else
+                {
+                    handlePositiveCheckOfExamRegistrationButDirectToOtherRoom( );
+                }
+            }
+            else
+            {
+                handlePositiveCheckOfExamRegistration( );
+            }
+        }
+        else if ( this.theExamRoom.get( ).getExamRegistrationState( ) == 1 )
+        {
+            if ( isStudentAssignedToSpecificRoom( ) )
+            {
+                if ( isStudentInFrontOfCorrectRoom( ) )
+                {
+                    handlePositiveApprovalOfExamRegistration( );
+                    saveExamStudent( );
+                    saveExamRoom( );
+                }
+                else
+                {
+                    handNegativeApprovalOfExamRegistrationBecauseOfWrongRoom( );
+                }
+            }
+            else
+            {
+                handlePositiveApprovalOfExamRegistration( );
+                saveExamStudent( );
+                saveExamRoom( );
+            }
+        }
+    }
+
+    protected boolean isStudentAssignedToSpecificRoom( )
+    {
+        return StringUtils.isEmpty( this.theExamStudent.get( ).getShouldTakeExamInRoom( ) ) == false;
+    }
+
+    protected boolean isStudentInFrontOfCorrectRoom( )
+    {
+        return StringUtils.equals( this.modelToStoreInDatabase.getRoom( ),
+            this.theExamStudent.get( ).getShouldTakeExamInRoom( ) );
+    }
+
+    protected void loadExamGroup( )
+    {
+        this.theExamGroup = this.examgroupDAO.loadModel( this.parentId ).getResult( );
+    }
+
+    protected void loadExamRoom( )
+    {
+        final String givenRoom = this.modelToStoreInDatabase.getRoom( );
+
+        if ( theExamGroup.getRoomNames( ).contains( givenRoom ) )
+        {
+            theExamRoom = loadExamRoom( givenRoom );
+        }
+        else
+        {
+            theExamRoom = Optional.empty( );
+        }
+    }
+
+    protected void loadExamStudentByCardNumber( )
+    {
+        this.theExamStudent = ExamDatabaseUtils.loadExamStudentByCardNumberAndExamGroup( this.theExamGroup,
+            this.modelToStoreInDatabase.getIdcardnumber( ) );
+    }
+
+    protected void loadLecturerByCardNumber( )
+    {
+        this.theLecturer = DatabaseUtils.load(
+            LecturerTable.TABLE_NAME,
+            "{model.cardNumber} = '" + this.modelToStoreInDatabase.getIdcardnumber( ) + "'",
+            DatabaseUtils.daoOf( LecturerDAO.class )
+        ).stream( ).findFirst( );
+    }
+
+    protected Optional<Examroom> loadExamRoom( final String roomName )
+    {
+        return loadAllExamRooms( ).stream( )
+                                  .filter( room -> room.getRoomName( ).equals( roomName ) )
+                                  .findFirst( );
+    }
+
+    protected Collection<Examroom> loadAllExamRooms( )
+    {
+        return DatabaseUtils.loadAllRelatedResources(
+            this.parentId,
+            ExamroomTable.TABLE_NAME,
+            ExamgroupExamroomExamroomRelationTable.TABLE_NAME,
+            this.examgroupExamroomExamroomDAO
+        );
+    }
+
+    protected void saveExamRoom( )
+    {
+        if ( this.theExamRoom.isPresent( ) )
+        {
+            this.examroomDAO.updateModel( this.theExamRoom.get( ) );
+        }
+    }
+
+    protected void saveExamStudent( )
+    {
+        if ( this.theExamStudent.isPresent( ) )
+        {
+            this.examstudentDAO.updateModel( this.theExamStudent.get( ) );
+        }
+    }
+
+    protected void handleRoomNotFoundError( )
+    {
+        this.modelToStoreInDatabase.setReturnCode( 100 );
+        this.modelToStoreInDatabase.setReturnText( "Der angegebene Raum ist für diese Prüfung nicht vorgesehen." );
+        this.scannedcardDAO.updateModel( this.modelToStoreInDatabase );
+    }
+
+    protected void handleIdCardNumberNotKnown( )
+    {
+        this.modelToStoreInDatabase.setReturnCode( 200 );
+        this.modelToStoreInDatabase.setReturnText(
+            "Die angegebene FHWS Karte ist nicht bekannt bzw. der Studierende ist für diese Prüfung nicht angemeldet." );
+        this.scannedcardDAO.updateModel( this.modelToStoreInDatabase );
+    }
+
+    protected void handlePrepareToOpenRegistration( )
+    {
+        this.modelToStoreInDatabase.setReturnCode( 300 );
+        this.modelToStoreInDatabase.setReturnText(
+            "Bitte die Kartennummer noch einmal senden mit Parameter == 1, wenn die Registrierung wirklich geöffnet werden soll." );
+        this.scannedcardDAO.updateModel( this.modelToStoreInDatabase );
+    }
+
+    protected void handleOpenRegistration( )
+    {
+        this.modelToStoreInDatabase.setReturnCode( 400 );
+        this.modelToStoreInDatabase.setReturnText(
+            "Die Registrierung ist für die Studierenden jetzt geöffnet." );
+        this.scannedcardDAO.updateModel( this.modelToStoreInDatabase );
+        this.theExamRoom.get( ).setExamRegistrationState( 1 );
+    }
+
+    protected void closeRegistration( )
+    {
+        this.modelToStoreInDatabase.setReturnCode( 800 );
+        this.modelToStoreInDatabase.setReturnText(
+            "Die Registrierung ist jetzt geschlossen." );
+        this.scannedcardDAO.updateModel( this.modelToStoreInDatabase );
+        this.theExamRoom.get( ).setExamRegistrationState( 0 );
+    }
+
+    protected void handlePositiveCheckOfExamRegistration( )
+    {
+        this.modelToStoreInDatabase.setReturnCode( 500 );
+        this.modelToStoreInDatabase.setReturnText(
+            "Der Studierende ist für diese Prüfung angemeldet und steht vor einem gültigen Prüfungsraum." );
+        this.scannedcardDAO.updateModel( this.modelToStoreInDatabase );
+    }
+
+    protected void handlePositiveCheckOfExamRegistrationButDirectToOtherRoom( )
+    {
+        this.modelToStoreInDatabase.setReturnCode( 500 );
+        this.modelToStoreInDatabase.setReturnText(
+            "Der Studierende ist für diese Prüfung angemeldet und hat einen Platz in Raum " +
+                this.theExamStudent.get( ).getShouldTakeExamInRoom( ) + " zugewiesen bekommen." );
+        this.scannedcardDAO.updateModel( this.modelToStoreInDatabase );
+    }
+
+    protected void handlePositiveApprovalOfExamRegistration( )
+    {
+        this.modelToStoreInDatabase.setReturnCode( 600 );
+        this.modelToStoreInDatabase.setReturnText(
+            "Der Studierende ist jetzt für diese Prüfung in diesem Raum verbindlich registriert." );
+        this.scannedcardDAO.updateModel( this.modelToStoreInDatabase );
+        this.theExamStudent.get( ).setTookExamInRoom( this.modelToStoreInDatabase.getRoom( ) );
+        this.theExamStudent.get( ).setPresentAtExam( 1 );
+
+        // TODO Student darf nicht doppelt gezählt werden!!
+        final int currentNumber = this.theExamRoom.get( ).getNumberOfStudentsPresentInRoom( );
+        this.theExamRoom.get( ).setNumberOfStudentsPresentInRoom( currentNumber + 1 );
+    }
+
+    protected void handNegativeApprovalOfExamRegistrationBecauseOfWrongRoom( )
+    {
+        this.modelToStoreInDatabase.setReturnCode( 700 );
+        this.modelToStoreInDatabase.setReturnText(
+            "Der Studierende ist für diese Prüfung angemeldet. Die Registrierung war aber nicht erfolgreich, weil dies der falsche Raum ist. Bitte in einen Platz in Raum " +
+                this.theExamStudent.get( ).getShouldTakeExamInRoom( ) + " einnehmen." );
+        this.scannedcardDAO.updateModel( this.modelToStoreInDatabase );
+    }
+
+    protected void addSuperVisorCn( )
+    {
+        final String oldSuperVisorCn = StringUtils.defaultString( this.theExamRoom.get( ).getAllExamSupervisorCns( ) );
+        final Set<String> cns = new HashSet<>( Arrays.asList( oldSuperVisorCn.split( "," ) ) );
+        cns.remove( "" );
+        cns.add( theLecturer.get( ).getCn( ) );
+        this.theExamRoom.get( ).setAllExamSupervisorCns( StringUtils.join( cns, "," ) );
+    }
+
+}
+
+--
+Prof. Dr. Peter Braun
+Dekan der Fakultät Informatik und Wirtschaftsinformatik
+Dean of the Faculty of Computer Science and Business Information Systems
+
+E-Mail/Email:  peter.braun@fhws.de
+Telefon/Phone: +49 931 3511-8971 und/and -9402
+Web:           https://fiw.fhws.de
+Büro/Office:   Sanderheinrichsleitenweg 20, 97074 Würzburg
+Raum/Room:     I.3.3
+
+Hochschule für angewandte Wissenschaften Würzburg-Schweinfurt
+Fakultät Informatik und Wirtschaftsinformatik
+Münzstr. 12, 97070 Würzburg
+
+University of Applied Sciences Würzburg-Schweinfurt
+Faculty Computer Science and Business Information Systems
+Münzstr. 12, 97070 Würzburg
+
+https://www.fhws.de
+https://www.facebook.com/FHWuerzburgSchweinfurt/

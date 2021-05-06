@@ -149,11 +149,22 @@ export const actions = {
     }
   },
 
-  checkRegistForExam(context, cardnumber) {
-    const body = {
-      idcardnumber: cardnumber,
-      room: context.rootState.roomName,
-      parameter: 1,
+  //Check or register a studentcard
+  checkRegistForExam(context, cardnumber, startModeExamRegister) {
+    let body = null
+
+    if(startModeExamRegister) {
+      body = {
+        idcardnumber: cardnumber,
+        room: context.rootState.roomName,
+        parameter: 1,
+      }
+    }
+    else {
+       body = {
+        idcardnumber: cardnumber,
+        room: context.rootState.roomName,
+      }
     }
     this.$axios.post(`${context.state.examID}/scannedcards`, body, {})
       .then((response) => {
@@ -168,6 +179,34 @@ export const actions = {
             else if (data.returnCode === 100) {
               context.commit("setIsRegisteredStudent", true, {root: true})
             }
+
+           /*
+           //Der angegebene Raum ist für diese Prüfung nicht vorgesehen.
+           else if (data.returnCode === 100) {
+              context.commit("setIsRegisteredStudent", true, {root: true})
+            }
+            //Die angegebene FHWS Karte ist nicht bekannt bzw. der Studierende ist für diese Prüfung nicht angemeldet.
+            else if (data.returnCode === 200) {
+              context.commit("setIsRegisteredStudent", true, {root: true})
+            }
+            //Bitte die Kartennummer noch einmal senden mit Parameter == 1, wenn die Registrierung wirklich geöffnet werden soll.
+            else if (data.returnCode === 300) {
+              context.commit("setIsRegisteredStudent", true, {root: true})
+            }
+            //Der Studierende ist für diese Prüfung angemeldet und steht vor einem gültigen Prüfungsraum. ODER Der Studierende ist für diese Prüfung angemeldet und hat einen Platz in Raum
+            else if (data.returnCode === 500) {
+              context.commit("setIsRegisteredStudent", true, {root: true})
+            }
+            //Der Studierende ist jetzt für diese Prüfung in diesem Raum verbindlich registriert.
+            else if (data.returnCode === 600) {
+              context.commit("setIsRegisteredStudent", true, {root: true})
+            }
+            //Angemeldet, aber die Registrierung war aber nicht erfolgreich, weil dies der falsche Raum ist. Bitte in einen Platz in Raum
+            else if (data.returnCode === 700) {
+              context.commit("setIsRegisteredStudent", true, {root: true})
+            }
+
+            */
             else {
               context.commit("setIsRegisteredStudent", false, {root: true})  //To remove clipping "Angemeldet / nicht angemeldet" in CurrentExamInfo
             }
