@@ -91,7 +91,7 @@ export const actions = {
       context.commit("setExamRooms", e.roomNames)
       context.commit("setNumberOfParticipants", e.totalNumberOfParticipants)
       context.commit("setExamDuration")
-      console.log("works -> exam")
+      console.log("Checking for exam in room " + context.rootState.roomName)
       const now = new Date();
 
       if (now.getTime() >= (new Date(context.state.startTime).getTime() - context.state.timeBeforeAfterExam) && now.getTime() <= (new Date(context.state.stopTime).getTime()) + context.state.timeBeforeAfterExam) {
@@ -122,7 +122,7 @@ export const actions = {
         await this.$axios.get('', {
           params: {
             cardnumber: cardnumber
-          }
+          },
         })
       ).data;
       context.commit("setCardNumber", cardnumber, {root: true})
@@ -150,9 +150,8 @@ export const actions = {
   },
 
   //Check or register a studentcard
-  checkRegistForExam(context, cardnumber, startModeExamRegister) {
+  checkRegistForExam(context, [cardnumber, startModeExamRegister]) {
     let body = null
-
     if(startModeExamRegister) {
       body = {
         idcardnumber: cardnumber,
@@ -166,7 +165,11 @@ export const actions = {
         room: context.rootState.roomName,
       }
     }
-    this.$axios.post(`${context.state.examID}/scannedcards`, body, {})
+    this.$axios.post(`${context.state.examID}/scannedcards`, body, {
+      headers: {
+       // "Content-Type": "application/vnd.fhws-scannedcard.scannedcardview+json"
+      }
+    })
       .then((response) => {
         const resURL = response.headers.location
         this.$axios.get(resURL, {})
@@ -210,7 +213,7 @@ export const actions = {
             else {
               context.commit("setIsRegisteredStudent", false, {root: true})  //To remove clipping "Angemeldet / nicht angemeldet" in CurrentExamInfo
             }
-            console.log(response.data.returnCode)
+            console.log("return code: " + response.data.returnCode)
           })
       })
       .catch(err => {

@@ -28,7 +28,7 @@ export default {
     this['exam/checkRoomForExam']()
     window.setInterval(() => {
       this['exam/checkRoomForExam']()
-    }, 6000)
+    }, 60000)
   }
 
 }

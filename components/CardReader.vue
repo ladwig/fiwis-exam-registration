@@ -78,8 +78,7 @@ export default {
     checkCard(cardnumber) {
       //If exam is in progress right now +-1h
       if (this.modeExamInProgress && !this.modeExamRegister) {
-        console.log("exam in progress")
-        this['exam/checkRegistForExam'](cardnumber)
+        this['exam/checkRegistForExam']([cardnumber])
       }
       else if(this.modeExamRegister) {
         alert("Funktion fehlt")

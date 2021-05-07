@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import {mapMutations} from "vuex";
+import {mapActions, mapMutations, mapState} from "vuex";
 
 export default {
   name: "StartExamRegisterAlert",
@@ -42,15 +42,24 @@ export default {
       dialog: true
     }
   },
+  computed: {
+    ...mapState([
+      "cardNumber",
+    ])
+  },
   methods: {
     ...mapMutations([
         "setIsExaminer",
         "setModeExamRegister",
       ]
     ),
-    //It will always close the modal and removes examiner data. Case 1 -> Starts exam register mode
+    ...mapActions([
+      "exam/checkRegistForExam",
+    ]),
+    //Always close the modal and removes examiner data. Case 1 -> Starts exam register mode
     closePopup(action) {
       if (action == 1) {
+        this['exam/checkRegistForExam']([this.cardNumber, true])
         this.setModeExamRegister(true)
       }
       this.setIsExaminer(false)
