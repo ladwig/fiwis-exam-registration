@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="ma-0 pa-0 full">
+  <v-container fluid pa-0 class="d-flex flex-column flex-grow-1 fill-parent-height pa-0">
     <!-- Select a room, first page -->
     <set-exam-room v-if="roomName===null"></set-exam-room>
 
@@ -8,40 +8,28 @@
 
     <!-- Popup when there is an error -->
     <error-message-alert v-if="errorMessage.error"></error-message-alert>
+    <v-row v-if="roomName!=null" no-gutters class="top-row flex-grow-1 flex-shrink-1">
+      <v-col cols="12" class="grid-item-mid fill-parent-height pa-5">
 
-    <!-- Screen when room has been selected  -->
-    <v-row class="full" v-if="roomName!=null">
-      <v-col cols="12" class="pa-5">
-        <v-row>
-          <current-exam-time v-if="modeExamInProgress"></current-exam-time>
-        </v-row>
-        <v-row>
-          <!-- Shows exam name or info that there is no exam in this room -->
-          <current-exam-name></current-exam-name>
-        </v-row>
-        <v-row>
-          <next-exam-info v-if="!modeExamInProgress"></next-exam-info>
-        </v-row>
-        <v-row>
-          <current-exam-info v-if="modeExamInProgress"></current-exam-info>
-        </v-row>
-        <v-row>
-          <students-in-room v-if="modeExamInProgress"></students-in-room>
-        </v-row>
-        <v-row>
-          <more-information></more-information>
-        </v-row>
+        <current-exam-name></current-exam-name>
+        <current-exam-time v-if="modeExamInProgress"></current-exam-time>
+        <next-exam-info v-if="!modeExamInProgress"></next-exam-info>
+        <current-exam-info v-if="modeExamInProgress"></current-exam-info>
+        <students-in-room v-if="modeExamInProgress"></students-in-room>
       </v-col>
+    </v-row>
+    <v-row v-if="roomName!=null" no-gutters class="bottom-row flex-grow-0 flex-shrink-0">
+      <v-col cols="12" class="grid-item-bottom">
+        <v-row>
+          <v-col>
+            <card-reader></card-reader>
+          </v-col>
+        </v-row>
 
-      <v-footer     light
-                    padless
-                    width="100%"
-      >
-        <card-reader></card-reader>
-        <display-clock></display-clock>
-      </v-footer >
+      </v-col>
     </v-row>
   </v-container>
+
 </template>
 
 <script>
@@ -80,12 +68,23 @@ export default {
 
 </script>
 <style>
-.right {
-  background: #f5f5f5;
+.grid-item-mid {
+  color: var(--v-light-base);
+  background-color: var(--v-primary-lighten2);
 }
 
-.full {
+
+.grid-item-bottom {
+  background-color: var(--v-secondary-base);
+
+}
+
+.fill-parent-height {
   height: 100%;
+}
+
+.top-row{
+  min-height: 0;
 }
 
 </style>

@@ -13,7 +13,7 @@
         src="../read_card.png"
         max-height="220"
         max-width="220"
-      ></v-img>
+      > </v-img>
     </div>
     <div>
       <input v-on:keydown="typeNFC($event)" id="NFC_CARDNUMBER" type="text" autocomplete="off"/>
