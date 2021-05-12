@@ -3,11 +3,12 @@
     <!-- Select a room, first page -->
     <set-exam-room v-if="roomName===null"></set-exam-room>
 
-    <!-- Popup to ask for exam start -->
-    <start-exam-register-alert v-if="isExaminer && !modeExamRegister"></start-exam-register-alert>
+    <!-- Popup to ask for exam start and settings -->
+    <settings-alert v-if="isExaminer"></settings-alert>
 
-    <!-- Popup when there is an eror -->
+    <!-- Popup when there is an error -->
     <error-message-alert v-if="errorMessage.error"></error-message-alert>
+
     <!-- Screen when room has been selected  -->
     <v-row class="full" v-if="roomName!=null">
       <!-- Left, big col -->
@@ -17,6 +18,7 @@
             <current-exam-time v-if="modeExamInProgress"></current-exam-time>
           </v-row>
           <v-row>
+            <!-- Shows exam name or info that there is no exam in this room -->
             <current-exam-name></current-exam-name>
           </v-row>
           <v-row>
@@ -60,13 +62,13 @@ import DisplayClock from "../components/DisplayClock";
 import StudentsInRoom from "../components/StudentsInRoom";
 import CurrentExamInfo from "../components/CurrentExamInfo";
 import CardReader from "../components/CardReader";
-import StartExamRegisterAlert from "../components/StartExamRegisterAlert";
+import SettingsAlert from "../components/SettingsAlert";
 import ErrorMessageAlert from "../components/ErrorMessageAlert";
 
 export default {
   components: {
     ErrorMessageAlert,
-    StartExamRegisterAlert,
+    SettingsAlert,
     CardReader,
     CurrentExamInfo,
     StudentsInRoom,

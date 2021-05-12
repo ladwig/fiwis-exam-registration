@@ -7,9 +7,9 @@
     >
       <v-card>
         <v-card-title class="headline">
-          {{ $t('startExamRegisterAlert.startExamRegisterHeadline') }}
+          {{ $t('settingsAlert.settingsAlertHeadline') }}
         </v-card-title>
-        <v-card-text>{{ $t('startExamRegisterAlert.startExamRegisterMore') }}
+        <v-card-text>{{ $t('settingsAlert.settingsAlertMore') }}
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -18,14 +18,22 @@
             text
             @click="closePopup(0)"
           >
-            {{ $t('startExamRegisterAlert.cancel') }}
+            {{ $t('settingsAlert.cancel') }}
           </v-btn>
           <v-btn
+            color="secondary darken-4"
+            text
+            @click="closePopup(2)"
+          >
+            Raum festlegen
+          </v-btn>
+          <v-btn v-if="!modeExamRegister"
             color="primary"
             @click="closePopup(1)"
           >
-            {{ $t('startExamRegisterAlert.start') }}
+            {{ $t('settingsAlert.start') }}
           </v-btn>
+
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -36,7 +44,7 @@
 import {mapActions, mapMutations, mapState} from "vuex";
 
 export default {
-  name: "StartExamRegisterAlert",
+  name: "SettingsAlert",
   data() {
     return {
       dialog: true
@@ -45,12 +53,14 @@ export default {
   computed: {
     ...mapState([
       "cardNumber",
+      "modeExamRegister"
     ])
   },
   methods: {
     ...mapMutations([
         "setIsExaminer",
         "setModeExamRegister",
+        "setRoomName",
       ]
     ),
     ...mapActions([
@@ -61,6 +71,9 @@ export default {
       if (action == 1) {
         this['exam/checkRegistForExam']([this.cardNumber, true])
         this.setModeExamRegister(true)
+      }
+      else if(action == 2) {
+        this.setRoomName(null)
       }
       this.setIsExaminer(false)
       this.dialog = false

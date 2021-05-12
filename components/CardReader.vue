@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="scan-container" v-if="cardIsLoading">
+    <div class="scan-container" v-if="this.cardIsLoading">
       <v-progress-circular
         :size="90"
         :width="7"
@@ -26,13 +26,62 @@ import {mapActions, mapMutations, mapState} from "vuex";
 
 export default {
   name: "CardReader",
+  data () {
+    return {
+      cardIsLoading: false,
+    }
+  },
   computed: {
     ...mapState([
       "cardNumber",
       "modeExamInProgress",
-      "cardIsLoading",
-      "modeExamRegister"
+      "modeExamRegister",
+      "returnText"
     ])
+  },
+  methods: {
+    ...mapMutations([
+        "setCardNumber",
+        "setIsRegisteredStudent",
+        "setReturnText"
+      ]
+    ),
+    ...mapActions([
+        'exam/checkCardForNextExam',
+        'exam/cardHandler',
+      ]
+    ),
+    setFocus() {
+      document.getElementById("NFC_CARDNUMBER").focus();
+    },
+
+    typeNFC(event) {
+      if (event.target.value == "") {
+        setTimeout(() => {
+          this.checkCard(event.target.value);
+        }, 420)
+       this.cardIsLoading = true;
+        setTimeout(() => {
+          event.target.value = "";
+          this.cardIsLoading = false
+          this.setReturnText(null)
+          this.setCardNumber(null)
+          this.setIsRegisteredStudent(null)
+        }, 5000);
+      }
+    },
+
+    checkCard(cardnumber) {
+      //If no exam (+-1h) found -> Students can check there next exam today
+      if (!this.modeExamInProgress) {
+        this['exam/checkCardForNextExam'](cardnumber)
+      }
+      //If exam is in progress right now +-1h
+      else {
+        this['exam/cardHandler']([cardnumber])
+      }
+
+    }
   },
   mounted() {
     setTimeout(() => {
@@ -44,55 +93,6 @@ export default {
       }, 1);
     };
   },
-  methods: {
-    ...mapMutations([
-        "setCardNumber",
-        "setCardIsLoading",
-        "setIsRegisteredStudent",
-      ]
-    ),
-    ...mapActions([
-        'exam/checkCardForExam',
-        'exam/checkRegistForExam',
-      ]
-    ),
-    setFocus() {
-      document.getElementById("NFC_CARDNUMBER").focus();
-    },
-
-    typeNFC(event) {
-      if (event.target.value == "") {
-        this.setCardIsLoading(true);
-        setTimeout(() => {
-          this.checkCard(event.target.value);
-        }, 420);
-        setTimeout(() => {
-          event.target.value = "";
-          this.setCardIsLoading(false)
-          this.setCardNumber(null)
-          this.setIsRegisteredStudent(null)
-        }, 5000);
-      }
-    },
-
-    checkCard(cardnumber) {
-      //If exam is in progress right now +-1h
-      if (this.modeExamInProgress && !this.modeExamRegister) {
-        this['exam/checkRegistForExam']([cardnumber])
-      }
-      else if(this.modeExamRegister) {
-        alert("Funktion fehlt")
-      }
-      //If no exam (+-1h) found -> Students can check there next exam today
-      else {
-        console.log("test")
-        this['exam/checkCardForExam'](cardnumber)
-      }
-
-    }
-
-
-  }
 }
 </script>
 

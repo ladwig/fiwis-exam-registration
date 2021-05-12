@@ -8,12 +8,12 @@ export const state = () => ({
     isRegisteredStudent: null,
     attendanceConfirmed: false,
     cardNumber: null,
-    cardIsLoading: false,
     errorMessage: {
       error: false,
       msgNmbr: null,
       response: null
-    }
+    },
+    returnText: null,
   }
 )
 
@@ -38,10 +38,6 @@ export const mutations = {
     state.isRegisteredStudent = isRegisteredStudent
   },
 
-  setCardIsLoading(state, cardIsLoading) {
-    state.cardIsLoading = cardIsLoading
-  },
-
   setIsThereNextExam(state, isThereNextExam) {
     state.isThereNextExam = isThereNextExam
   },
@@ -54,6 +50,10 @@ export const mutations = {
     state.errorMessage.error = data[0]
     state.errorMessage.msgNmbr = data[1]
     state.errorMessage.response = data[2]
+  },
+
+  setReturnText(state, returnText) {
+    state.returnText = returnText;
   },
 
   //For manual testing

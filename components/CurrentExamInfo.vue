@@ -1,5 +1,6 @@
 <template>
-  <div v-if="cardIsLoading && (isRegisteredStudent != null) && (isRegisteredStudent || !isRegisteredStudent)">
+  <div v-if="cardNumber != null">
+    {{    console.log(cardNumber) }}
     <div v-if="isRegisteredStudent">
       <h4 class="display-1 primary--text">{{ $t('currentExamInfo.isRegisteredStudentHeadline') }}</h4>
       <p>{{ $t('currentExamInfo.isRegisteredStudentMore') }}</p>
@@ -32,7 +33,7 @@ export default {
     ...mapState([
       "modeExamRegister",
       "isRegisteredStudent",
-      "cardIsLoading"
+      "cardNumber"
     ]),
   },
 

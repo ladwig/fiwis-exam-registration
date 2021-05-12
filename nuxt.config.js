@@ -5,6 +5,11 @@ export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
+  server: {
+    port: '80',
+    host: '0.0.0.0' // default: localhost
+  },
+
   publicRuntimeConfig: {
     axios: {
       browserBaseURL: process.env.BROWSER_BASE_URL

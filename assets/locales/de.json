@@ -21,9 +21,9 @@
   "errorMessageAlert": {
     "itsAError": "Fehler aufgetreten"
   },
-  "startExamRegisterAlert": {
-    "startExamRegisterHeadline": "Prüfungsregistrierung starten",
-    "startExamRegisterMore": "Starten Sie die Prüfungsregistierung, sodass Studierende ihre Anwesenheit ab sofort bestätigen können.",
+  "settingsAlert": {
+    "settingsAlertHeadline": "Registrierung / Einstellungen",
+    "settingsAlertMore": "Starten Sie die Prüfungsregistierung, sodass Studierende ihre Anwesenheit ab sofort bestätigen können oder legen Sie einen neuen Raum fest.",
     "cancel": "Abbrechen",
     "start": "Start"
   },

@@ -11,6 +11,7 @@ export const state = () => ({
 })
 
 export const mutations = {
+
   setExamDuration(state) {
     const diff = ((new Date(state.startTime).getTime() - new Date(state.stopTime).getTime()) / 1000) / 60;
     state.examDuration = Math.abs(Math.round(diff));
@@ -116,7 +117,7 @@ export const actions = {
     }
   },
 
-  async checkCardForExam(context, cardnumber) {
+  async checkCardForNextExam(context, cardnumber) {
     try {
       const response = (
         await this.$axios.get('', {
@@ -150,7 +151,7 @@ export const actions = {
   },
 
   //Check or register a studentcard
-  checkRegistForExam(context, [cardnumber, startModeExamRegister]) {
+  cardHandler(context, [cardnumber, startModeExamRegister]) {
     let body = null
     if(startModeExamRegister) {
       body = {
@@ -175,6 +176,7 @@ export const actions = {
         this.$axios.get(resURL, {})
           .then((response) => {
             const data = response.data
+            context.commit("setReturnText", data.returnText, {root: true})
 
             if (data.returnCode === 300) {
               context.commit("setIsExaminer", true, {root: true})
