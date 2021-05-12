@@ -8,8 +8,9 @@
 
     <!-- Popup when there is an error -->
     <error-message-alert v-if="errorMessage.error"></error-message-alert>
+
     <v-row v-if="roomName!=null" no-gutters class="top-row flex-grow-1 flex-shrink-1">
-      <v-col cols="12" class="grid-item-mid fill-parent-height pa-5">
+      <v-col cols="12" class="grid-item-mid fill-parent-height pa-5" >
 
         <current-exam-name></current-exam-name>
         <current-exam-time v-if="modeExamInProgress"></current-exam-time>
@@ -20,12 +21,7 @@
     </v-row>
     <v-row v-if="roomName!=null" no-gutters class="bottom-row flex-grow-0 flex-shrink-0">
       <v-col cols="12" class="grid-item-bottom">
-        <v-row>
-          <v-col>
-            <card-reader></card-reader>
-          </v-col>
-        </v-row>
-
+        <card-reader></card-reader>
       </v-col>
     </v-row>
   </v-container>

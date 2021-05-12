@@ -2,7 +2,7 @@
   <div>
     <div class="scan-container" v-if="this.cardIsLoading">
       <v-progress-circular
-        :size="90"
+        :size="150"
         :width="7"
         indeterminate
         color="primary"
@@ -11,8 +11,8 @@
     <div v-else>
       <v-img
         src="../read_card.png"
-        max-height="220"
-        max-width="220"
+        max-height="200"
+        max-width="200"
       > </v-img>
     </div>
     <div>
