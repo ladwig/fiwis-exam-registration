@@ -1,9 +1,9 @@
 <template>
   <v-container fluid class="clock-container">
-    <v-row class="clock justify-center">
+    <div class="clock body-1">
       {{ date }} <br>
       {{ time }} {{ $t('displayClock.suffix') }}
-    </v-row>
+    </div>
 
   </v-container>
 
@@ -32,7 +32,6 @@ export default {
       this.time = Intl.DateTimeFormat('de-DE', {
         hour: 'numeric',
         minute: 'numeric',
-        second: 'numeric'
       }).format()
 
       this.date = Intl.DateTimeFormat('de-DE', {
@@ -50,7 +49,7 @@ export default {
 
 <style scoped>
 .clock-container {
-
+width: 15%;
 }
 
 .clock {

@@ -6,6 +6,7 @@
       color="primary"
       label
       outlined
+      class="body-1"
     >
       {{ getStartTimeWithoutDate }} – {{ getStopTimeWithoutDate }} Uhr
     </v-chip>

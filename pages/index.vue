@@ -12,7 +12,7 @@
     <!-- Screen when room has been selected  -->
     <v-row class="full" v-if="roomName!=null">
       <!-- Left, big col -->
-      <v-col cols="8" class="pa-10">
+      <v-col cols="9" class="pa-10">
         <v-container style="margin-top: 30vh">
           <v-row>
             <current-exam-time v-if="modeExamInProgress"></current-exam-time>
@@ -27,11 +27,14 @@
           <v-row>
             <current-exam-info v-if="modeExamInProgress"></current-exam-info>
           </v-row>
+          <v-row>
+            <card-reader style="position: absolute; bottom: 0"></card-reader>
+          </v-row>
         </v-container>
       </v-col>
 
       <!-- Right, small col -->
-      <v-col cols="4" class="right pa-5">
+      <v-col cols="3" class="right pa-5">
         <v-container>
          <v-row>
           <students-in-room v-if="modeExamInProgress"></students-in-room>
@@ -40,10 +43,10 @@
             <more-information></more-information>
           </v-row>
           <v-row>
-            <display-clock></display-clock>
           </v-row>
-          <v-row justify="end">
-            <card-reader style="position: absolute; bottom: 0"></card-reader>
+          <v-row justify="center">
+            <display-clock style="position: absolute; bottom: 5%"></display-clock>
+
           </v-row>
         </v-container>
       </v-col>
