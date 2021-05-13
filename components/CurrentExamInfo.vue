@@ -32,7 +32,8 @@ export default {
     ...mapState([
       "modeExamRegister",
       "isRegisteredStudent",
-      "cardNumber"
+      "cardNumber",
+      "cardIsLoading"
     ]),
   },
 

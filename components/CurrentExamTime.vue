@@ -5,7 +5,7 @@
       color="secondary"
       label
       outlined
-      class="body-1"
+      class="body-1 font-weight-bold"
     >
       {{ getStartTimeWithoutDate }} – {{ getStopTimeWithoutDate }} Uhr
     </v-chip>
@@ -13,7 +13,7 @@
       color="secondary"
       label
       outlined
-      class="body-1 font-weight-bold"
+      class="body-1 font-weight-bold blink"
     >{{ $t('currentExamTime.dontDisturb') }}
     </v-chip>
 
@@ -43,5 +43,13 @@ export default {
 </script>
 
 <style scoped>
+.blink {
+  animation: blinker 1.5s step-start infinite;
+}
 
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
 </style>

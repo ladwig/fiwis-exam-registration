@@ -14,9 +14,8 @@
       <v-col cols="11" class="grid-item-mid fill-parent-height pa-0 pl-10 pt-15">
 
         <current-exam-name></current-exam-name>
-        <current-exam-time v-if="modeExamInProgress"></current-exam-time>
-        <next-exam-info v-if="!modeExamInProgress"></next-exam-info>
-        <students-in-room v-if="modeExamInProgress"></students-in-room>
+        <current-exam-time v-if="modeExamInProgress" class="mt-5"></current-exam-time>
+        <students-in-room v-if="modeExamInProgress" class="mt-5"></students-in-room>
       </v-col>
     </v-row>
     <v-row v-if="roomName!=null" no-gutters class="bottom-row flex-grow-0 flex-shrink-0 grid-item-bottom">
@@ -27,7 +26,9 @@
         <card-reader></card-reader>
       </v-col>
       <v-col cols="9">
-        <current-exam-info v-if="modeExamInProgress" class="mt-2 ml-10"></current-exam-info></v-col>
+        <next-exam-info v-if="!modeExamInProgress" class="mt-2 ml-10"></next-exam-info>
+        <current-exam-info v-if="modeExamInProgress" class="mt-2 ml-10"></current-exam-info>
+      </v-col>
     </v-row>
   </v-container>
 

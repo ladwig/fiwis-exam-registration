@@ -2,14 +2,14 @@
       <v-progress-linear
         indeterminate
         color="primary"
-        height="25"
+        height="15"
         v-if="cardIsLoading"
       ></v-progress-linear>
 
       <v-progress-linear
         disabled
         color="primary"
-        height="25"
+        height="15"
         v-else
       ></v-progress-linear>
 </template>
