@@ -1,23 +1,11 @@
 <template>
-  <div>
-    <div class="scan-container" v-if="this.cardIsLoading">
-      <v-progress-circular
-        :size="150"
-        :width="7"
-        indeterminate
-        color="primary"
-      ></v-progress-circular>
-    </div>
-    <div v-else>
+  <div class="scan-container">
       <v-img
         src="../read_card.png"
         max-height="200"
         max-width="200"
       > </v-img>
-    </div>
-    <div>
       <input v-on:keydown="typeNFC($event)" id="NFC_CARDNUMBER" type="text" autocomplete="off"/>
-    </div>
   </div>
 </template>
 
@@ -43,7 +31,8 @@ export default {
     ...mapMutations([
         "setCardNumber",
         "setIsRegisteredStudent",
-        "setReturnText"
+        "setReturnText",
+        "setCardIsLoading"
       ]
     ),
     ...mapActions([
@@ -60,10 +49,10 @@ export default {
         setTimeout(() => {
           this.checkCard(event.target.value);
         }, 420)
-       this.cardIsLoading = true;
+        this.setCardIsLoading(true)
         setTimeout(() => {
           event.target.value = "";
-          this.cardIsLoading = false
+          this.setCardIsLoading(false)
           this.setReturnText(null)
           this.setCardNumber(null)
           this.setIsRegisteredStudent(null)
@@ -103,7 +92,7 @@ export default {
   width: 0;
 }
 
-scan-container {
-  height: 10vh;
+.scan-container {
+  height: 25vh;
 }
 </style>

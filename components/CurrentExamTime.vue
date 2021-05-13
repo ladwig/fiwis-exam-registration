@@ -1,6 +1,6 @@
 <template>
 
-  <v-container class="ma-0 pa-0">
+  <v-container class="pa-0 ma-0">
     <v-chip
       color="secondary"
       label
@@ -9,7 +9,14 @@
     >
       {{ getStartTimeWithoutDate }} – {{ getStopTimeWithoutDate }} Uhr
     </v-chip>
-    <div v-if="new Date(startTime) < new Date()">{{ $t('currentExamTime.dontDisturb') }}</div>
+    <v-chip v-if="new Date(startTime) < new Date()"
+      color="secondary"
+      label
+      outlined
+      class="body-1 font-weight-bold"
+    >{{ $t('currentExamTime.dontDisturb') }}
+    </v-chip>
+
   </v-container>
 </template>
 

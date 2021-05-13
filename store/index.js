@@ -14,6 +14,7 @@ export const state = () => ({
       response: null
     },
     returnText: null,
+    cardIsLoading: false
   }
 )
 
@@ -54,6 +55,10 @@ export const mutations = {
 
   setReturnText(state, returnText) {
     state.returnText = returnText;
+  },
+
+  setCardIsLoading(state, cardIsLoading) {
+    state.cardIsLoading = cardIsLoading;
   },
 
   //For manual testing
