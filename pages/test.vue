@@ -10,23 +10,24 @@
     <error-message-alert v-if="errorMessage.error"></error-message-alert>
 
     <v-row v-if="roomName!=null" no-gutters class="top-row flex-grow-1 flex-shrink-1">
-      <v-col cols="12" class="grid-item-mid fill-parent-height pa-10">
 
-        <current-exam-name class="ma-5"></current-exam-name>
-        <current-exam-time v-if="modeExamInProgress" class="ma-5"></current-exam-time>
-        <next-exam-info v-if="!modeExamInProgress" class="ma-5"></next-exam-info>
-        <students-in-room v-if="modeExamInProgress" class="ma-5"></students-in-room>
+      <v-col cols="11" class="grid-item-mid fill-parent-height pa-0 pl-10 pt-15">
+
+        <current-exam-name></current-exam-name>
+        <current-exam-time v-if="modeExamInProgress"></current-exam-time>
+        <next-exam-info v-if="!modeExamInProgress"></next-exam-info>
+        <students-in-room v-if="modeExamInProgress"></students-in-room>
       </v-col>
     </v-row>
     <v-row v-if="roomName!=null" no-gutters class="bottom-row flex-grow-0 flex-shrink-0 grid-item-bottom">
       <v-col cols="12">
         <progress-bar></progress-bar>
       </v-col>
-      <v-col cols="3">
+      <v-col cols="3" class="pl-10">
         <card-reader></card-reader>
       </v-col>
       <v-col cols="9">
-        <current-exam-info v-if="modeExamInProgress" class="ma-5"></current-exam-info></v-col>
+        <current-exam-info v-if="modeExamInProgress" class="mt-2 ml-10"></current-exam-info></v-col>
     </v-row>
   </v-container>
 
@@ -72,7 +73,6 @@ export default {
 <style>
 .grid-item-mid {
   color: var(--v-light-base);
-  background-color: var(--v-primary-lighten2);
 }
 
 .grid-item-bottom {
@@ -86,6 +86,7 @@ export default {
 
 .top-row {
   min-height: 0;
+  background-color: var(--v-primary-lighten2);
 }
 
 

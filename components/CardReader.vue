@@ -1,9 +1,10 @@
 <template>
-  <div class="scan-container">
+  <div>
       <v-img
         src="../read_card.png"
         max-height="200"
         max-width="200"
+        class="mt-2"
       > </v-img>
       <input v-on:keydown="typeNFC($event)" id="NFC_CARDNUMBER" type="text" autocomplete="off"/>
   </div>
@@ -92,7 +93,4 @@ export default {
   width: 0;
 }
 
-.scan-container {
-  height: 25vh;
-}
 </style>

@@ -12,7 +12,7 @@
         max-width="150"
         contain
       ></v-img> -->
-      <v-toolbar-title class="font-weight-bold display-1">{{ roomName }}</v-toolbar-title>
+      <v-toolbar-title class="font-weight-bold display-1 pl-10">{{ roomName }}</v-toolbar-title>
       <v-icon v-if="$nuxt.isOffline" color="primary">mdi-wifi-strength-alert-outline</v-icon>
       <v-spacer></v-spacer>
       <display-clock></display-clock>
