@@ -65,6 +65,7 @@ export default {
     ),
     ...mapActions([
       "exam/checkRegistForExam",
+      "resetAllValues"
     ]),
     //Always close the modal and removes examiner data. Case 1 -> Starts exam register mode
     closePopup(action) {
@@ -73,7 +74,7 @@ export default {
         this.setModeExamRegister(true)
       }
       else if(action == 2) {
-        this.setRoomName(null)
+        window.location.reload(true)
       }
       this.setIsExaminer(false)
       this.dialog = false

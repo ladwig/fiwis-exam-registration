@@ -69,20 +69,34 @@ export default {
       }
       //If exam is in progress right now +-1h
       else {
+
         this['exam/cardHandler']([cardnumber])
       }
 
+    },
+
+    focusCardInput() {
+      const cardnumber = document.getElementById("NFC_CARDNUMBER")
+
+      setTimeout(() => {
+        cardnumber.readOnly = true
+        cardnumber.focus();
+      }, 1);
+
+      setTimeout(() => {
+        cardnumber.readOnly = false;
+      },1)
+
+      cardnumber.onblur = function (event) {
+        setTimeout( () => {
+          cardnumber.readOnly = true
+          cardnumber.focus();
+        }, 1)
+      }
     }
   },
   mounted() {
-    setTimeout(() => {
-      document.getElementById("NFC_CARDNUMBER").focus();
-    }, 1);
-    document.getElementById("NFC_CARDNUMBER").onblur = () => {
-      setTimeout(() => {
-        document.getElementById("NFC_CARDNUMBER").focus();
-      }, 1);
-    };
+    this.focusCardInput()
   },
 }
 </script>
