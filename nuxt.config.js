@@ -25,14 +25,14 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - registapp',
-    title: 'registapp',
+    titleTemplate: '%s - FHWS',
+    title: 'Prüfungsanmeldung',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'de'
     },
     meta: [
       {charset: 'utf-8'},
-      {name: 'viewport', content: 'width=device-width, initial-scale=1'},
+      {name: 'viewport', content: 'width=device-width, initial-scale=1, user-scalable=no'},
       {hid: 'description', name: 'description', content: ''}
     ],
     link: [
