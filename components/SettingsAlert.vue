@@ -26,7 +26,7 @@
             text
             @click="closePopup(2)"
           >
-            Raum festlegen
+            {{ $t('settingsAlert.restart') }}
           </v-btn>
           <v-btn v-if="!modeExamRegister"
             color="primary"
