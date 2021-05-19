@@ -1,12 +1,14 @@
 <template>
-  <div v-if="cardNumber != null">
+  <div v-if="returnText">
     <div v-if="isRegisteredStudent">
       <h2 class="display-2 primary--text font-weight-light">{{ $t('currentExamInfo.isRegisteredStudentHeadline') }}</h2>
       <p>{{ $t('currentExamInfo.isRegisteredStudentMore') }}</p>
+      <p>{{this.returnText}}</p>
     </div>
     <div v-else>
       <h2 class="display-2 primary--text font-weight-light">{{ $t('currentExamInfo.isNotRegisteredStudentHeadline') }}</h2>
       <p>{{ $t('currentExamInfo.isNotRegisteredStudentMore') }}</p>
+      <p>{{this.returnText}}</p>
     </div>
   </div>
   <div v-else>
@@ -33,7 +35,8 @@ export default {
       "modeExamRegister",
       "isRegisteredStudent",
       "cardNumber",
-      "cardIsLoading"
+      "cardIsLoading",
+      "returnText"
     ]),
   },
 

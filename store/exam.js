@@ -176,14 +176,13 @@ export const actions = {
         console.log(resURL)
         this.$axios.get(resURL, {})
           .then((response) => {
+            console.log(response.data.returnCode)
             const data = response.data
             context.commit("setReturnText", data.returnText, {root: true})
-            console.log("return code: " + response.data.returnCode)
-
             if (data.returnCode === 300) {
               context.commit("setIsExaminer", true, {root: true})
             }
-            else if (data.returnCode === 100) {
+            else if (data.returnCode === 500) {
               context.commit("setIsRegisteredStudent", true, {root: true})
             }
 
@@ -214,9 +213,12 @@ export const actions = {
             }
 
             */
-            else {
-              context.commit("setIsRegisteredStudent", false, {root: true})  //To remove clipping "Angemeldet / nicht angemeldet" in CurrentExamInfo
-            }
+            setTimeout(() => {
+              context.commit("setCardNumber", null , {root: true})
+              context.commit("setCardIsLoading", false , {root: true})
+              context.commit("setReturnText", null , {root: true})
+              context.commit("setIsRegisteredStudent", false , {root: true})
+            }, 5000);
           })
       })
       .catch(err => {

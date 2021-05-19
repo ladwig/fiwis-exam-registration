@@ -68,17 +68,12 @@ export default {
       if (event.target.value == "") {
         setTimeout(() => {
           this.setCardNumber(event.target.value)
-          console.log("oben" + event.target.value)
           this.checkCard(event.target.value);
         }, 420)
         this.setCardIsLoading(true)
         setTimeout(() => {
           event.target.value = "";
-          this.setCardIsLoading(false)
-          this.setReturnText(null)
-          this.setCardNumber(null)
-          this.setIsRegisteredStudent(null)
-        }, 5000);
+        }, 3000);
       }
     },
 
@@ -92,7 +87,6 @@ export default {
       else {
         this['exam/cardHandler']([cardnumber])
       }
-
     },
 
   },
