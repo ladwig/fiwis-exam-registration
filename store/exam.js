@@ -73,6 +73,17 @@ export const getters = {
 }
 
 export const actions = {
+
+  resetStates(context) {
+    setTimeout(() => {
+      context.commit("setCardNumber", null , {root: true})
+      context.commit("setCardIsLoading", false , {root: true})
+      context.commit("setReturnText", null , {root: true})
+      context.commit("setIsRegisteredStudent", false , {root: true})
+    }, 5000);
+  },
+
+  // Get's called after room selection and at set interval. Sets all relevant exam information.
   async checkRoomForExam(context) {
     try {
     const exam = (
@@ -117,6 +128,7 @@ export const actions = {
     }
   },
 
+  // Gets called when there is no exam at the moment. Sets
   async checkCardForNextExam(context, cardnumber) {
     try {
       const response = (
@@ -176,9 +188,17 @@ export const actions = {
         console.log(resURL)
         this.$axios.get(resURL, {})
           .then((response) => {
+
             console.log(response.data.returnCode)
+
             const data = response.data
-            context.commit("setReturnText", data.returnText, {root: true})
+
+            if(data.returnText) {
+              context.commit("setReturnText", data.returnText, {root: true})
+            } else {
+              context.commit("setReturnText", "Kein returnText verfübar", {root: true})
+            }
+
             if (data.returnCode === 300) {
               context.commit("setIsExaminer", true, {root: true})
             }
@@ -186,7 +206,8 @@ export const actions = {
               context.commit("setIsRegisteredStudent", true, {root: true})
             }
 
-           /*
+            context.dispatch("resetStates")
+            /*
            //Der angegebene Raum ist für diese Prüfung nicht vorgesehen.
            else if (data.returnCode === 100) {
               context.commit("setIsRegisteredStudent", true, {root: true})
@@ -211,14 +232,7 @@ export const actions = {
             else if (data.returnCode === 700) {
               context.commit("setIsRegisteredStudent", true, {root: true})
             }
-
             */
-            setTimeout(() => {
-              context.commit("setCardNumber", null , {root: true})
-              context.commit("setCardIsLoading", false , {root: true})
-              context.commit("setReturnText", null , {root: true})
-              context.commit("setIsRegisteredStudent", false , {root: true})
-            }, 5000);
           })
       })
       .catch(err => {
