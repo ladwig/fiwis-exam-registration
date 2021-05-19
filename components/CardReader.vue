@@ -41,14 +41,34 @@ export default {
         'exam/cardHandler',
       ]
     ),
-    setFocus() {
-      document.getElementById("NFC_CARDNUMBER").focus();
+    focusCardInput() {
+      const cardnumber = document.getElementById("NFC_CARDNUMBER")
+
+      setTimeout(() => {
+        cardnumber.readOnly = true
+        cardnumber.focus();
+      },);
+
+      setTimeout(() => {
+        cardnumber.readOnly = false;
+      },1)
+
+      cardnumber.onblur = function (event) {
+        setTimeout( () => {
+          cardnumber.readOnly = true
+          cardnumber.focus();
+        },)
+        setTimeout(() => {
+          cardnumber.readOnly = false;
+        },1)
+      }
     },
 
     typeNFC(event) {
       if (event.target.value == "") {
         setTimeout(() => {
           this.setCardNumber(event.target.value)
+          console.log("oben" + event.target.value)
           this.checkCard(event.target.value);
         }, 420)
         this.setCardIsLoading(true)
@@ -63,37 +83,18 @@ export default {
     },
 
     checkCard(cardnumber) {
+      console.log(cardnumber)
       //If no exam (+-1h) found -> Students can check there next exam today
       if (!this.modeExamInProgress) {
         this['exam/checkCardForNextExam'](cardnumber)
       }
       //If exam is in progress right now +-1h
       else {
-
         this['exam/cardHandler']([cardnumber])
       }
 
     },
 
-    focusCardInput() {
-      const cardnumber = document.getElementById("NFC_CARDNUMBER")
-
-      setTimeout(() => {
-        cardnumber.readOnly = true
-        cardnumber.focus();
-      }, 1);
-
-      setTimeout(() => {
-        cardnumber.readOnly = false;
-      },1)
-
-      cardnumber.onblur = function (event) {
-        setTimeout( () => {
-          cardnumber.readOnly = true
-          cardnumber.focus();
-        }, 1)
-      }
-    }
   },
   mounted() {
     this.focusCardInput()
