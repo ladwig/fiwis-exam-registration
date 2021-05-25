@@ -15,7 +15,7 @@ export default {
     headline: String,
     icon: String,
     more: String,
-    returnText: String
+    returnText: String,
   }
 }
 

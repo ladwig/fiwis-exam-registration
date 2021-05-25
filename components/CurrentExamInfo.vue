@@ -1,24 +1,21 @@
 <template>
-    <div v-if="modeExamRegister">
-<scan-information-panel
-  :headline="$t('currentExamInfo.registerForExamNowHeadline')"
-  icon="mdi-information-outline"
-  :return-text="this.returnText"
-  :more="$t('currentExamInfo.registerForExamNowMore')"
-></scan-information-panel>
 
-  </div>
+    <scan-information-panel
+      v-if="modeExamRegister"
+      :headline="$t('currentExamInfo.registerForExamNowHeadline')"
+      icon="mdi-information-outline"
+      :return-text="this.returnText"
+      :more="$t('currentExamInfo.registerForExamNowMore')"
+    />
 
-    <div v-else>
-      <h2 class="display-2 primary--text font-weight-light">{{ $t('currentExamInfo.checkStatusHeadline') }}</h2>
-      <div v-if="returnText">
-        <v-icon>mdi-information-outline</v-icon>
-        {{this.returnText}}</div>
-      <div v-else>
-        <v-icon>mdi-information-outline</v-icon>
-        {{ $t('currentExamInfo.checkStatusMore') }}
-      </div>
-    </div>
+  <scan-information-panel
+    v-else
+    :headline="$t('currentExamInfo.checkStatusHeadline')"
+    icon="mdi-information-outline"
+    :return-text="this.returnText"
+    :more="$t('currentExamInfo.checkStatusMore')"
+  />
+
 </template>
 
 <script>
@@ -42,10 +39,6 @@ export default {
   },
 
   methods: {},
-  created() {
-
-  }
-
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-0">
+  <v-container class="pa-0 ma-0">
     <div v-if="numberOfStudentsPresentInRoom == numberOfStudentsPlannedInRoom">
       {{ $t('studentsInRoom.noSeats') }}<b> {{
         examRooms
@@ -17,16 +17,19 @@ export default {
   name: "StudentsInRoom",
   data() {
     return {
-      numberOfStudentsPlannedInRoom: 70,
-      numberOfStudentsPresentInRoom: 31,
       roomFull: false,
     }
   },
   computed: {
     ...mapState({
-      examRooms: state => state.exam.examRooms
+      examRooms: state => state.exam.examRooms,
+      numberOfStudentsPlannedInRoom: state => state.exam.numberOfStudentsPlannedInRoom,
+      numberOfStudentsPresentInRoom: state => state.exam.numberOfStudentsPresentInRoom
     })
   },
+  created() {
+    this.$store.dispatch("exam/checkNumberOfStudentsInRoom")
+  }
 }
 </script>
 

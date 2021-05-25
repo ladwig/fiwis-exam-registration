@@ -5,6 +5,8 @@ export const state = () => ({
   stopTime: null,
   examRooms: null, // "H.1.2, H.1.3"
   numberOfParticipants: null,
+  numberOfStudentsPlannedInRoom: null,
+  numberOfStudentsPresentInRoom: null,
   examDuration: null,
   moreInformationMsg: null,
   timeBeforeAfterExam: 3600000, //1h before, 1h after exam -> modeExamInProgress
@@ -36,6 +38,15 @@ export const mutations = {
   setNumberOfParticipants(state, numberOfParticipants) {
     state.numberOfParticipants = numberOfParticipants;
   },
+
+  setNumberOfStudentsPlannedInRoom(state, numberOfStudentsPlannedInRoom) {
+    state.numberOfStudentsPlannedInRoom = numberOfStudentsPlannedInRoom;
+  },
+
+  setNumberOfStudentsPresentInRoom(state, numberOfStudentsPresentInRoom) {
+    state.numberOfStudentsPresentInRoom = numberOfStudentsPresentInRoom;
+  },
+
 
   setExamRooms(state, examRooms) {
     state.examRooms = examRooms;
@@ -80,6 +91,7 @@ export const actions = {
       context.commit("setCardIsLoading", false , {root: true})
       context.commit("setReturnText", null , {root: true})
       context.commit("setIsRegisteredStudent", false , {root: true})
+      context.commit("setIsThereNextExam", null , {root: true})
     }, 5000);
   },
 
@@ -120,7 +132,6 @@ export const actions = {
         console.error(err.response)
       } else if (err.request) {
         context.commit("setErrorMessage", [true, 0], {root: true})
-        console.error("Can't get a response, maybe the connection to the API failed!")
         console.log(context.rootState.errorMessage)
       } else {
         console.error(err.message);
@@ -128,7 +139,7 @@ export const actions = {
     }
   },
 
-  // Gets called when there is no exam at the moment. Sets
+  // Gets called when there is no exam at the moment.
   async checkCardForNextExam(context, cardnumber) {
     try {
       const response = (
@@ -149,12 +160,37 @@ export const actions = {
       } else {
         context.commit("setIsThereNextExam", false, {root: true})
       }
+      context.dispatch("resetStates")
     } catch(err) {
       if (err.response) {
         console.error(err.response)
       } else if (err.request) {
         context.commit("setErrorMessage", [true, 0], {root: true})
-        console.error("Can't get a response, maybe the connection to the API failed!")
+        console.log(context.rootState.errorMessage)
+      } else {
+        console.error(err.message);
+      }
+    }
+  },
+
+  //Checks how many students are in the room
+  async checkNumberOfStudentsInRoom(context) {
+    try {
+      const response = (
+        await this.$axios.get(`${context.state.examID}/examrooms`, {
+        })
+      ).data;
+      if(response.length > 0) {
+        context.commit("setNumberOfStudentsPlannedInRoom", response[0].numberOfStudentsPlannedInRoom)
+        context.commit("setNumberOfStudentsPresentInRoom", response[0].numberOfStudentsPresentInRoom)
+        console.log(response[0].numberOfStudentsPlannedInRoom)
+        console.log(response[0].numberOfStudentsPresentInRoom)
+      }
+    } catch(err) {
+      if (err.response) {
+        console.error(err.response)
+      } else if (err.request) {
+        context.commit("setErrorMessage", [true, 0], {root: true})
         console.log(context.rootState.errorMessage)
       } else {
         console.error(err.message);
@@ -165,6 +201,7 @@ export const actions = {
   //Check or register a studentcard
   cardHandler(context, [cardnumber, startModeExamRegister]) {
     let body = null
+    //To check if card is admin/examiner
     if(startModeExamRegister) {
       body = {
         idcardnumber: cardnumber,
@@ -178,7 +215,6 @@ export const actions = {
         room: context.rootState.roomName,
       }
     }
-    console.time("timer1");
     this.$axios.post(`${context.state.examID}/scannedcards`, body, {
       headers: {
        // "Content-Type": "application/vnd.fhws-scannedcard.scannedcardview+json"
@@ -186,10 +222,8 @@ export const actions = {
     })
       .then((response) => {
         const resURL = response.headers.location
-        console.log(resURL)
         this.$axios.get(resURL, {})
           .then((response) => {
-            console.timeEnd("timer1");
             console.log(response.data.returnCode)
 
             const data = response.data
@@ -207,6 +241,7 @@ export const actions = {
               context.commit("setIsRegisteredStudent", true, {root: true})
             }
 
+            context.dispatch("checkNumberOfStudentsInRoom")
             context.dispatch("resetStates")
             /*
            //Der angegebene Raum ist für diese Prüfung nicht vorgesehen.

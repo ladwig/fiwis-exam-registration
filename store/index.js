@@ -3,7 +3,7 @@ export const state = () => ({
     modeJustCheck: true, // Keine Prüfung
     modeExamInProgress: null, // Prüfungszeit + 1h vorher +1h nachher
     modeExamRegister: false,
-    isThereNextExam: false,
+    isThereNextExam: null,
     isExaminer: false, // Prüfer, der Registrierung starten kann
     isRegisteredStudent: null,
     attendanceConfirmed: false,
