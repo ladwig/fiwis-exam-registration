@@ -5,7 +5,7 @@
       color="secondary"
       label
       outlined
-      class="body-1 font-weight-bold"
+      class="headline font-weight-regular"
     >
       {{ getStartTimeWithoutDate }} – {{ getStopTimeWithoutDate }} Uhr
     </v-chip>
@@ -13,7 +13,7 @@
       color="secondary"
       label
       outlined
-      class="body-1 font-weight-bold blink"
+      class="headline font-weight-regular blink"
     >{{ $t('currentExamTime.dontDisturb') }}
     </v-chip>
 

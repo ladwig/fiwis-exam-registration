@@ -1,9 +1,10 @@
 <template>
   <div>
-    <h2 class="display-2 primary--text font-weight-light"> {{ headline }} </h2>
-    <v-icon> {{ icon }} </v-icon>
-    <div style="display: inline-block" v-if="returnText"> {{ returnText }} </div>
-    <div style="display: inline-block" v-else> {{ more }} </div>
+    <h2 class="display-3 darker--text font-weight-regular"> {{ headline }} </h2>
+    <div class="mt-2">
+      <v-icon color="darker" size="24" class="middle"> {{ icon }} </v-icon>
+      <div class="d-inline-block headline font-weight-regular darker--text middle"> {{ returnText ? returnText : more }} </div>
+    </div>
   </div>
 </template>
 
@@ -22,5 +23,8 @@ export default {
 </script>
 
 <style scoped>
+.middle {
+  vertical-align: middle
+}
 
 </style>

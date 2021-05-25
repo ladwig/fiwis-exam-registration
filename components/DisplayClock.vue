@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="clock-container">
     <div class="clock">
-      <div class="title">{{ time }}  {{ $t('displayClock.suffix') }}<br></div>
+      <div class="title darker--text">{{ time }}  {{ $t('displayClock.suffix') }}<br></div>
       {{ date }}
     </div>
 

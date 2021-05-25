@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-0 ma-0">
+  <v-container class="pa-0 ma-0 headline">
     <div v-if="numberOfStudentsPresentInRoom == numberOfStudentsPlannedInRoom">
       {{ $t('studentsInRoom.noSeats') }}<b> {{
         examRooms

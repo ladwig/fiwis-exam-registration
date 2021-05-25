@@ -87,7 +87,8 @@ export default {
         light: {
           primary: "#EA6105",
           secondary: "#F5F5F5",
-          light: "#FFF"
+          light: "#ffffff",
+          darker: "#454545"
         },
         dark: {
           primary: "#EA6105",
