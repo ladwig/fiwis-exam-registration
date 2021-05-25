@@ -1,21 +1,33 @@
 <template>
     <div v-if="modeExamRegister">
-    <h2 class="display-2 primary--text font-weight-light">{{ $t('currentExamInfo.registerForExamNowHeadline') }}</h2>
-      <p v-if="returnText">{{this.returnText}}</p>
-      <p v-else>{{ $t('currentExamInfo.registerForExamNowMore') }}</p>
+<scan-information-panel
+  :headline="$t('currentExamInfo.registerForExamNowHeadline')"
+  icon="mdi-information-outline"
+  :return-text="this.returnText"
+  :more="$t('currentExamInfo.registerForExamNowMore')"
+></scan-information-panel>
+
   </div>
+
     <div v-else>
       <h2 class="display-2 primary--text font-weight-light">{{ $t('currentExamInfo.checkStatusHeadline') }}</h2>
-      <p v-if="returnText">{{this.returnText}}</p>
-      <p v-else>{{ $t('currentExamInfo.checkStatusMore') }}</p>
+      <div v-if="returnText">
+        <v-icon>mdi-information-outline</v-icon>
+        {{this.returnText}}</div>
+      <div v-else>
+        <v-icon>mdi-information-outline</v-icon>
+        {{ $t('currentExamInfo.checkStatusMore') }}
+      </div>
     </div>
 </template>
 
 <script>
 import {mapState} from "vuex";
+import ScanInformationPanel from "./ScanInformationPanel";
 
 export default {
   name: "CurrentExamInfo",
+  components: {ScanInformationPanel},
   computed: {
     ...mapState({
       examName: state => state.exam.examName,

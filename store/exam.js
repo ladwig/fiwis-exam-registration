@@ -178,6 +178,7 @@ export const actions = {
         room: context.rootState.roomName,
       }
     }
+    console.time("timer1");
     this.$axios.post(`${context.state.examID}/scannedcards`, body, {
       headers: {
        // "Content-Type": "application/vnd.fhws-scannedcard.scannedcardview+json"
@@ -188,7 +189,7 @@ export const actions = {
         console.log(resURL)
         this.$axios.get(resURL, {})
           .then((response) => {
-
+            console.timeEnd("timer1");
             console.log(response.data.returnCode)
 
             const data = response.data
