@@ -13,7 +13,7 @@
       color="secondary"
       label
       outlined
-      class="headline font-weight-regular "
+      class="headline font-weight-regular blink"
     >{{ $t('currentExamTime.dontDisturb') }}
     </v-chip>
 
