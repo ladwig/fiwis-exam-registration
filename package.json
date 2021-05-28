@@ -15,7 +15,9 @@
     "nuxt-i18n": "^6.26.0"
   },
   "devDependencies": {
+    "@nuxt/test-utils": "^0.2.2",
     "@nuxtjs/vuetify": "^1.11.3",
+    "jest": "^27.0.1",
     "vuetify": "^2.4.9"
   }
 }
