@@ -25,9 +25,9 @@ import {mapMutations, mapState} from "vuex";
 export default {
   name: "SetExamRoom",
   computed: {
-    rooms() {
-      return this.$store.state.rooms.rooms
-    },
+    ...mapState({
+      rooms: state => state.rooms.rooms,
+    }),
     ...mapState([
       "roomName"
     ])

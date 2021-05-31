@@ -5,7 +5,7 @@ test('shows current time', async () => {
 
   const { findByText } = render(DisplayClock)
   const date = new Date()
-  const time = date.getHours() + ":" + date.getMinutes()
+  const time = ('0'+date.getHours()).substr(-2) + ":" + ('0'+date.getMinutes()).substr(-2)
 
   await findByText(time, {exact: false})
 
