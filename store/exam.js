@@ -145,7 +145,7 @@ export const actions = {
       const response = (
         await this.$axios.get('', {
           params: {
-            cardnumber: cardnumber
+            cardnumber:  parseInt(cardnumber, 16)
           },
         })
       ).data;
@@ -204,14 +204,14 @@ export const actions = {
     //To check if card is admin/examiner
     if(startModeExamRegister) {
       body = {
-        idcardnumber: cardnumber,
+        idcardnumber:  parseInt(cardnumber, 16),
         room: context.rootState.roomName,
         parameter: 1,
       }
     }
     else {
        body = {
-        idcardnumber: cardnumber,
+        idcardnumber:  parseInt(cardnumber, 16),
         room: context.rootState.roomName,
       }
     }

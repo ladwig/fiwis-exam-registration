@@ -24,7 +24,7 @@ export const mutations = {
   },
 
   setCardNumber(state, cardNumber) {
-    state.cardNumber = cardNumber
+    state.cardNumber =  parseInt(cardNumber, 16)
   },
 
   setModeExamInProgress(state, modeExamInProgress) {
