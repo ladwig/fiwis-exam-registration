@@ -29,11 +29,8 @@ import {mapState} from "vuex";
 export default {
   name: "NextExamInfo",
   computed: {
-    ...mapState([
-      "returnText",
-      "isThereNextExam"
-    ]),
     ...mapState({
+      isThereNextExam: state => state.currentCard.isThereNextExam,
       examName: state => state.exam.examName,
       examRooms: state => state.exam.examRooms
     }),

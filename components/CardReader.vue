@@ -22,23 +22,22 @@ export default {
   },
   computed: {
     ...mapState([
-      "cardNumber",
+      "currentCard/cardNumber",
       "modeExamInProgress",
       "modeExamRegister",
-      "returnText"
+      "currentCard/returnText"
     ])
   },
   methods: {
     ...mapMutations([
-        "setCardNumber",
-        "setIsRegisteredStudent",
+        "currentCard/setCardNumber",
         "setReturnText",
         "setCardIsLoading"
       ]
     ),
     ...mapActions([
-        'exam/checkCardForNextExam',
-        'exam/checkCardForThisExam',
+        'currentCard/checkCardForNextExam',
+        'currentCard/checkCardForThisExam',
       ]
     ),
     focusCardInput() {
@@ -67,7 +66,6 @@ export default {
     typeNFC(event) {
       if (event.target.value == "") {
         setTimeout(() => {
-          this.setCardNumber(event.target.value)
           this.checkCard(event.target.value);
         }, 420)
         this.setCardIsLoading(true)
@@ -81,11 +79,11 @@ export default {
       console.log(cardnumber)
       //If no exam (+-1h) found -> Students can check there next exam today
       if (!this.modeExamInProgress) {
-        this['exam/checkCardForNextExam'](cardnumber)
+        this['currentCard/checkCardForNextExam'](cardnumber)
       }
       //If exam is in progress right now +-1h
       else {
-        this['exam/checkCardForThisExam']([cardnumber])
+        this['currentCard/checkCardForThisExam']([cardnumber])
       }
     },
 

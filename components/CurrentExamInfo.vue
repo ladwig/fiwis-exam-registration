@@ -28,12 +28,10 @@ export default {
   computed: {
     ...mapState({
       examName: state => state.exam.examName,
+      returnText: state => state.currentCard.returnText
     }),
     ...mapState([
       "modeExamRegister",
-      "isRegisteredStudent",
-      "cardNumber",
-      "returnText"
     ]),
   },
 

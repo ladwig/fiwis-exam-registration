@@ -89,7 +89,7 @@ export const actions = {
       context.commit("setReturnText", null , {root: true})
       context.commit("setIsRegisteredStudent", false , {root: true})
       context.commit("setIsThereNextExam", null , {root: true})
-    }, 5000);
+    }, 4000);
   },
 
   // Get's called after room selection and at set interval. Sets all relevant exam information.
@@ -219,10 +219,12 @@ export const actions = {
         const resURL = response.headers.location
         this.$axios.get(resURL, {})
           .then((response) => {
-           context.dispatch("setCardReturnData", response.data)
-             .then(
-               context.dispatch("checkNumberOfStudentsInRoom"),
+            context.dispatch("setCardReturnData", response.data)
+
+             .then(() => {
+               context.dispatch("checkNumberOfStudentsInRoom")
                context.dispatch("resetStates")
+             }
             )
           })
       })
@@ -254,7 +256,7 @@ export const actions = {
       else if (data.returnCode === 500) {
         context.commit("setIsRegisteredStudent", true, {root: true})
       }
-      resolve("ok")
+      resolve()
     })
   }
 
