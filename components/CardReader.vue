@@ -38,7 +38,7 @@ export default {
     ),
     ...mapActions([
         'exam/checkCardForNextExam',
-        'exam/cardHandler',
+        'exam/checkCardForThisExam',
       ]
     ),
     focusCardInput() {
@@ -85,7 +85,7 @@ export default {
       }
       //If exam is in progress right now +-1h
       else {
-        this['exam/cardHandler']([cardnumber])
+        this['exam/checkCardForThisExam']([cardnumber])
       }
     },
 

@@ -33,7 +33,6 @@ export default {
       "modeExamRegister",
       "isRegisteredStudent",
       "cardNumber",
-      "cardIsLoading",
       "returnText"
     ]),
   },
