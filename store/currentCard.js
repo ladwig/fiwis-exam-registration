@@ -1,5 +1,5 @@
 export const state = () => ({
-    isThereNextExam: false,
+    isThereNextExam: null,
     isExaminer: false,
     isRegisteredStudent: null, // Not used rn, maybe for displaying icons ?
     cardNumber: null,
@@ -44,7 +44,7 @@ export const actions = {
     }, 4000);
   },
 
-  //Gets called when there is no exam atm and card gets scanned
+/*  //Gets called when there is no exam atm and card gets scanned
   async checkCardForNextExam(context, cardnumber) {
     try {
       const response = (
@@ -54,18 +54,11 @@ export const actions = {
           },
         })
       ).data;
-      context.commit("setCardNumber", cardnumber)
-      if (response.length > 0) {
-        context.commit("setIsThereNextExam", true)
-        const e = response[0]
-        context.commit("exam/setExamName", e.names, {root: true})
-        context.commit("exam/setStartTime", e.startTime, {root: true})
-        context.commit("exam/setStopTime", e.stopTime, {root: true})
-        context.commit("exam/setExamRooms", e.roomNames, {root: true})
-      } else {
-        context.commit("setIsThereNextExam", false)
-      }
-      context.dispatch("resetStates")
+      context.dispatch("processCardForNextExam", response)
+        .then(() => {
+          context.dispatch("resetStates")
+        }
+      )
     } catch(err) {
       if (err.response) {
         console.error(err.response)
@@ -76,6 +69,50 @@ export const actions = {
         console.error(err.message);
       }
     }
+  },*/
+
+  checkCardForNextExam(context, cardnumber) {
+    this.$axios.get('', {
+      params: {
+        cardnumber:  parseInt(cardnumber, 16)
+      },
+    })
+      .then((response)  => {
+        context.dispatch("processCardForNextExam", response.data)
+          .then(() => {
+              context.dispatch("resetStates")
+            }
+          )
+      })
+      .catch(err => {
+        if(err.response) {
+          console.error(err.response)
+        }
+        else if(err.request) {
+          context.commit("setErrorMessage", [true, 0], {root: true})
+          console.error("Can't get a response, maybe the connection to the API failed!")
+        }
+        else {
+          console.error(err.message);
+        }
+      })
+  },
+
+  processCardForNextExam(context, data) {
+    console.log(data)
+    return new Promise( resolve => {
+      if (data.length > 0) {
+        context.commit("setIsThereNextExam", true)
+        const e = data[0]
+        context.commit("exam/setExamName", e.names, {root: true})
+        context.commit("exam/setStartTime", e.startTime, {root: true})
+        context.commit("exam/setStopTime", e.stopTime, {root: true})
+        context.commit("exam/setExamRooms", e.roomNames, {root: true})
+      } else {
+        context.commit("setIsThereNextExam", false)
+      }
+      resolve()
+    })
   },
 
   checkCardForThisExam(context, [cardnumber, startModeExamRegister]) {
@@ -105,8 +142,7 @@ export const actions = {
         const resURL = response.headers.location
         this.$axios.get(resURL, {})
           .then((response) => {
-            context.dispatch("setCardReturnData", response.data)
-
+            context.dispatch("processCardForThisExam", response.data)
               .then(() => {
                 context.dispatch("resetStates")
                 context.dispatch("exam/updateNumberOfStudentsInRoom", '',{root: true})
@@ -128,7 +164,7 @@ export const actions = {
       })
   },
 
-  setCardReturnData(context, data) {
+  processCardForThisExam(context, data) {
     return new Promise( resolve => {
       if(data.returnText) {
         context.commit("setReturnText", data.returnText)
@@ -144,6 +180,6 @@ export const actions = {
       }
       resolve()
     })
-  }
+  },
 
 }

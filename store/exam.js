@@ -127,6 +127,7 @@ export const actions = {
 
   //Checks how many students are in the room
   async updateNumberOfStudentsInRoom(context) {
+    console.log("ok")
     try {
       const response = (
         await this.$axios.get(`${context.state.examID}/examrooms`, {

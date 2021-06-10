@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import {mapActions, mapMutations, mapState} from "vuex";
+import {mapActions, mapState} from "vuex";
 
 export default {
   name: "StudentsInRoom",
@@ -31,9 +31,9 @@ export default {
     ...mapActions([
       "exam/updateNumberOfStudentsInRoom",
     ]),
+  },
   created() {
     this['exam/updateNumberOfStudentsInRoom']()
-    }
   }
 }
 </script>

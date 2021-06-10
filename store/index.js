@@ -34,15 +34,4 @@ export const mutations = {
   setCardIsLoading(state, cardIsLoading) {
     state.cardIsLoading = cardIsLoading;
   },
-
-}
-
-export const getters = {
-  getCardNumber(state) {
-    return state.cardNumber
-  }
-}
-
-export const actions = {
-
 }
