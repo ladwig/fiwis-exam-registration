@@ -50,7 +50,6 @@ export const mutations = {
   setExamRooms(state, examRooms) {
     state.examRooms = examRooms;
   },
-
 }
 
 export const getters = {
@@ -64,6 +63,7 @@ export const getters = {
     })
     return time
   },
+
   getStopTimeWithoutDate(state) {
     const time = new Date(state.stopTime)
     return time.toLocaleTimeString('de-DE', {
@@ -71,6 +71,7 @@ export const getters = {
       minute: 'numeric',
     })
   },
+
   getStartTimeWithoutDate(state) {
     const time = new Date(state.startTime)
     return time.toLocaleTimeString('de-DE', {

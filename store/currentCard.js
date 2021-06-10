@@ -43,6 +43,16 @@ export const actions = {
     }, 4000);
   },
 
+  //Maybe to run different LED colors
+  returnDecision(context, decision) {
+    if(decision) {
+      console.log("positive")
+    }
+    else {
+      console.log("negative")
+    }
+  },
+
   //Gets called when there is no exam atm and card gets scanned
   checkCardForNextExam(context, cardnumber) {
     this.$axios.get('', {
@@ -143,6 +153,13 @@ export const actions = {
         context.commit("setReturnText", data.returnText)
       } else {
         context.commit("setReturnText", "Kein returnText verfübar")
+      }
+      console.log(data.returnCode)
+      if([300, 500, 600].indexOf(data.returnCode) >= 0) {
+        context.dispatch("returnDecision", true)
+      }
+      else {
+        context.dispatch("returnDecision", false)
       }
 
       if (data.returnCode === 300) {
