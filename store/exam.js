@@ -83,18 +83,31 @@ export const getters = {
 export const actions = {
 
   // Get's called after room selection and at set interval. Sets all relevant exam information.
-  async checkRoomForExam(context) {
-    try {
-    const exam = (
-      await this.$axios.get('', {
-        params: {
-          room: context.rootState.roomName
+  checkRoomForExam(context) {
+    this.$axios.get('', {
+      params: {
+        room: context.rootState.roomName
+      }
+    })
+      .then((response) => {
+        context.dispatch("processRoomForExam", response.data)
+      })
+      .catch(err => {
+        if (err.response) {
+          context.commit("setErrorMessage", [true, 1, err.response], {root: true})
+          console.error(err.response)
+        } else if (err.request) {
+          context.commit("setErrorMessage", [true, 0], {root: true})
+          console.log(context.rootState.errorMessage)
+        } else {
+          console.error(err.message);
         }
       })
-    ).data;
+  },
 
-    if (exam.length > 0) {
-      const e = exam[0]
+  processRoomForExam(context, data) {
+    if (data.length > 0) {
+      const e = data[0]
       context.commit("setExamID", e.id)
       context.commit("setExamName", e.names)
       context.commit("setStartTime", e.startTime)
@@ -108,26 +121,14 @@ export const actions = {
         context.commit("setModeExamInProgress", true, {root: true})
       }
       else
-       {
+      {
         context.commit("setModeExamInProgress", false, {root: true})
-      }
-    }
-    } catch(err) {
-      if (err.response) {
-        context.commit("setErrorMessage", [true, 1, err.response], {root: true})
-        console.error(err.response)
-      } else if (err.request) {
-        context.commit("setErrorMessage", [true, 0], {root: true})
-        console.log(context.rootState.errorMessage)
-      } else {
-        console.error(err.message);
       }
     }
   },
 
   //Checks how many students are in the room
   async updateNumberOfStudentsInRoom(context) {
-    console.log("ok")
     try {
       const response = (
         await this.$axios.get(`${context.state.examID}/examrooms`, {
@@ -148,74 +149,6 @@ export const actions = {
       }
     }
   },
-
-  checkCardForThisExam(context, [cardnumber, startModeExamRegister]) {
-    let body = null
-
-    //To check if card is admin/examiner
-    if(startModeExamRegister) {
-      body = {
-        idcardnumber:  parseInt(cardnumber, 16),
-        room: context.rootState.roomName,
-        parameter: 1,
-      }
-    }
-    else {
-      body = {
-        idcardnumber:  parseInt(cardnumber, 16),
-        room: context.rootState.roomName,
-      }
-    }
-
-    this.$axios.post(`${context.state.examID}/scannedcards`, body, {
-      headers: {
-        // "Content-Type": "application/vnd.fhws-scannedcard.scannedcardview+json"
-      }
-    })
-      .then((response) => {
-        const resURL = response.headers.location
-        this.$axios.get(resURL, {})
-          .then((response) => {
-            context.dispatch("setCardReturnData", response.data)
-
-             .then(() => {
-               context.dispatch("checkNumberOfStudentsInRoom")
-               context.dispatch("resetStates")
-             }
-            )
-          })
-      })
-      .catch(err => {
-        if(err.response) {
-          console.error(err.response)
-        }
-        else if(err.request) {
-          context.commit("setErrorMessage", [true, 0], {root: true})
-          console.error("Can't get a response, maybe the connection to the API failed!")
-        }
-        else {
-          console.error(err.message);
-        }
-      })
-  },
-
-  setCardReturnData(context, data) {
-    return new Promise( resolve => {
-      if(data.returnText) {
-        context.commit("setReturnText", data.returnText, {root: true})
-      } else {
-        context.commit("setReturnText", "Kein returnText verfübar", {root: true})
-      }
-
-      if (data.returnCode === 300) {
-        context.commit("setIsExaminer", true, {root: true})
-      }
-      else if (data.returnCode === 500) {
-        context.commit("setIsRegisteredStudent", true, {root: true})
-      }
-      resolve()
-    })
-  }
 
   //Check or register a studentcard
 /*  cardHandler(context, [cardnumber, startModeExamRegister]) {

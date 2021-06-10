@@ -15,7 +15,6 @@ export const mutations = {
 
   setIsExaminer(state, isExaminer) {
     state.isExaminer = isExaminer
-    console.log("works")
   },
 
   setIsRegisteredStudent(state, isRegisteredStudent) {
@@ -44,33 +43,7 @@ export const actions = {
     }, 4000);
   },
 
-/*  //Gets called when there is no exam atm and card gets scanned
-  async checkCardForNextExam(context, cardnumber) {
-    try {
-      const response = (
-        await this.$axios.get('', {
-          params: {
-            cardnumber:  parseInt(cardnumber, 16)
-          },
-        })
-      ).data;
-      context.dispatch("processCardForNextExam", response)
-        .then(() => {
-          context.dispatch("resetStates")
-        }
-      )
-    } catch(err) {
-      if (err.response) {
-        console.error(err.response)
-      } else if (err.request) {
-        context.commit("setErrorMessage", [true, 0], {root: true})
-        console.log(context.rootState.errorMessage)
-      } else {
-        console.error(err.message);
-      }
-    }
-  },*/
-
+  //Gets called when there is no exam atm and card gets scanned
   checkCardForNextExam(context, cardnumber) {
     this.$axios.get('', {
       params: {
@@ -118,7 +91,7 @@ export const actions = {
   checkCardForThisExam(context, [cardnumber, startModeExamRegister]) {
     let body = null
 
-    //To check if card is admin/examiner
+    //To check if card is admin/examiner and if ModeExamRegister should start
     if(startModeExamRegister) {
       body = {
         idcardnumber:  parseInt(cardnumber, 16),
