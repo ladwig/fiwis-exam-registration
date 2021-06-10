@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import {mapState} from "vuex";
+import {mapActions, mapMutations, mapState} from "vuex";
 
 export default {
   name: "StudentsInRoom",
@@ -27,8 +27,13 @@ export default {
       numberOfStudentsPresentInRoom: state => state.exam.numberOfStudentsPresentInRoom
     })
   },
+  methods: {
+    ...mapActions([
+      "exam/updateNumberOfStudentsInRoom",
+    ]),
   created() {
-    this.$store.dispatch("exam/updateNumberOfStudentsInRoom")
+    this['exam/updateNumberOfStudentsInRoom']()
+    }
   }
 }
 </script>

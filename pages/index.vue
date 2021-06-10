@@ -68,7 +68,7 @@ export default {
       "modeExamRegister",
     ]),
     ...mapState({
-      isExaminer: state => state.currentCard.isExaminer
+      isExaminer: state => state.currentCard.isExaminer,
     }),
   },
 

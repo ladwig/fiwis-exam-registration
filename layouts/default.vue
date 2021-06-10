@@ -14,7 +14,6 @@
       ></v-img> -->
       <v-toolbar-title class="font-weight-bold display-1 pl-10 darker--text">{{ roomName }}</v-toolbar-title>
       <v-icon v-if="$nuxt.isOffline" color="primary">mdi-wifi-strength-alert-outline</v-icon>
-      <v-btn @click="onlyForTesting()">Test</v-btn>
       <v-spacer></v-spacer>
       <display-clock></display-clock>
     </v-app-bar>
