@@ -1,19 +1,14 @@
 export const state = () => ({
     roomName: null,
-    modeJustCheck: true, // Keine Prüfung
-    modeExamInProgress: null, // Prüfungszeit + 1h vorher +1h nachher
-    modeExamRegister: false,
-   // isThereNextExam: null,
- //   isExaminer: false, // Prüfer, der Registrierung starten kann
-   // isRegisteredStudent: null,
-  //  cardNumber: null,
+    modeJustCheck: true, // No exam found
+    modeExamInProgress: null, // Exam time + X time before and after -> X = exam/timeBeforeAfterExam
+    modeExamRegister: false, // Registermode active
     errorMessage: {
       error: false,
       msgNmbr: null,
       response: null
     },
-   // returnText: null,
-    cardIsLoading: false
+    cardIsLoading: false // True when API calls are made and returns displayed
   }
 )
 

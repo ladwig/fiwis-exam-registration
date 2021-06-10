@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import {mapMutations, mapState} from "vuex";
+import { mapState } from "vuex";
 
 export default {
   computed: {
@@ -34,9 +34,6 @@ export default {
     ])
   },
   methods: {
-    ...mapMutations([
-      "setIsExaminer"
-    ]),
     axiosTestFunction() {
       this.$axios.get('', {
         params: {
@@ -52,11 +49,7 @@ export default {
         .then(function () {
           // always executed
         });
-
     },
-    onlyForTesting() {
-      this.setIsExaminer(true)
-    }
   },
   created() {
 

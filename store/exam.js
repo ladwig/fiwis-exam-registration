@@ -82,16 +82,6 @@ export const getters = {
 
 export const actions = {
 
-  resetStates(context) {
-    setTimeout(() => {
-      context.commit("setCardNumber", null , {root: true})
-      context.commit("setCardIsLoading", false , {root: true})
-      context.commit("setReturnText", null , {root: true})
-      context.commit("setIsRegisteredStudent", false , {root: true})
-      context.commit("setIsThereNextExam", null , {root: true})
-    }, 4000);
-  },
-
   // Get's called after room selection and at set interval. Sets all relevant exam information.
   async checkRoomForExam(context) {
     try {
@@ -135,42 +125,8 @@ export const actions = {
     }
   },
 
-  // Gets called when there is no exam at the moment.
-  async checkCardForNextExam(context, cardnumber) {
-    try {
-      const response = (
-        await this.$axios.get('', {
-          params: {
-            cardnumber:  parseInt(cardnumber, 16)
-          },
-        })
-      ).data;
-      context.commit("setCardNumber", cardnumber, {root: true})
-      if (response.length > 0) {
-        context.commit("setIsThereNextExam", true, {root: true})
-        const e = response[0]
-        context.commit("setExamName", e.names)
-        context.commit("setStartTime", e.startTime)
-        context.commit("setStopTime", e.stopTime)
-        context.commit("setExamRooms", e.roomNames)
-      } else {
-        context.commit("setIsThereNextExam", false, {root: true})
-      }
-      context.dispatch("resetStates")
-    } catch(err) {
-      if (err.response) {
-        console.error(err.response)
-      } else if (err.request) {
-        context.commit("setErrorMessage", [true, 0], {root: true})
-        console.log(context.rootState.errorMessage)
-      } else {
-        console.error(err.message);
-      }
-    }
-  },
-
   //Checks how many students are in the room
-  async checkNumberOfStudentsInRoom(context) {
+  async updateNumberOfStudentsInRoom(context) {
     try {
       const response = (
         await this.$axios.get(`${context.state.examID}/examrooms`, {

@@ -4,7 +4,6 @@
       v-model="dialog"
       persistent
       max-width="400"
-
     >
       <v-card>
         <v-card-title class="headline">
@@ -52,32 +51,32 @@ export default {
     }
   },
   computed: {
-    ...mapState([
-      "cardNumber",
-      "modeExamRegister"
-    ])
+    ...mapState({
+        cardNumber: state => state.currentCard.cardNumber,
+    }),
+  },
+  props: {
+    modeExamRegister: Boolean,
   },
   methods: {
     ...mapMutations([
-        "setIsExaminer",
+        "currentCard/setIsExaminer",
         "setModeExamRegister",
-        "setRoomName",
       ]
     ),
     ...mapActions([
-      "exam/checkRegistForExam",
-      "resetAllValues"
+      "currentCard/checkCardForThisExam",
     ]),
     //Always close the modal and removes examiner data. Case 1 -> Starts exam register mode
     closePopup(action) {
       if (action == 1) {
-        this['exam/checkRegistForExam']([this.cardNumber, true])
+        this['currentCard/checkCardForThisExam']([this.cardNumber,true])
         this.setModeExamRegister(true)
       }
       else if(action == 2) {
         window.location.reload(true)
       }
-      this.setIsExaminer(false)
+      this["currentCard/setIsExaminer"](false)
       this.dialog = false
 
     }

@@ -1,5 +1,4 @@
 {
-  "daniel": "Uhr",
   "currentExamInfo": {
     "isRegisteredStudentHeadline": "Sie sind angemeldet!",
     "isRegisteredStudentMore": "Es liegt eine Anmeldung für diese Prüfung vor. Bestätigen Sie vor Prüfungsbeginn Ihre Anwesenheit.",
@@ -8,7 +7,7 @@
     "registerForExamNowHeadline": "Jetzt zur Prüfung anmelden",
     "registerForExamNowMore": "Beim Scannen Ihres Ausweises bestätigen Sie die Teilnahme an der Prüfung!",
     "checkStatusHeadline": "Anmeldung prüfen",
-    "checkStatusMore": "Ausweis scannen, um zu prüfen, ob Sie angemeldet sind."
+    "checkStatusMore": "Ausweis scannen, um zu prüfen ob Sie angemeldet sind."
   },
   "currentExamName": {
     "noExamInRoom": "Derzeit findet keine Prüfung in diesem Raum statt"

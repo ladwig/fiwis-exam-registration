@@ -31,7 +31,6 @@ export default {
   methods: {
     ...mapMutations([
         "currentCard/setCardNumber",
-        "setReturnText",
         "setCardIsLoading"
       ]
     ),

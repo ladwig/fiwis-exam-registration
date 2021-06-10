@@ -4,7 +4,7 @@
     <set-exam-room v-if="roomName===null"></set-exam-room>
 
     <!-- Popup to ask for exam start and settings -->
-    <settings-alert v-if="isExaminer"></settings-alert>
+    <settings-alert v-if="this.isExaminer"></settings-alert>
 
     <!-- Popup when there is an error -->
     <error-message-alert v-if="errorMessage.error"></error-message-alert>
@@ -27,7 +27,7 @@
       </v-col>
       <v-col cols="9">
         <next-exam-info v-if="!modeExamInProgress" class="mt-2 ml-10"></next-exam-info>
-        <current-exam-info v-if="modeExamInProgress" class="mt-2 ml-10"></current-exam-info>
+        <current-exam-info v-if="modeExamInProgress" :registModeActive="modeExamRegister" class="mt-2 ml-10"></current-exam-info>
       </v-col>
     </v-row>
   </v-container>
@@ -63,11 +63,15 @@ export default {
     ...mapState([
       "roomName",
       "modeExamInProgress",
-      "isExaminer",
       "modeExamRegister",
       "errorMessage",
-    ])
+      "modeExamRegister",
+    ]),
+    ...mapState({
+      isExaminer: state => state.currentCard.isExaminer
+    }),
   },
+
 }
 
 </script>

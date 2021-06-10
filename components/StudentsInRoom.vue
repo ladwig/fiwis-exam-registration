@@ -28,7 +28,7 @@ export default {
     })
   },
   created() {
-    this.$store.dispatch("exam/checkNumberOfStudentsInRoom")
+    this.$store.dispatch("exam/updateNumberOfStudentsInRoom")
   }
 }
 </script>

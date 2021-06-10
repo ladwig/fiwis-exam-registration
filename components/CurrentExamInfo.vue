@@ -1,7 +1,7 @@
 <template>
 
     <scan-information-panel
-      v-if="modeExamRegister"
+      v-if="registModeActive"
       :headline="$t('currentExamInfo.registerForExamNowHeadline')"
       icon="mdi-information-outline"
       :return-text="this.returnText"
@@ -25,17 +25,17 @@ import ScanInformationPanel from "./ScanInformationPanel";
 export default {
   name: "CurrentExamInfo",
   components: {ScanInformationPanel},
+  props: {
+    registModeActive: Boolean,
+  },
   computed: {
     ...mapState({
-      examName: state => state.exam.examName,
       returnText: state => state.currentCard.returnText
     }),
     ...mapState([
       "modeExamRegister",
     ]),
   },
-
-  methods: {},
 }
 </script>
 

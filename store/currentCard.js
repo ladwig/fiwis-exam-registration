@@ -15,6 +15,7 @@ export const mutations = {
 
   setIsExaminer(state, isExaminer) {
     state.isExaminer = isExaminer
+    console.log("works")
   },
 
   setIsRegisteredStudent(state, isRegisteredStudent) {
@@ -30,12 +31,9 @@ export const mutations = {
   },
 }
 
-export const getters = {
-
-}
-
 export const actions = {
 
+  //Resets all states which connected to specific user/card12
   resetStates(context) {
     setTimeout(() => {
       context.commit("setCardNumber", null)
@@ -46,8 +44,7 @@ export const actions = {
     }, 4000);
   },
 
-
-// Gets called when there is no exam atm and card gets scanned
+  //Gets called when there is no exam atm and card gets scanned
   async checkCardForNextExam(context, cardnumber) {
     try {
       const response = (
@@ -111,8 +108,8 @@ export const actions = {
             context.dispatch("setCardReturnData", response.data)
 
               .then(() => {
-                //  context.dispatch("checkNumberOfStudentsInRoom") //FIXING
-                  context.dispatch("resetStates")
+                context.dispatch("resetStates")
+                context.dispatch("exam/updateNumberOfStudentsInRoom", '',{root: true})
                 }
               )
           })
