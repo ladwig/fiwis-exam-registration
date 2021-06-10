@@ -3,7 +3,7 @@
         indeterminate
         color="primary"
         height="15"
-        v-if="cardIsLoading"
+        v-if="loading"
       ></v-progress-linear>
 
       <v-progress-linear
@@ -15,33 +15,12 @@
 </template>
 
 <script>
-import {mapActions, mapMutations, mapState} from "vuex";
+import {mapState} from "vuex";
 
 export default {
   name: "ProgressBar",
-  data () {
-    return {
-    }
-  },
-  computed: {
-    ...mapState([
-      "cardIsLoading"
-    ])
-  },
-  methods: {
-    ...mapMutations([
-
-      ]
-    ),
-    ...mapActions([
-
-      ]
-    ),
+  props: {
+    loading: Boolean,
   }
-
 }
 </script>
-
-<style scoped>
-
-</style>

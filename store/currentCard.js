@@ -31,7 +31,6 @@ export const mutations = {
 }
 
 export const actions = {
-
   //Resets all states which connected to specific user/card12
   resetStates(context) {
     setTimeout(() => {

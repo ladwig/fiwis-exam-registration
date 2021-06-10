@@ -1,10 +1,11 @@
 <template>
   <v-container fluid pa-0 class="d-flex flex-column flex-grow-1 fill-parent-height pa-0">
+
     <!-- Select a room, first page -->
     <set-exam-room v-if="roomName===null"></set-exam-room>
 
     <!-- Popup to ask for exam start and settings -->
-    <settings-alert v-if="this.isExaminer"></settings-alert>
+    <settings-alert v-if="this.isExaminer" :mode-exam-register="modeExamRegister"></settings-alert>
 
     <!-- Popup when there is an error -->
     <error-message-alert v-if="errorMessage.error"></error-message-alert>
@@ -13,20 +14,33 @@
 
       <v-col cols="11" class="grid-item-mid fill-parent-height pa-0 pl-10 pt-15">
 
+        <!-- Name of exam or no exam text -->
         <current-exam-name></current-exam-name>
+
+        <!-- Time of exam and warning when exam in progress -->
         <current-exam-time v-if="modeExamInProgress" class="mt-5"></current-exam-time>
-        <students-in-room v-if="modeExamInProgress" class="mt-5"></students-in-room>
+
+        <!-- Current number of studends in room and room full warning -->
+        <students-in-room v-if="modeExamRegister" class="mt-5"></students-in-room>
       </v-col>
     </v-row>
     <v-row v-if="roomName!=null" no-gutters class="bottom-row flex-grow-0 flex-shrink-0 grid-item-bottom">
       <v-col cols="12">
-        <progress-bar></progress-bar>
+
+        <!-- Shows loading status when card is scanned -->
+        <progress-bar :loading="cardIsLoading"></progress-bar>
       </v-col>
       <v-col cols="3" class="pl-10">
+
+        <!-- Manages card scans and shows card image -->
         <card-reader></card-reader>
       </v-col>
       <v-col cols="9">
+
+        <!-- Shows next exam for scanned card -->
         <next-exam-info v-if="!modeExamInProgress" class="mt-2 ml-10"></next-exam-info>
+
+        <!-- Shows return text for scanned card -->
         <current-exam-info v-if="modeExamInProgress" :registModeActive="modeExamRegister" class="mt-2 ml-10"></current-exam-info>
       </v-col>
     </v-row>
@@ -66,6 +80,7 @@ export default {
       "modeExamRegister",
       "errorMessage",
       "modeExamRegister",
+      "cardIsLoading",
     ]),
     ...mapState({
       isExaminer: state => state.currentCard.isExaminer,

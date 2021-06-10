@@ -24,7 +24,7 @@ export default {
   },
   created() {
 
-    // nach 1 Min. neue Prüfung suchen
+    // Scans every minute for exam in room
     this['exam/checkRoomForExam']()
     window.setInterval(() => {
       this['exam/checkRoomForExam']()

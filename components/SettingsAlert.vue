@@ -33,6 +33,12 @@
           >
             {{ $t('settingsAlert.start') }}
           </v-btn>
+          <v-btn v-if="modeExamRegister"
+                 color="primary"
+                 @click="closePopup(3)"
+          >
+            {{ $t('settingsAlert.stop') }}
+          </v-btn>
 
         </v-card-actions>
       </v-card>
@@ -67,6 +73,7 @@ export default {
     ...mapActions([
       "currentCard/checkCardForThisExam",
     ]),
+
     //Always close the modal and removes examiner data. Case 1 -> Starts exam register mode
     closePopup(action) {
       if (action == 1) {
@@ -75,6 +82,11 @@ export default {
       }
       else if(action == 2) {
         window.location.reload(true)
+      }
+
+      //Right now only frontend action, status in backend/FIWIS stays at register mode
+      else if(action == 3) {
+        this.setModeExamRegister(false)
       }
       this["currentCard/setIsExaminer"](false)
       this.dialog = false

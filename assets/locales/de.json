@@ -26,7 +26,8 @@
     "settingsAlertMore": "Starten Sie die Prüfungsregistierung, sodass Studierende ihre Anwesenheit ab sofort bestätigen können oder legen Sie einen neuen Raum fest.",
     "restart": "App neu starten",
     "cancel": "Abbrechen",
-    "start": "Start"
+    "start": "Start",
+    "stop": "Stop"
   },
   "studentsInRoom": {
     "noSeats": "Keine Plätze mehr frei, bitte nutzen Sie alternativ:",

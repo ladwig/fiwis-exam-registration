@@ -1,4 +1,5 @@
 <template>
+  <!-- "generic" component, used for CurrentExamInfo and NextExamInfo -->
   <div>
     <h2 class="display-3 darker--text font-weight-regular"> {{ headline }} </h2>
     <div class="mt-2">
