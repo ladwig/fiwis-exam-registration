@@ -1,3 +1,5 @@
+import { changeColor } from "../ledAPI";
+
 export const state = () => ({
     isThereNextExam: null,
     isExaminer: false,
@@ -26,8 +28,12 @@ export const mutations = {
   },
 
   setReturnText(state, returnText) {
-    state.returnText = returnText;
+    state.returnText = returnText
   },
+
+  setLEDColor(state, LEDColor) {
+    state.LEDColor = LEDColor
+  }
 }
 
 export const actions = {
@@ -39,24 +45,26 @@ export const actions = {
       context.commit("setReturnText")
       context.commit("setIsRegisteredStudent")
       context.commit("setIsThereNextExam")
+      changeColor("#ffffff")
     }, 4000);
   },
 
   //Maybe to run different LED colors
   returnDecision(context, decision) {
     if(decision) {
-      console.log("positive")
+      changeColor("#00ff00")
     }
     else {
-      console.log("negative")
+      changeColor("#ff0000")
     }
   },
 
   //Gets called when there is no exam atm and card gets scanned
   checkCardForNextExam(context, cardnumber) {
+    console.log(cardnumber)
     this.$axios.get('', {
       params: {
-        cardnumber:  parseInt(cardnumber, 16)
+        cardnumber: parseInt(cardnumber, 16) //36104139103212548
       },
     })
       .then((response)  => {
@@ -126,8 +134,8 @@ export const actions = {
           .then((response) => {
             context.dispatch("processCardForThisExam", response.data)
               .then(() => {
-                context.dispatch("resetStates")
-                context.dispatch("exam/updateNumberOfStudentsInRoom", '',{root: true})
+                  context.dispatch("resetStates")
+                  context.dispatch("exam/updateNumberOfStudentsInRoom", '',{root: true})
                 }
               )
           })

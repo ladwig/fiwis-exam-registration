@@ -47,12 +47,14 @@ export default {
   },
   methods: {
     ...mapMutations([
-      "setErrorMessage"
+      "setErrorMessage",
+      "setCardIsLoading"
       ]
     ),
     closePopup() {
       this.dialog = false
       this.setErrorMessage([false, null, null])
+      this.setCardIsLoading(false)
     }
   }
 }

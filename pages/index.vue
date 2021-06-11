@@ -62,6 +62,7 @@ import CardReader from "../components/CardReader";
 import SettingsAlert from "../components/SettingsAlert";
 import ErrorMessageAlert from "../components/ErrorMessageAlert";
 import ProgressBar from "../components/ProgressBar";
+import { changeColor } from "../ledAPI";
 
 export default {
   components: {
@@ -86,6 +87,9 @@ export default {
       isExaminer: state => state.currentCard.isExaminer,
     }),
   },
+  created() {
+    changeColor("#ffffff")
+  }
 
 }
 

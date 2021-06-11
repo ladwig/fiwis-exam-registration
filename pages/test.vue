@@ -1,35 +1,6 @@
 <template>
-  <v-container fluid pa-0 class="d-flex flex-column flex-grow-1 fill-parent-height pa-0">
-    <!-- Select a room, first page -->
-    <set-exam-room v-if="roomName===null"></set-exam-room>
-
-    <!-- Popup to ask for exam start and settings -->
-    <settings-alert v-if="isExaminer"></settings-alert>
-
-    <!-- Popup when there is an error -->
-    <error-message-alert v-if="errorMessage.error"></error-message-alert>
-
-    <v-row v-if="roomName!=null" no-gutters class="top-row flex-grow-1 flex-shrink-1">
-
-      <v-col cols="11" class="grid-item-mid fill-parent-height pa-0 pl-10 pt-15">
-
-        <current-exam-name></current-exam-name>
-        <current-exam-time v-if="modeExamInProgress" class="mt-5"></current-exam-time>
-        <students-in-room v-if="modeExamInProgress" class="mt-5"></students-in-room>
-      </v-col>
-    </v-row>
-    <v-row v-if="roomName!=null" no-gutters class="bottom-row flex-grow-0 flex-shrink-0 grid-item-bottom">
-      <v-col cols="12">
-        <progress-bar></progress-bar>
-      </v-col>
-      <v-col cols="3" class="pl-10">
-        <card-reader></card-reader>
-      </v-col>
-      <v-col cols="9">
-        <next-exam-info v-if="!modeExamInProgress" class="mt-2 ml-10"></next-exam-info>
-        <current-exam-info v-if="modeExamInProgress" class="mt-2 ml-10"></current-exam-info>
-      </v-col>
-    </v-row>
+  <v-container>
+ asd
   </v-container>
 
 </template>
@@ -61,35 +32,58 @@ export default {
   },
   computed: {
     ...mapState([
-      "roomName",
-      "modeExamInProgress",
-      "isExaminer",
-      "modeExamRegister",
-      "errorMessage",
+
     ])
   },
-}
+mounted() {
+    //this.test()
+},
+/*  methods: {
 
+    colorTest() {
+      const colors = ["#00ff00","#0000ff","#ff000f", "#ff0fff", "#ffff0f","#0fffff"]
+      const color = colors[Math.floor(Math.random() * colors.length)]
+      var access = new function() {
+        this.ip = 'localhost';
+        //this.ip = '192.168.1.162';
+        this.api_base = 'http://' + this.ip + ':8080/v2';
+
+        this.token = '';
+      }
+        changeLedColor(color)
+        function changeLedColor(hex) {
+          var xhr = new XMLHttpRequest(),
+            data = {
+              id: 0,
+              name: 'frame',
+              brightness: 1.0,
+              color: hex
+            },
+            data_string = '';
+          for (var key in data) {
+            data_string += '&'+key+(data[key] ?'='+data[key] :'');
+          }
+          xhr.open('POST', access.api_base+'/hardware/light?access_token='+access.token, true);
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+          xhr.onreadystatechange = function() {
+            if (this.readyState == 4) {
+              if (this.status != 200) {
+                alert('some errors color');
+              }
+            }
+          }
+          xhr.send(data_string);
+        }
+    },
+
+
+  }*/
+}
 </script>
 <style>
-.grid-item-mid {
-  color: var(--v-light-base);
+input {
+  border: 1px solid black;
 }
-
-.grid-item-bottom {
-  background-color: var(--v-secondary-base);
-
-}
-
-.fill-parent-height {
-  height: 100%;
-}
-
-.top-row {
-  min-height: 0;
-  background-color: var(--v-primary-lighten2);
-}
-
 
 
 </style>
