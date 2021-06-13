@@ -4,9 +4,7 @@ export function changeColor(hex) {
     base: 'http://localhost:8080/v2',
     token: ''
   }
-
   const xhr = new XMLHttpRequest()
-console.log(xhr)
   const data = {
     id: 0,
     name: 'frame',
@@ -22,7 +20,7 @@ console.log(xhr)
   xhr.onreadystatechange = function() {
     if (this.readyState == 4) {
       if (this.status != 200) {
-        alert('some errors color');
+        alert(this.status);
       }
     }
   }
