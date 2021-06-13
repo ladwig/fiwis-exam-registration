@@ -1,8 +1,8 @@
 <template>
   <v-container fluid class="clock-container">
-    <div class="clock body-1">
-      {{ date }} <br>
-      {{ time }} {{ $t('displayClock.suffix') }}
+    <div class="clock">
+      <div class="title darker--text">{{ time }} {{ $t('displayClock.suffix')}} <br></div>
+      {{ date }}
     </div>
 
   </v-container>
@@ -35,7 +35,7 @@ export default {
       }).format()
 
       this.date = Intl.DateTimeFormat('de-DE', {
-        year: 'numeric',
+        weekday: 'long',
         month: 'short',
         day: 'numeric'
       }).format()
@@ -49,11 +49,10 @@ export default {
 
 <style scoped>
 .clock-container {
-width: 15%;
+  width: 180px;
 }
 
 .clock {
-  text-align: center;
-  border: 2px solid var(--v-primary-base);
+text-align: right;
 }
 </style>

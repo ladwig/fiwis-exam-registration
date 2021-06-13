@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="center">
+
     <v-dialog
       v-model="dialog"
       persistent
@@ -25,7 +25,7 @@
             text
             @click="closePopup(2)"
           >
-            Raum festlegen
+            {{ $t('settingsAlert.restart') }}
           </v-btn>
           <v-btn v-if="!modeExamRegister"
             color="primary"
@@ -33,11 +33,17 @@
           >
             {{ $t('settingsAlert.start') }}
           </v-btn>
+          <v-btn v-if="modeExamRegister"
+                 color="primary"
+                 @click="closePopup(3)"
+          >
+            {{ $t('settingsAlert.stop') }}
+          </v-btn>
 
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </v-row>
+
 </template>
 
 <script>
@@ -51,31 +57,38 @@ export default {
     }
   },
   computed: {
-    ...mapState([
-      "cardNumber",
-      "modeExamRegister"
-    ])
+    ...mapState({
+        cardNumber: state => state.currentCard.cardNumber,
+    }),
+  },
+  props: {
+    modeExamRegister: Boolean,
   },
   methods: {
     ...mapMutations([
-        "setIsExaminer",
+        "currentCard/setIsExaminer",
         "setModeExamRegister",
-        "setRoomName",
       ]
     ),
     ...mapActions([
-      "exam/checkRegistForExam",
+      "currentCard/checkCardForThisExam",
     ]),
+
     //Always close the modal and removes examiner data. Case 1 -> Starts exam register mode
     closePopup(action) {
       if (action == 1) {
-        this['exam/checkRegistForExam']([this.cardNumber, true])
+        this['currentCard/checkCardForThisExam']([this.cardNumber,true])
         this.setModeExamRegister(true)
       }
       else if(action == 2) {
-        this.setRoomName(null)
+        window.location.reload(true)
       }
-      this.setIsExaminer(false)
+
+      //Right now only frontend action, status in backend/FIWIS stays at register mode
+      else if(action == 3) {
+        this.setModeExamRegister(false)
+      }
+      this["currentCard/setIsExaminer"](false)
       this.dialog = false
 
     }

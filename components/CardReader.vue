@@ -1,23 +1,12 @@
 <template>
   <div>
-    <div class="scan-container" v-if="this.cardIsLoading">
-      <v-progress-circular
-        :size="90"
-        :width="7"
-        indeterminate
-        color="primary"
-      ></v-progress-circular>
-    </div>
-    <div v-else>
       <v-img
         src="../read_card.png"
-        max-height="220"
-        max-width="220"
-      ></v-img>
-    </div>
-    <div>
+        max-height="200"
+        max-width="200"
+        class="mt-2"
+      > </v-img>
       <input v-on:keydown="typeNFC($event)" id="NFC_CARDNUMBER" type="text" autocomplete="off"/>
-    </div>
   </div>
 </template>
 
@@ -33,26 +22,44 @@ export default {
   },
   computed: {
     ...mapState([
-      "cardNumber",
+      "currentCard/cardNumber",
       "modeExamInProgress",
       "modeExamRegister",
-      "returnText"
+      "currentCard/returnText"
     ])
   },
   methods: {
     ...mapMutations([
-        "setCardNumber",
-        "setIsRegisteredStudent",
-        "setReturnText"
+        "currentCard/setCardNumber",
+        "setCardIsLoading"
       ]
     ),
     ...mapActions([
-        'exam/checkCardForNextExam',
-        'exam/cardHandler',
+        'currentCard/checkCardForNextExam',
+        'currentCard/checkCardForThisExam',
       ]
     ),
-    setFocus() {
-      document.getElementById("NFC_CARDNUMBER").focus();
+    focusCardInput() {
+      const cardnumber = document.getElementById("NFC_CARDNUMBER")
+
+      setTimeout(() => {
+        cardnumber.readOnly = true
+        cardnumber.focus();
+      },);
+
+      setTimeout(() => {
+        cardnumber.readOnly = false;
+      },1)
+
+      cardnumber.onblur = function (event) {
+        setTimeout( () => {
+          cardnumber.readOnly = true
+          cardnumber.focus();
+        },)
+        setTimeout(() => {
+          cardnumber.readOnly = false;
+        },1)
+      }
     },
 
     typeNFC(event) {
@@ -60,38 +67,28 @@ export default {
         setTimeout(() => {
           this.checkCard(event.target.value);
         }, 420)
-       this.cardIsLoading = true;
+        this.setCardIsLoading(true)
         setTimeout(() => {
           event.target.value = "";
-          this.cardIsLoading = false
-          this.setReturnText(null)
-          this.setCardNumber(null)
-          this.setIsRegisteredStudent(null)
-        }, 5000);
+        }, 3000);
       }
     },
 
     checkCard(cardnumber) {
+      console.log(cardnumber)
       //If no exam (+-1h) found -> Students can check there next exam today
       if (!this.modeExamInProgress) {
-        this['exam/checkCardForNextExam'](cardnumber)
+        this['currentCard/checkCardForNextExam'](cardnumber)
       }
       //If exam is in progress right now +-1h
       else {
-        this['exam/cardHandler']([cardnumber])
+        this['currentCard/checkCardForThisExam']([cardnumber])
       }
+    },
 
-    }
   },
   mounted() {
-    setTimeout(() => {
-      document.getElementById("NFC_CARDNUMBER").focus();
-    }, 1);
-    document.getElementById("NFC_CARDNUMBER").onblur = () => {
-      setTimeout(() => {
-        document.getElementById("NFC_CARDNUMBER").focus();
-      }, 1);
-    };
+    this.focusCardInput()
   },
 }
 </script>
@@ -103,7 +100,4 @@ export default {
   width: 0;
 }
 
-scan-container {
-  height: 10vh;
-}
 </style>

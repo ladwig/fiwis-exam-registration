@@ -7,7 +7,7 @@
     "registerForExamNowHeadline": "Jetzt zur Prüfung anmelden",
     "registerForExamNowMore": "Beim Scannen Ihres Ausweises bestätigen Sie die Teilnahme an der Prüfung!",
     "checkStatusHeadline": "Anmeldung prüfen",
-    "checkStatusMore": "Scannen Sie Ihren Ausweis, um zu prüfen, ob Sie für diese Prüfung angemeldet sind."
+    "checkStatusMore": "Ausweis scannen, um zu prüfen ob Sie angemeldet sind."
   },
   "currentExamName": {
     "noExamInRoom": "Derzeit findet keine Prüfung in diesem Raum statt"
@@ -24,8 +24,10 @@
   "settingsAlert": {
     "settingsAlertHeadline": "Registrierung / Einstellungen",
     "settingsAlertMore": "Starten Sie die Prüfungsregistierung, sodass Studierende ihre Anwesenheit ab sofort bestätigen können oder legen Sie einen neuen Raum fest.",
+    "restart": "App neu starten",
     "cancel": "Abbrechen",
-    "start": "Start"
+    "start": "Start",
+    "stop": "Stop"
   },
   "studentsInRoom": {
     "noSeats": "Keine Plätze mehr frei, bitte nutzen Sie alternativ:",

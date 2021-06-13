@@ -1,57 +1,51 @@
 <template>
-  <v-container fluid class="ma-0 pa-0 full">
+  <v-container fluid pa-0 class="d-flex flex-column flex-grow-1 fill-parent-height pa-0">
+
     <!-- Select a room, first page -->
     <set-exam-room v-if="roomName===null"></set-exam-room>
 
     <!-- Popup to ask for exam start and settings -->
-    <settings-alert v-if="isExaminer"></settings-alert>
+    <settings-alert v-if="this.isExaminer" :mode-exam-register="modeExamRegister"></settings-alert>
 
     <!-- Popup when there is an error -->
     <error-message-alert v-if="errorMessage.error"></error-message-alert>
 
-    <!-- Screen when room has been selected  -->
-    <v-row class="full" v-if="roomName!=null">
-      <!-- Left, big col -->
-      <v-col cols="9" class="pa-10">
-        <v-container style="margin-top: 30vh">
-          <v-row>
-            <current-exam-time v-if="modeExamInProgress"></current-exam-time>
-          </v-row>
-          <v-row>
-            <!-- Shows exam name or info that there is no exam in this room -->
-            <current-exam-name></current-exam-name>
-          </v-row>
-          <v-row>
-            <next-exam-info v-if="!modeExamInProgress"></next-exam-info>
-          </v-row>
-          <v-row>
-            <current-exam-info v-if="modeExamInProgress"></current-exam-info>
-          </v-row>
-          <v-row>
-            <card-reader style="position: absolute; bottom: 0"></card-reader>
-          </v-row>
-        </v-container>
+    <v-row v-if="roomName!=null" no-gutters class="top-row flex-grow-1 flex-shrink-1">
+
+      <v-col cols="11" class="grid-item-mid fill-parent-height pa-0 pl-10 pt-15">
+
+        <!-- Name of exam or no exam text -->
+        <current-exam-name></current-exam-name>
+
+        <!-- Time of exam and warning when exam in progress -->
+        <current-exam-time v-if="modeExamInProgress" class="mt-5"></current-exam-time>
+
+        <!-- Current number of studends in room and room full warning -->
+        <students-in-room v-if="modeExamRegister" class="mt-5"></students-in-room>
       </v-col>
+    </v-row>
+    <v-row v-if="roomName!=null" no-gutters class="bottom-row flex-grow-0 flex-shrink-0 grid-item-bottom">
+      <v-col cols="12">
 
-      <!-- Right, small col -->
-      <v-col cols="3" class="right pa-5">
-        <v-container>
-         <v-row>
-          <students-in-room v-if="modeExamInProgress"></students-in-room>
-         </v-row>
-          <v-row>
-            <more-information></more-information>
-          </v-row>
-          <v-row>
-          </v-row>
-          <v-row justify="center">
-            <display-clock style="position: absolute; bottom: 5%"></display-clock>
+        <!-- Shows loading status when card is scanned -->
+        <progress-bar :loading="cardIsLoading"></progress-bar>
+      </v-col>
+      <v-col cols="3" class="pl-10">
 
-          </v-row>
-        </v-container>
+        <!-- Manages card scans and shows card image -->
+        <card-reader></card-reader>
+      </v-col>
+      <v-col cols="9">
+
+        <!-- Shows next exam for scanned card -->
+        <next-exam-info v-if="!modeExamInProgress" class="mt-2 ml-10"></next-exam-info>
+
+        <!-- Shows return text for scanned card -->
+        <current-exam-info v-if="modeExamInProgress" :registModeActive="modeExamRegister" class="mt-2 ml-10"></current-exam-info>
       </v-col>
     </v-row>
   </v-container>
+
 </template>
 
 <script>
@@ -67,9 +61,12 @@ import CurrentExamInfo from "../components/CurrentExamInfo";
 import CardReader from "../components/CardReader";
 import SettingsAlert from "../components/SettingsAlert";
 import ErrorMessageAlert from "../components/ErrorMessageAlert";
+import ProgressBar from "../components/ProgressBar";
+import { changeColor } from "../ledAPI";
 
 export default {
   components: {
+    ProgressBar,
     ErrorMessageAlert,
     SettingsAlert,
     CardReader,
@@ -81,21 +78,41 @@ export default {
     ...mapState([
       "roomName",
       "modeExamInProgress",
-      "isExaminer",
       "modeExamRegister",
       "errorMessage",
-    ])
+      "modeExamRegister",
+      "cardIsLoading",
+    ]),
+    ...mapState({
+      isExaminer: state => state.currentCard.isExaminer,
+    }),
   },
+  created() {
+    changeColor("#ffffff")
+  }
+
 }
 
 </script>
 <style>
-.right {
-  background: #f5f5f5;
+.grid-item-mid {
+  color: var(--v-light-base);
 }
 
-.full {
+.grid-item-bottom {
+  background-color: var(--v-secondary-base);
+
+}
+
+.fill-parent-height {
   height: 100%;
 }
+
+.top-row {
+  min-height: 0;
+  background-color: var(--v-primary-lighten2);
+}
+
+
 
 </style>

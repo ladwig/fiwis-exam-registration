@@ -6,16 +6,29 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate"
+    "generate": "nuxt generate",
+    "jest": "jest",
+    "e2e": "cypress open --browser chrome",
+    "e2e:silent": "cypress run"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.1",
+    "@testing-library/jest-dom": "^5.12.0",
     "core-js": "^3.9.1",
     "nuxt": "^2.15.3",
-    "nuxt-i18n": "^6.26.0"
+    "nuxt-i18n": "^6.27.0"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.11.3",
-    "vuetify": "^2.4.9"
+    "@testing-library/vue": "^5.6.2",
+    "@vue/test-utils": "^1.1.3",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^26",
+    "cypress": "^7.5.0",
+    "jest": "^26",
+    "ts-jest": "^26.5.3",
+    "vue-jest": "^3",
+    "vuetify": "^2.4.9",
+    "sass": "~1.32.12"
   }
 }

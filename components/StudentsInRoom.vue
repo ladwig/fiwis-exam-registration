@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container class="pa-0 ma-0 headline">
     <div v-if="numberOfStudentsPresentInRoom == numberOfStudentsPlannedInRoom">
       {{ $t('studentsInRoom.noSeats') }}<b> {{
         examRooms
@@ -11,22 +11,30 @@
 </template>
 
 <script>
-import {mapState} from "vuex";
+import {mapActions, mapState} from "vuex";
 
 export default {
   name: "StudentsInRoom",
   data() {
     return {
-      numberOfStudentsPlannedInRoom: 70,
-      numberOfStudentsPresentInRoom: 31,
       roomFull: false,
     }
   },
   computed: {
     ...mapState({
-      examRooms: state => state.exam.examRooms
+      examRooms: state => state.exam.examRooms,
+      numberOfStudentsPlannedInRoom: state => state.exam.numberOfStudentsPlannedInRoom,
+      numberOfStudentsPresentInRoom: state => state.exam.numberOfStudentsPresentInRoom
     })
   },
+  methods: {
+    ...mapActions([
+      "exam/updateNumberOfStudentsInRoom",
+    ]),
+  },
+  created() {
+    this['exam/updateNumberOfStudentsInRoom']()
+  }
 }
 </script>
 

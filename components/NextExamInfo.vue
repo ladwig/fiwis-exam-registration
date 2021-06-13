@@ -1,57 +1,24 @@
 <template>
-  <div v-if="getCardNumber">
-    <v-card
-      class="mx-auto"
-      max-width="400"
-      tile
-      v-if="isThereNextExam"
-    >
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title class="font-weight-bold">{{ $t('nextExamInfo.yourNextExam') }}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title>
-            <v-icon left>
-              mdi-school-outline
-            </v-icon>
-            {{ examName }}
-          </v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title>
-            <v-icon left>
-              mdi-clock-time-four-outline
-            </v-icon>
-            {{ getStartTimeWithDate }} - {{ getStopTimeWithoutDate }}  {{ $t('displayClock.suffix') }}
-          </v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-
-      <v-list-item>
-        <v-list-item-content>
-
-          <v-list-item-title>
-
-            <v-icon left>
-              mdi-map-marker-outline
-            </v-icon>
-            {{ examRooms }}
-          </v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-    </v-card>
-    <h4 v-else class="display-1">{{ $t('nextExamInfo.noExamToday') }}</h4>
-  </div>
-  <div v-else>
-    <h4 class="display-1 primary--text">{{ $t('nextExamInfo.showNextExamHeadline') }}</h4>
-    <p>{{ $t('nextExamInfo.showNextExamMore') }}</p>
+  <div>
+    <scan-information-panel
+      :headline="$t('nextExamInfo.showNextExamHeadline')"
+      icon="mdi-information-outline"
+      :more="$t('nextExamInfo.showNextExamMore')"
+    />
+    <div v-if="isThereNextExam">
+     <li>
+       {{examName}}
+     </li>
+      <li>
+        {{examRooms}}
+      </li>
+      <li>
+        {{getStartTimeWithDate}} -- {{getStopTimeWithoutDate}}
+      </li>
+    </div>
+    <div v-if="isThereNextExam == false">
+      Keine weitere Prüfung gefunden
+    </div>
   </div>
 
 </template>
@@ -62,12 +29,8 @@ import {mapState} from "vuex";
 export default {
   name: "NextExamInfo",
   computed: {
-    ...mapState([
-      "isThereNextExam",
-      "modeExamInProgress",
-      "cardNumber",
-    ]),
     ...mapState({
+      isThereNextExam: state => state.currentCard.isThereNextExam,
       examName: state => state.exam.examName,
       examRooms: state => state.exam.examRooms
     }),
@@ -77,9 +40,6 @@ export default {
     getStopTimeWithoutDate(state) {
       return this.$store.getters["exam/getStopTimeWithoutDate"]
     },
-    getCardNumber(state) {
-      return this.$store.getters["getCardNumber"]
-    }
   },
 }
 </script>

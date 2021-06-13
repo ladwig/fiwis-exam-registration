@@ -25,19 +25,16 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - registapp',
-    title: 'registapp',
+    titleTemplate: '%s - FHWS',
+    title: 'Prüfungsanmeldung',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'de'
     },
     meta: [
       {charset: 'utf-8'},
-      {name: 'viewport', content: 'width=device-width, initial-scale=1'},
+      {name: 'viewport', content: 'width=device-width, initial-scale=1, user-scalable=no'},
       {hid: 'description', name: 'description', content: ''}
     ],
-    link: [
-      {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
-    ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -87,7 +84,8 @@ export default {
         light: {
           primary: "#EA6105",
           secondary: "#F5F5F5",
-          light: "#FFF"
+          light: "#ffffff",
+          darker: "#454545"
         },
         dark: {
           primary: "#EA6105",

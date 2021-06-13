@@ -1,29 +1,30 @@
 <template>
   <v-app>
     <v-app-bar
-      color="primary"
+      color="secondary"
       flat
       app
     >
-      <v-img
+  <!--    <v-img
         class="mx-3"
         src="../logo.png"
         max-height="150"
         max-width="150"
         contain
-      ></v-img>
-      <v-icon v-if="$nuxt.isOffline" color="light">mdi-wifi-strength-alert-outline</v-icon>
+      ></v-img> -->
+      <v-toolbar-title class="font-weight-bold display-1 pl-10 darker--text">{{ roomName }}</v-toolbar-title>
+      <v-icon v-if="$nuxt.isOffline" color="primary">mdi-wifi-strength-alert-outline</v-icon>
       <v-spacer></v-spacer>
-      <v-toolbar-title class="white--text font-weight-bold display-1">{{ roomName }}</v-toolbar-title>
+      <display-clock></display-clock>
     </v-app-bar>
-    <v-main>
+    <v-main  style="height:100vh; overflow:hidden">
       <nuxt/>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import {mapMutations, mapState} from "vuex";
+import { mapState } from "vuex";
 
 export default {
   computed: {
@@ -32,9 +33,6 @@ export default {
     ])
   },
   methods: {
-    ...mapMutations({
-
-    }),
     axiosTestFunction() {
       this.$axios.get('', {
         params: {
@@ -50,8 +48,7 @@ export default {
         .then(function () {
           // always executed
         });
-
-    }
+    },
   },
   created() {
 

@@ -1,14 +1,20 @@
 <template>
 
-  <v-container class="ma-0 pa-0">
-    <div v-if="new Date(startTime) < new Date()">{{ $t('currentExamTime.dontDisturb') }}</div>
+  <v-container class="pa-0 ma-0">
     <v-chip
-      color="primary"
+      color="secondary"
       label
       outlined
-      class="body-1"
+      class="headline font-weight-regular"
     >
       {{ getStartTimeWithoutDate }} – {{ getStopTimeWithoutDate }} Uhr
+    </v-chip>
+    <v-chip v-if="new Date(startTime) < new Date()"
+      color="secondary"
+      label
+      outlined
+      class="headline font-weight-regular blink"
+    >{{ $t('currentExamTime.dontDisturb') }}
     </v-chip>
 
   </v-container>
@@ -37,5 +43,13 @@ export default {
 </script>
 
 <style scoped>
+.blink {
+  animation: blinker 1.5s step-start infinite;
+}
 
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
 </style>

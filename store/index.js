@@ -1,19 +1,14 @@
 export const state = () => ({
     roomName: null,
-    modeJustCheck: true, // Keine Prüfung
-    modeExamInProgress: null, // Prüfungszeit + 1h vorher +1h nachher
-    modeExamRegister: false,
-    isThereNextExam: false,
-    isExaminer: false, // Prüfer, der Registrierung starten kann
-    isRegisteredStudent: null,
-    attendanceConfirmed: false,
-    cardNumber: null,
+    modeJustCheck: true, // No exam found
+    modeExamInProgress: null, // Exam time + X time before and after -> X = exam/timeBeforeAfterExam
+    modeExamRegister: false, // Registermode active
     errorMessage: {
       error: false,
       msgNmbr: null,
       response: null
     },
-    returnText: null,
+    cardIsLoading: false // True when API calls are made and returns displayed
   }
 )
 
@@ -22,24 +17,8 @@ export const mutations = {
     state.roomName = roomName;
   },
 
-  setCardNumber(state, cardNumber) {
-    state.cardNumber = cardNumber
-  },
-
   setModeExamInProgress(state, modeExamInProgress) {
     state.modeExamInProgress = modeExamInProgress
-  },
-
-  setIsExaminer(state, isExaminer) {
-    state.isExaminer = isExaminer
-  },
-
-  setIsRegisteredStudent(state, isRegisteredStudent) {
-    state.isRegisteredStudent = isRegisteredStudent
-  },
-
-  setIsThereNextExam(state, isThereNextExam) {
-    state.isThereNextExam = isThereNextExam
   },
 
   setModeExamRegister(state, modeExamRegister) {
@@ -52,25 +31,7 @@ export const mutations = {
     state.errorMessage.response = data[2]
   },
 
-  setReturnText(state, returnText) {
-    state.returnText = returnText;
+  setCardIsLoading(state, cardIsLoading) {
+    state.cardIsLoading = cardIsLoading;
   },
-
-  //For manual testing
-  toggleExamInProgress(state) {
-    state.modeExamInProgress = !state.modeExamInProgress
-  },
-
-  //For manual testing
-  toogleModeExamRegister(state, modeExamRegister) {
-    state.modeExamRegister = !state.modeExamRegister
-  }
-
 }
-
-export const getters = {
-  getCardNumber(state) {
-    return state.cardNumber
-  }
-}
-

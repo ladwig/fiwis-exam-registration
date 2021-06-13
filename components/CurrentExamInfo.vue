@@ -1,46 +1,41 @@
 <template>
-  <div v-if="cardNumber != null">
-    <div v-if="isRegisteredStudent">
-      <h2 class="display-2 primary--text font-weight-light">{{ $t('currentExamInfo.isRegisteredStudentHeadline') }}</h2>
-      <p>{{ $t('currentExamInfo.isRegisteredStudentMore') }}</p>
-    </div>
-    <div v-else>
-      <h2 class="display-2 primary--text font-weight-light">{{ $t('currentExamInfo.isNotRegisteredStudentHeadline') }}</h2>
-      <p>{{ $t('currentExamInfo.isNotRegisteredStudentMore') }}</p>
-    </div>
-  </div>
-  <div v-else>
-    <div v-if="modeExamRegister">
-    <h2 class="display-2 primary--text font-weight-light">{{ $t('currentExamInfo.registerForExamNowHeadline') }}</h2>
-    <p>{{ $t('currentExamInfo.registerForExamNowMore') }}</p>
-  </div>
-    <div v-else>
-      <h2 class="display-2 primary--text font-weight-light">{{ $t('currentExamInfo.checkStatusHeadline') }}</h2>
-      <p>{{ $t('currentExamInfo.checkStatusMore') }}</p>
-    </div></div>
+
+    <scan-information-panel
+      v-if="registModeActive"
+      :headline="$t('currentExamInfo.registerForExamNowHeadline')"
+      icon="mdi-information-outline"
+      :return-text="this.returnText"
+      :more="$t('currentExamInfo.registerForExamNowMore')"
+    />
+
+  <scan-information-panel
+    v-else
+    :headline="$t('currentExamInfo.checkStatusHeadline')"
+    icon="mdi-information-outline"
+    :return-text="this.returnText"
+    :more="$t('currentExamInfo.checkStatusMore')"
+  />
+
 </template>
 
 <script>
 import {mapState} from "vuex";
+import ScanInformationPanel from "./ScanInformationPanel";
 
 export default {
   name: "CurrentExamInfo",
+  components: {ScanInformationPanel},
+  props: {
+    registModeActive: Boolean,
+  },
   computed: {
     ...mapState({
-      examName: state => state.exam.examName,
+      returnText: state => state.currentCard.returnText
     }),
     ...mapState([
       "modeExamRegister",
-      "isRegisteredStudent",
-      "cardNumber"
     ]),
   },
-
-  methods: {},
-  created() {
-
-  }
-
 }
 </script>
 
