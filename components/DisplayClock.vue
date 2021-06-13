@@ -21,13 +21,20 @@ export default {
       date: null,
     }
   },
+
+  created() {
+    this.setTime()
+    this.interval = setInterval(() => {
+      this.setTime()
+    }, 1000)
+  },
+
   beforeDestroy() {
-    // Vermeiden von Memory Leak
     clearInterval(this.interval)
   },
-  created() {
-    // Jede Sekunde Update
-    this.interval = setInterval(() => {
+
+  methods: {
+    setTime() {
 
       this.time = Intl.DateTimeFormat('de-DE', {
         hour: 'numeric',
@@ -39,10 +46,7 @@ export default {
         month: 'short',
         day: 'numeric'
       }).format()
-    }, 1000)
-  },
-  methods: {
-    ...mapMutations({})
+    }
   }
 }
 </script>

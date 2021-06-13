@@ -82,7 +82,8 @@ export const getters = {
 
 export const actions = {
 
-  // Get's called after room selection and at set interval. Sets all relevant exam information.
+  // Runs after room selection and at set interval (every minute)
+  // Gets all relevant exam information, sets/commits them with it's process function
   checkRoomForExam(context) {
     this.$axios.get('', {
       params: {
@@ -120,8 +121,7 @@ export const actions = {
       if (now.getTime() >= (new Date(context.state.startTime).getTime() - context.state.timeBeforeAfterExam) && now.getTime() <= (new Date(context.state.stopTime).getTime()) + context.state.timeBeforeAfterExam) {
         context.commit("setModeExamInProgress", true, {root: true})
       }
-      else
-      {
+      else {
         context.commit("setModeExamInProgress", false, {root: true})
       }
     }

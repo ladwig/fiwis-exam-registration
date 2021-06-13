@@ -22,14 +22,18 @@ export default {
   methods: {
     ...mapActions(['exam/checkRoomForExam'])
   },
-  created() {
-
-    // Scans every minute for exam in room
+  beforeMount() {
     this['exam/checkRoomForExam']()
+  },
+  created() {
+    // Scans every minute for exam in room
+
     window.setInterval(() => {
       this['exam/checkRoomForExam']()
     }, 60000)
   }
+
+
 
 }
 </script>
