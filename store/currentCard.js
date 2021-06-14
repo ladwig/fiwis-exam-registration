@@ -54,11 +54,11 @@ export const actions = {
   //Maybe to run different LED colors
   returnDecision(context, decision) {
     if(decision) {
-      context.commit("setStatus", "green")
+      context.commit("setStatus", "#00ff00")
       changeColor("#00ff00")
     }
     else {
-      context.commit("setStatus", "red")
+      context.commit("setStatus", "#ff0000")
       changeColor("#ff0000")
     }
   },
