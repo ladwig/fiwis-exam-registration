@@ -28,7 +28,7 @@
       <v-col cols="12">
 
         <!-- Shows loading status when card is scanned -->
-        <progress-bar :loading="cardIsLoading"></progress-bar>
+        <progress-bar :loading="cardIsLoading" :status="status"></progress-bar>
       </v-col>
       <v-col cols="3" class="pl-10">
 
@@ -39,6 +39,7 @@
 
         <!-- Shows next exam for scanned card -->
         <next-exam-info v-if="!modeExamInProgress" class="mt-2 ml-10"></next-exam-info>
+
 
         <!-- Shows return text for scanned card -->
         <current-exam-info v-if="modeExamInProgress" :registModeActive="modeExamRegister" class="mt-2 ml-10"></current-exam-info>
@@ -85,6 +86,7 @@ export default {
     ]),
     ...mapState({
       isExaminer: state => state.currentCard.isExaminer,
+      status: state => state.currentCard.status
     }),
   },
   created() {

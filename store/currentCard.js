@@ -6,6 +6,7 @@ export const state = () => ({
     isRegisteredStudent: null, // Not used rn, maybe for displaying icons ?
     cardNumber: null,
     returnText: null,
+    status: null
   }
 )
 
@@ -31,8 +32,8 @@ export const mutations = {
     state.returnText = returnText
   },
 
-  setLEDColor(state, LEDColor) {
-    state.LEDColor = LEDColor
+  setStatus(state, status) {
+    state.status = status
   }
 }
 
@@ -46,15 +47,18 @@ export const actions = {
       context.commit("setIsRegisteredStudent")
       context.commit("setIsThereNextExam")
       changeColor("#ffffff")
+      context.commit("setStatus", null)
     }, 4000);
   },
 
   //Maybe to run different LED colors
   returnDecision(context, decision) {
     if(decision) {
+      context.commit("setStatus", "green")
       changeColor("#00ff00")
     }
     else {
+      context.commit("setStatus", "red")
       changeColor("#ff0000")
     }
   },
