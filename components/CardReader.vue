@@ -15,11 +15,6 @@ import {mapActions, mapMutations, mapState} from "vuex";
 
 export default {
   name: "CardReader",
-  data () {
-    return {
-      cardIsLoading: false,
-    }
-  },
   computed: {
     ...mapState([
       "currentCard/cardNumber",
@@ -35,8 +30,7 @@ export default {
       ]
     ),
     ...mapActions([
-        'currentCard/checkCardForNextExam',
-        'currentCard/checkCardForThisExam',
+      "currentCard/checkCard"
       ]
     ),
     focusCardInput() {
@@ -65,24 +59,13 @@ export default {
     typeNFC(event) {
       if (event.target.value == "") {
         setTimeout(() => {
-          this.checkCard(event.target.value);
+          this['currentCard/checkCard'](parseInt(event.target.value, 16))
+         // this.checkCard(event.target.value);
         }, 420)
         this.setCardIsLoading(true)
         setTimeout(() => {
           event.target.value = "";
         }, 3000);
-      }
-    },
-
-    checkCard(cardnumber) {
-      console.log(cardnumber)
-      //If no exam (+-1h) found -> Students can check there next exam today
-      if (!this.modeExamInProgress) {
-        this['currentCard/checkCardForNextExam'](cardnumber)
-      }
-      //If exam is in progress right now +-1h
-      else {
-        this['currentCard/checkCardForThisExam']([cardnumber])
       }
     },
 

@@ -13,7 +13,7 @@ export const state = () => ({
 export const mutations = {
 
   setCardNumber(state, cardNumber) {
-    state.cardNumber =  parseInt(cardNumber, 16)
+    state.cardNumber =  cardNumber
   },
 
   setIsExaminer(state, isExaminer) {
@@ -63,12 +63,23 @@ export const actions = {
     }
   },
 
+  checkCard(context, cardnumber) {
+    // If no exam (+-1h) found -> Students can check there next exam
+    if (!context.rootState.modeExamInProgress){
+      context.dispatch("checkCardForNextExam", cardnumber)
+    }
+    // If exam is in progress right now +-1h
+    else {
+      console.log(cardnumber)
+      context.dispatch("checkCardForThisExam", [cardnumber])
+    }
+  },
+
   //Gets called when there is no exam atm and card gets scanned
   checkCardForNextExam(context, cardnumber) {
-    console.log(cardnumber)
     this.$axios.get('', {
       params: {
-        cardnumber: parseInt(cardnumber, 16) //36104139103212548
+        cardnumber: cardnumber //36104139103212548
       },
     })
       .then((response)  => {
@@ -93,7 +104,6 @@ export const actions = {
   },
 
   processCardForNextExam(context, data) {
-    console.log(data)
     return new Promise( resolve => {
       if (data.length > 0) {
         context.commit("setIsThereNextExam", true)
@@ -115,14 +125,14 @@ export const actions = {
     //To check if card is admin/examiner and if ModeExamRegister should start
     if(startModeExamRegister) {
       body = {
-        idcardnumber:  parseInt(cardnumber, 16),
+        idcardnumber:  cardnumber,
         room: context.rootState.roomName,
         parameter: 1,
       }
     }
     else {
       body = {
-        idcardnumber:  parseInt(cardnumber, 16),
+        idcardnumber:  cardnumber,
         room: context.rootState.roomName,
       }
     }
