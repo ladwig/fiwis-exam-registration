@@ -35,3 +35,4 @@ export const mutations = {
     state.cardIsLoading = cardIsLoading;
   },
 }
+

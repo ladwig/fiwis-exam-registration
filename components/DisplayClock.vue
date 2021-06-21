@@ -35,7 +35,6 @@ export default {
 
   methods: {
     setTime() {
-
       this.time = Intl.DateTimeFormat('de-DE', {
         hour: 'numeric',
         minute: 'numeric',
