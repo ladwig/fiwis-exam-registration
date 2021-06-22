@@ -28,7 +28,7 @@ describe('Checking error handling', () => {
     expect(cy.contains(text.error, { matchCase: false }))
   })
 
-  it('No connection after card input when exam exam', () => {
+  it('No connection after card input when exam', () => {
     cy.clock(new Date(2020, 6, 24, 20, 10, 0), ['Date'])
     cy.intercept("GET", "/examgroups?room=H.1.1", {
       statusCode: 200,

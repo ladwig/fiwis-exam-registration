@@ -35,16 +35,15 @@ export default {
 
   methods: {
     setTime() {
-      this.time = Intl.DateTimeFormat('de-DE', {
+      this.time = new Date() .toLocaleString('de-DE', {
         hour: 'numeric',
-        minute: 'numeric',
-      }).format()
-
-      this.date = Intl.DateTimeFormat('de-DE', {
+        minute: 'numeric'
+      })
+      this.date = new Date().toLocaleString('de-DE', {
         weekday: 'long',
         month: 'short',
         day: 'numeric'
-      }).format()
+      })
     }
   }
 }
