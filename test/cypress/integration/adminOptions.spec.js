@@ -54,13 +54,13 @@ describe('Checking all admin / examiner options', () => {
   })
 
   it('Just close popup', () => {
-    cy.contains(text.cancelButton, { matchCase: false }).click()
-    cy.contains(text.cancelButton, {matchCase: false}).should("not.exist")
+    cy.get("button").contains(text.cancelButton, { matchCase: false }).click()
+    contains(text.cancelButton, {matchCase: false}).should("not.exist")
     cy.contains(body[0].names).should("exist")
   })
 
   it('Restart app by reloading window', () => {
-    cy.contains(text.restartButton, { matchCase: false }).click()
+    cy.get("button").contains(text.restartButton, { matchCase: false }).click()
     expect(cy.contains(text.chooseRoom))
   })
 

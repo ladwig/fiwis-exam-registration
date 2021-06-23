@@ -41,7 +41,6 @@ export const actions = {
   // Resets all states which connected to specific user/card
   resetStates(context) {
     setTimeout(() => {
-      context.commit("setCardNumber", null)
       context.commit("setCardIsLoading", false , {root: true})
       context.commit("setReturnText")
       context.commit("setIsRegisteredStudent")
@@ -71,7 +70,7 @@ export const actions = {
     // If exam is in progress right now +-1h
     else {
       console.log(cardnumber)
-      context.dispatch("checkCardForThisExam", [cardnumber])
+      context.dispatch("checkCardForThisExam", cardnumber)
     }
   },
 
@@ -119,34 +118,24 @@ export const actions = {
     })
   },
 
-  checkCardForThisExam(context, [cardnumber, startModeExamRegister]) {
-    let body = null
+  checkCardForThisExam(context, cardnumber) {
 
-    //To check if card is admin/examiner and if ModeExamRegister should start
-    if(startModeExamRegister) {
-      body = {
-        idcardnumber:  cardnumber,
-        room: context.rootState.roomName,
-        parameter: 1,
-      }
-    }
-    else {
-      body = {
-        idcardnumber:  cardnumber,
+      const body = {
+        idcardnumber: cardnumber,
         room: context.rootState.roomName,
       }
-    }
 
-    this.$axios.post(`${context.rootState.exam.examID}/scannedcards`, body, {
+   this.$axios.post(`${context.rootState.exam.examID}/scannedcards`, body, {
       headers: {
         // "Content-Type": "application/vnd.fhws-scannedcard.scannedcardview+json"
       }
     })
       .then((response) => {
         const resURL = response.headers.location
+        console.log(response.headers)
         this.$axios.get(resURL, {})
           .then((response) => {
-            context.dispatch("processCardForThisExam", response.data)
+            context.dispatch("processCardForThisExam", [response.data,cardnumber])
               .then(() => {
                   context.dispatch("resetStates")
                   context.dispatch("exam/updateNumberOfStudentsInRoom", '',{root: true})
@@ -168,29 +157,84 @@ export const actions = {
       })
   },
 
-  processCardForThisExam(context, data) {
+  processCardForThisExam(context, [data, cardnumber]) {
+    console.log(data)
     return new Promise( resolve => {
-      if(data.returnText) {
-        context.commit("setReturnText", data.returnText)
-      } else {
-        context.commit("setReturnText", "Fehler: Kein returnText verfübar")
-      }
-      console.log(data.returnCode)
-      if([300, 500, 600].indexOf(data.returnCode) >= 0) {
-        context.dispatch("returnDecision", true)
-      }
-      else {
-        context.dispatch("returnDecision", false)
-      }
+        if(data.returnText) {
+          context.commit("setReturnText", data.returnText)
+        } else {
+          context.commit("setReturnText", "Fehler: Kein returnText verfübar")
+        }
+        if([300, 500, 600].indexOf(data.returnCode) >= 0) {
+          context.dispatch("returnDecision", true)
+        }
+        else {
+          context.dispatch("returnDecision", false)
+        }
 
-      if (data.returnCode === 300) {
-        context.commit("setIsExaminer", true)
-      }
-      else if (data.returnCode === 500) {
-        context.commit("setIsRegisteredStudent")
-      }
+        if (data.returnCode === 300) {
+          context.commit("setCardNumber", cardnumber) //evtl [cardnumber]
+          context.commit("setIsExaminer", true)
+        }
+        else if (data.returnCode === 500) {
+          context.commit("setIsRegisteredStudent")
+        }
+
       resolve()
     })
   },
 
+  requestModeChange(context, action) {
+    let body = null
+      if(action === "start") {
+        body = {
+          idcardnumber: 33,  // change to !!!! -> context.state.cardNumber
+          room: context.rootState.roomName,
+          parameter: 1,
+        }
+      }
+    else if(action === "stop") {
+      body = {
+        idcardnumber: 33,  // change to !!!! -> context.state.cardNumber
+        room: context.rootState.roomName,
+        parameter: 1, //stop code? 2?
+      }
+    }
+      console.log("VALUE 33 auf state ändern! Nur wegen mock api hardcoded")
+    this.$axios.post(`${context.rootState.exam.examID}/scannedcards`, body, {
+      headers: {
+        // "Content-Type": "application/vnd.fhws-scannedcard.scannedcardview+json"
+      }
+    })
+      .then((response) => {
+        const resURL = response.headers.location
+        console.log(response.headers)
+        this.$axios.get(resURL, {})
+          .then((response) => {
+            context.dispatch("processModeChange", response.data)
+          })
+      })
+      .catch(err => {
+        if(err.response) {
+          console.error(err.response)
+        }
+        else if(err.request) {
+          context.commit("setErrorMessage", [true, 0], {root: true})
+          console.error("Can't get a response, maybe the connection to the API failed!")
+        }
+        else {
+          console.error(err.message);
+        }
+      })
+  },
+
+  processModeChange(context, data) {
+    if(data.returnCode == 400) {
+      context.commit("setModeExamRegister", true, {root: true})
+    }
+    else if(data.returnCode == 800) {
+      context.commit("setModeExamRegister", false, {root: true})
+    }
+    context.commit("setCardNumber", null)
+  },
 }

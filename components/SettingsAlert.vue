@@ -71,14 +71,13 @@ export default {
       ]
     ),
     ...mapActions([
-      "currentCard/checkCardForThisExam",
+      "currentCard/requestModeChange",
     ]),
 
     //Always close the modal and removes examiner data. Case 1 -> Starts exam register mode
     closePopup(action) {
       if (action === 1) {
-        this['currentCard/checkCardForThisExam']([this.cardNumber,true])
-        this.setModeExamRegister(true)
+        this['currentCard/requestModeChange']("start")
       }
       else if(action === 2) {
         window.location.reload(true)
@@ -86,6 +85,7 @@ export default {
 
       //Right now only frontend action, status in backend/FIWIS stays at register mode
       else if(action === 3) {
+        // this['currentCard/requestModeChange']("stop")
         this.setModeExamRegister(false)
       }
       this["currentCard/setIsExaminer"](false)

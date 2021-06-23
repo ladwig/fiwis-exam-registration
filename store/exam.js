@@ -129,23 +129,25 @@ export const actions = {
 
   //Checks how many students are in the room
   async updateNumberOfStudentsInRoom(context) {
-    try {
-      const response = (
-        await this.$axios.get(`${context.state.examID}/examrooms`, {
-        })
-      ).data;
-      if(response.length > 0) {
-        context.commit("setNumberOfStudentsPlannedInRoom", response[0].numberOfStudentsPlannedInRoom)
-        context.commit("setNumberOfStudentsPresentInRoom", response[0].numberOfStudentsPresentInRoom)
-      }
-    } catch(err) {
-      if (err.response) {
-        console.error(err.response)
-      } else if (err.request) {
-        context.commit("setErrorMessage", [true, 0], {root: true})
-        console.log(context.rootState.errorMessage)
-      } else {
-        console.error(err.message);
+    if(context.rootState.modeExamRegister) {
+      try {
+        const response = (
+          await this.$axios.get(`${context.state.examID}/examrooms`, {
+          })
+        ).data;
+        if(response.length > 0) {
+          context.commit("setNumberOfStudentsPlannedInRoom", response[0].numberOfStudentsPlannedInRoom)
+          context.commit("setNumberOfStudentsPresentInRoom", response[0].numberOfStudentsPresentInRoom)
+        }
+      } catch(err) {
+        if (err.response) {
+          console.error(err.response)
+        } else if (err.request) {
+          context.commit("setErrorMessage", [true, 0], {root: true})
+          console.log(context.rootState.errorMessage)
+        } else {
+          console.error(err.message);
+        }
       }
     }
   },

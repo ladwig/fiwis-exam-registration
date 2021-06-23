@@ -24,9 +24,9 @@
   "settingsAlert": {
     "settingsAlertHeadline": "Registrierung / Einstellungen",
     "settingsAlertMore": "Starten Sie die Prüfungsregistierung, sodass Studierende ihre Anwesenheit ab sofort bestätigen können oder legen Sie einen neuen Raum fest.",
-    "restart": "App neu starten",
+    "restart": "Neu starten",
     "cancel": "Abbrechen",
-    "start": "Start",
+    "start": "Registierung",
     "stop": "Stop"
   },
   "studentsInRoom": {
