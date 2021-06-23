@@ -59,6 +59,7 @@ export default {
     typeNFC(event) {
       if (event.target.value == "") {
         setTimeout(() => {
+          alert("clean: " + event.target.value + " radix16: " + parseInt(event.target.value, 16))
           this['currentCard/checkCard'](parseInt(event.target.value, 16))
          // this.checkCard(event.target.value);
         }, 420)

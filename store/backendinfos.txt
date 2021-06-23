@@ -282,7 +282,7 @@ public class PostScannedIdCardInExamGroupState extends PostSingleCardScanInExamG
     }
 
     protected void closeRegistration( )
-    {
+    {^^
         this.modelToStoreInDatabase.setReturnCode( 800 );
         this.modelToStoreInDatabase.setReturnText(
             "Die Registrierung ist jetzt geschlossen." );

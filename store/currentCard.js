@@ -173,7 +173,7 @@ export const actions = {
       if(data.returnText) {
         context.commit("setReturnText", data.returnText)
       } else {
-        context.commit("setReturnText", "Kein returnText verfübar")
+        context.commit("setReturnText", "Fehler: Kein returnText verfübar")
       }
       console.log(data.returnCode)
       if([300, 500, 600].indexOf(data.returnCode) >= 0) {
