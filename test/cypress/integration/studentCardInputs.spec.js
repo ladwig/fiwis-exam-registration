@@ -27,7 +27,7 @@ describe('All possible studentcard inputs and responses', () => {
 
   })
 
-/*  it('No exam in room and showing next exam ', () => {
+it('No exam in room and showing next exam ', () => {
     cy.intercept("GET", "/examgroups?room=H.1.1", {
       statusCode: 200,
       body: [{}]
@@ -136,9 +136,9 @@ describe('All possible studentcard inputs and responses', () => {
     expect(cy.contains(text.isNotRegistered))
     cy.tick(4000)
     cy.contains(text.isNotRegistered).should("not.exist")
-  })*/
+  })
 
-  it('Exam registration mode active and student is registered', () => {
+  it('Exam registration mode active and 1x registered, 1x not registered card', () => {
 
     cy.intercept("GET", "/examgroups?room=H.1.1", {
       statusCode: 200,
@@ -148,7 +148,7 @@ describe('All possible studentcard inputs and responses', () => {
     cy.intercept("GET", "/examgroups/4000/scannedcards/8000", {
       statusCode: 200,
       body: {
-        returnCode: text.isRegistered,
+        returnCode: text.isRegisteredCode,
         returnText: text.isRegistered
       },
     }).as("getStudentCard")
@@ -169,6 +169,14 @@ describe('All possible studentcard inputs and responses', () => {
       },
     }).as("getProfStartCard")
 
+    cy.intercept("GET", "/examgroups/4000/scannedcards/2000", {
+      statusCode: 200,
+      body: {
+        returnCode: text.isNotRegisteredCode,
+        returnText: text.isNotRegistered
+      },
+    }).as("getNotRegisteredCard")
+
     cy.intercept("GET", "/examgroups/4000/examrooms", {
       statusCode: 200,
       body: {
@@ -179,13 +187,13 @@ describe('All possible studentcard inputs and responses', () => {
 
 
     cy.intercept("POST", '/examgroups/4000/scannedcards', (req) => {
-      if(req.body.idcardnumber == "19") {
-        req.alias = "postProfCard"
+      if(req.body.idcardnumber == "19" && !req.body.parameter) {
         req.reply({
           headers: {
             "location": "/4000/scannedcards/6000"
           }
         })
+        req.alias = "postProfCard"
       }
       if(req.body.idcardnumber == "18") {
         req.reply({
@@ -195,7 +203,15 @@ describe('All possible studentcard inputs and responses', () => {
         })
         req.alias = "postStudentCard"
       }
-      if(req.body.parameter == "1") {
+      if(req.body.idcardnumber == "20") {
+        req.reply({
+          headers: {
+            "location": "/4000/scannedcards/2000"
+          }
+        })
+        req.alias = "postNotRegisteredCard"
+      }
+      if(req.body.parameter == 1) {
         req.reply({
           headers: {
             "location": "/4000/scannedcards/1000"
@@ -213,8 +229,18 @@ describe('All possible studentcard inputs and responses', () => {
     cy.wait("@postProfCard")
     cy.get("button").contains(text.startButton, { matchCase: false }).click()
     cy.wait("@postProfStartCard")
+    cy.wait(4000)
     expect(cy.contains(text.registerNow))
-
+    cy.get("input").type("12")
+    cy.wait("@postStudentCard")
+    expect(cy.contains(text.isRegistered))
+    cy.wait(4000)
+    expect(cy.contains(text.registerNow))
+    cy.get("input").type("14")
+    cy.wait("@postNotRegisteredCard")
+    expect(cy.contains(text.isNotRegistered))
+    cy.wait(4000)
+    expect(cy.contains(text.registerNow))
   })
 
 })

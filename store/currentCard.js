@@ -186,9 +186,10 @@ export const actions = {
 
   requestModeChange(context, action) {
     let body = null
+    alert("ok")
       if(action === "start") {
         body = {
-          idcardnumber: 33,  // change to !!!! -> context.state.cardNumber
+          idcardnumber: context.state.cardNumber, //33
           room: context.rootState.roomName,
           parameter: 1,
         }
@@ -229,12 +230,12 @@ export const actions = {
   },
 
   processModeChange(context, data) {
+    context.commit("setCardNumber", null)
     if(data.returnCode == 400) {
       context.commit("setModeExamRegister", true, {root: true})
     }
     else if(data.returnCode == 800) {
       context.commit("setModeExamRegister", false, {root: true})
     }
-    context.commit("setCardNumber", null)
   },
 }
