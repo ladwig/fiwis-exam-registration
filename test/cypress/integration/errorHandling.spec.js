@@ -1,16 +1,4 @@
-const body = [ {
-  id: 4000,
-  names: "Technischer Datenschutz",
-  roomNames: "H.1.1",
-  totalNumberOfParticipants: 50,
-  startTime: new Date(2020, 6, 24, 20, 0, 0),
-  stopTime: new Date(2020, 6, 24, 21, 0, 0),
-}]
-
-const text = {
-  error: "fehler",
-  okay: "okay",
-}
+import {body, text} from "../fixtures/helper"
 
 describe('Checking error handling', () => {
 
@@ -38,7 +26,7 @@ describe('Checking error handling', () => {
     cy.contains('H.1.1').click()
     cy.get("input").type("13")
     expect(cy.contains(text.error, { matchCase: false }))
-    cy.contains(text.okay, { matchCase: false }).click()
+    cy.get("button").contains(text.okayButton, { matchCase: false }).click()
     cy.get("input").type("13")
   })
 

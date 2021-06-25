@@ -80,6 +80,9 @@ export const actions = {
       params: {
         cardnumber: cardnumber //36104139103212548
       },
+      headers: {
+     //   "Accept": process.env.NEXT_EXAM_ACCEPT_HEADER
+      }
     })
       .then((response)  => {
         context.dispatch("processCardForNextExam", response.data)
@@ -119,21 +122,23 @@ export const actions = {
   },
 
   checkCardForThisExam(context, cardnumber) {
-
       const body = {
         idcardnumber: cardnumber,
         room: context.rootState.roomName,
       }
-
    this.$axios.post(`${context.rootState.exam.examID}/scannedcards`, body, {
       headers: {
-        // "Content-Type": "application/vnd.fhws-scannedcard.scannedcardview+json"
+       // "Content-Type": process.env.SCANNED_CARD_CONTENT_TYPE_HEADER
       }
     })
       .then((response) => {
         const resURL = response.headers.location
         console.log(response.headers)
-        this.$axios.get(resURL, {})
+        this.$axios.get(resURL, {
+          headers: {
+          //  "Accept": process.env.SCANNED_CARD_ACCEPT_HEADER
+          }
+        })
           .then((response) => {
             context.dispatch("processCardForThisExam", [response.data,cardnumber])
               .then(() => {
@@ -201,16 +206,19 @@ export const actions = {
         parameter: 1, //stop code? 2?
       }
     }
-      console.log("VALUE 33 auf state ändern! Nur wegen mock api hardcoded")
     this.$axios.post(`${context.rootState.exam.examID}/scannedcards`, body, {
       headers: {
-        // "Content-Type": "application/vnd.fhws-scannedcard.scannedcardview+json"
+        // "Content-Type": process.env.SCANNED_CARD_CONTENT_TYPE_HEADER
       }
     })
       .then((response) => {
         const resURL = response.headers.location
         console.log(response.headers)
-        this.$axios.get(resURL, {})
+        this.$axios.get(resURL, {
+          headers: {
+            //  "Accept": process.env.SCANNED_CARD_ACCEPT_HEADER
+          }
+        })
           .then((response) => {
             context.dispatch("processModeChange", response.data)
           })

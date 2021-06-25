@@ -88,6 +88,9 @@ export const actions = {
     this.$axios.get('', {
       params: {
         room: context.rootState.roomName
+      },
+      headers: {
+       // "Accept": process.env.EXAM_NAME_ACCEPT_HEADER
       }
     })
       .then((response) => {
@@ -133,6 +136,9 @@ export const actions = {
       try {
         const response = (
           await this.$axios.get(`${context.state.examID}/examrooms`, {
+            headers: {
+             // "Accept": process.env.EXAM_ROOMS_ACCEPT_HEADER
+            }
           })
         ).data;
         if(response.length > 0) {

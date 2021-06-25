@@ -1,18 +1,4 @@
-const body = [ {
-  id: 4000,
-  names: "Technischer Datenschutz",
-  roomNames: "H.1.1",
-  totalNumberOfParticipants: 50,
-  startTime: new Date(2020, 6, 24, 20, 0, 0),
-  stopTime: new Date(2020, 6, 24, 21, 0, 0),
-}]
-
-const text = {
-  checkRegist: "Anmeldung prüfen",
-  noDisturb: "nicht stören",
-  noExam: "keine Prüfung",
-  nextExam: "nächste Prüfung",
-}
+import {body, text} from "../fixtures/helper"
 
 describe('Choosing room and load exam', () => {
 
