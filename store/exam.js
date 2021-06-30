@@ -4,6 +4,7 @@ export const state = () => ({
   startTime: null, // "2021-04-02T20:00:00+02:00"
   stopTime: null,
   examRooms: null, // "H.1.2, H.1.3"
+  examModeStatus: 0,
   numberOfParticipants: null,
   numberOfStudentsPlannedInRoom: null,
   numberOfStudentsPresentInRoom: null,
@@ -48,6 +49,10 @@ export const mutations = {
 
   setExamRooms(state, examRooms) {
     state.examRooms = examRooms;
+  },
+
+  setExamModeStatus(state, examModeStatus) {
+    state.examModeStatus = examModeStatus;
   },
 }
 
@@ -119,15 +124,30 @@ export const actions = {
       context.commit("setExamRooms", e.roomNames)
       context.commit("setNumberOfParticipants", e.totalNumberOfParticipants)
       context.commit("setExamDuration")
+      context.commit("setModeExamInProgress", true, {root: true})
+      context.dispatch("checkExamModeStatus", e.examroomUrl.href)
+        .then((status) => {
+          context.commit("setExamModeStatus", status)
+        })
 
-      const now = new Date();
+/*      const now = new Date();
       if (now.getTime() >= (new Date(context.state.startTime).getTime() - context.state.timeBeforeAfterExam) && now.getTime() <= (new Date(context.state.stopTime).getTime()) + context.state.timeBeforeAfterExam) {
         context.commit("setModeExamInProgress", true, {root: true})
       }
       else {
         context.commit("setModeExamInProgress", false, {root: true})
-      }
+      }*/
     }
+  },
+
+ async checkExamModeStatus(context, url) {
+    const res = await this.$axios.get(url, {
+      headers: {
+        "Accept": process.env.EXAM_STATUS_ACCEPT_HEADER
+      }
+    })
+   const roomDataIndex = res.data.findIndex(a => a.roomName == context.rootState.roomName)
+   return res.data[roomDataIndex].examRegistrationState
   },
 
   //Checks how many students are in the room
@@ -137,7 +157,7 @@ export const actions = {
         const response = (
           await this.$axios.get(`${context.state.examID}/examrooms`, {
             headers: {
-          //    "Accept": process.env.EXAM_ROOMS_ACCEPT_HEADER
+              "Accept": process.env.EXAM_ROOMS_ACCEPT_HEADER
             }
           })
         ).data;

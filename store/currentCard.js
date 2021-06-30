@@ -38,7 +38,7 @@ export const mutations = {
 }
 
 export const actions = {
-  // Resets all states which connected to specific user/card
+  // Resets all states that are connected to specific user/card
   resetStates(context) {
     setTimeout(() => {
       context.commit("setCardIsLoading", false , {root: true})
@@ -50,27 +50,15 @@ export const actions = {
     }, 4000);
   },
 
-  //Maybe to run different LED colors
-  returnDecision(context, decision) {
-    if(decision) {
-      context.commit("setStatus", "#00ff00")
-      changeColor("#00ff00")
-    }
-    else {
-      context.commit("setStatus", "#ff0000")
-      changeColor("#ff0000")
-    }
-  },
-
-  checkCard(context, cardnumber) {
+  async checkCard(context, cardnumber) {
+    const cardID = await context.dispatch("cardNum2String", cardnumber)
     // If no exam (+-1h) found -> Students can check there next exam
     if (!context.rootState.modeExamInProgress){
-      context.dispatch("checkCardForNextExam", cardnumber)
+      context.dispatch("checkCardForNextExam", cardID)
     }
     // If exam is in progress right now +-1h
     else {
-      console.log(cardnumber)
-      context.dispatch("checkCardForThisExam", cardnumber)
+      context.dispatch("checkCardForThisExam", cardID)
     }
   },
 
@@ -78,10 +66,10 @@ export const actions = {
   checkCardForNextExam(context, cardnumber) {
     this.$axios.get('', {
       params: {
-        cardnumber: cardnumber //36104139103212548
+        cardnumber: "36104139103212548", //cardnumber
       },
       headers: {
-     // "Accept": process.env.NEXT_EXAM_ACCEPT_HEADER
+        "Accept": process.env.NEXT_EXAM_ACCEPT_HEADER
       }
     })
       .then((response)  => {
@@ -122,13 +110,13 @@ export const actions = {
   },
 
   checkCardForThisExam(context, cardnumber) {
-      const body = {
-        idcardnumber: cardnumber,
-        room: context.rootState.roomName,
-      }
-   this.$axios.post(`${context.rootState.exam.examID}/scannedcards`, body, {
+    const body = {
+      idcardnumber: "36104139103212548", //cardnumber
+      room: context.rootState.roomName,
+    }
+    this.$axios.post(`${context.rootState.exam.examID}/scannedcards`, body, {
       headers: {
-     // "Content-Type":"application/vnd.fhws-scannedcard.scannedcardview+json"
+        "Content-Type": process.env.SCANNED_CARD_CONTENT_TYPE_HEADER
       }
     })
       .then((response) => {
@@ -136,7 +124,7 @@ export const actions = {
         console.log(response.headers)
         this.$axios.get(resURL, {
           headers: {
-      //      "Accept": "application/vnd.fhws-scannedcard.scannedcardview+json"
+            "Accept": process.env.SCANNED_CARD_ACCEPT_HEADER
           }
         })
           .then((response) => {
@@ -165,25 +153,25 @@ export const actions = {
   processCardForThisExam(context, [data, cardnumber]) {
     console.log(data)
     return new Promise( resolve => {
-        if(data.returnText) {
-          context.commit("setReturnText", data.returnText)
-        } else {
-          context.commit("setReturnText", "Fehler: Kein returnText verfübar")
-        }
-        if([300, 500, 600].indexOf(data.returnCode) >= 0) {
-          context.dispatch("returnDecision", true)
-        }
-        else {
-          context.dispatch("returnDecision", false)
-        }
+      if(data.returnText) {
+        context.commit("setReturnText", data.returnText)
+      } else {
+        context.commit("setReturnText", "Fehler: Kein returnText verfübar")
+      }
+      if([300, 500, 600].indexOf(data.returnCode) >= 0) {
+        context.dispatch("returnDecision", true)
+      }
+      else {
+        context.dispatch("returnDecision", false)
+      }
 
-        if (data.returnCode === 300) {
-          context.commit("setCardNumber", cardnumber) //evtl [cardnumber]
-          context.commit("setIsExaminer", true)
-        }
-        else if (data.returnCode === 500) {
-          context.commit("setIsRegisteredStudent")
-        }
+      if (data.returnCode === 300) {
+        context.commit("setCardNumber", cardnumber) //evtl [cardnumber]
+        context.commit("setIsExaminer", true)
+      }
+      else if (data.returnCode === 500) {
+        context.commit("setIsRegisteredStudent")
+      }
 
       resolve()
     })
@@ -191,23 +179,22 @@ export const actions = {
 
   requestModeChange(context, action) {
     let body = null
-      if(action === "start") {
-        body = {
-          idcardnumber:  33, //context.state.cardNumber //33
-          room: context.rootState.roomName,
-          parameter: 1,
-        }
+    if(action === "start") {
+      body = {
+        idcardnumber:  33, //context.state.cardNumber //33
+        room: context.rootState.roomName,
+        parameter: 1,
       }
+    }
     else if(action === "stop") {
       body = {
         idcardnumber: context.state.cardNumber, //33
         room: context.rootState.roomName,
-        parameter: 1, //stop code? 2?
       }
     }
     this.$axios.post(`${context.rootState.exam.examID}/scannedcards`, body, {
       headers: {
-    //  "Content-Type": process.env.SCANNED_CARD_CONTENT_TYPE_HEADER
+          "Content-Type": process.env.SCANNED_CARD_CONTENT_TYPE_HEADER
       }
     })
       .then((response) => {
@@ -215,7 +202,7 @@ export const actions = {
         console.log(response.headers)
         this.$axios.get(resURL, {
           headers: {
-       //     "Accept": process.env.SCANNED_CARD_ACCEPT_HEADER
+            "Accept": process.env.SCANNED_CARD_ACCEPT_HEADER
           }
         })
           .then((response) => {
@@ -244,5 +231,32 @@ export const actions = {
     else if(data.returnCode == 800) {
       context.commit("setModeExamRegister", false, {root: true})
     }
+  },
+
+  //HelperFunction: To run different LED on the device and in the UI
+  returnDecision(context, decision) {
+    if(decision) {
+      context.commit("setStatus", "#00ff00")
+      changeColor("#00ff00")
+    }
+    else {
+      context.commit("setStatus", "#ff0000")
+      changeColor("#ff0000")
+    }
+  },
+
+  //HelperFunction: Converting the scanned card to a matchable string for FIWIS
+  cardNum2String(context, cardnumber) {
+    console.log(cardnumber)
+    const converter = require('hex2dec');
+    return String(
+      converter.hexToDec(
+        cardnumber
+          .match(/.{1,2}/g)
+          .reverse()
+          .join(""),
+        16
+      )
+    )
   },
 }
