@@ -18,6 +18,9 @@ it('No exam in room and showing next exam ', () => {
     cy.get("input").type("12")
     cy.intercept("GET", "/examgroups?cardnumber=18", {
       statusCode: 200,
+      headers: {
+        'content-type': 'application/vnd.fhws-examgroup.exambycardnumberview+json',
+      },
       body: [
         {
           names: text.nextExamTitle,
@@ -35,7 +38,7 @@ it('No exam in room and showing next exam ', () => {
 
   })
 
-  it('No exam in room and showing next exam ', () => {
+  it('No exam in room and no next exam ', () => {
     cy.intercept("GET", "/examgroups?room=H.1.1", {
       statusCode: 200,
       body: [{}]
@@ -46,6 +49,9 @@ it('No exam in room and showing next exam ', () => {
     cy.get("input").type("12")
     cy.intercept("GET", "/examgroups?cardnumber=18", {
       statusCode: 200,
+      headers: {
+        'content-type': 'application/vnd.fhws-examgroup.exambycardnumberview+json',
+      },
       body: []
     }).as("getCard")
     cy.wait("@getCard")
@@ -89,11 +95,17 @@ it('No exam in room and showing next exam ', () => {
   it('Exam in room right now and student is not registered', () => {
     cy.intercept("GET", "/examgroups?room=H.1.1", {
       statusCode: 200,
+      headers: {
+        "content-type": "application/vnd.fhws-examgroup.examroomdisplayview+json"
+      },
       body: body
     }).as("getRoom")
 
     cy.intercept("GET", "/examgroups/4000/scannedcards/8000", {
       statusCode: 200,
+      headers: {
+        'content-type': 'application/vnd.fhws-scannedcard.scannedcardview+json',
+      },
       body: {
         returnCode: text.isNotRegistered,
         returnText: text.isNotRegistered
@@ -103,7 +115,8 @@ it('No exam in room and showing next exam ', () => {
     cy.intercept("POST", '/examgroups/4000/scannedcards', (req) => {
       req.reply({
         headers: {
-          "location": "/4000/scannedcards/8000"
+          "location": "/4000/scannedcards/8000",
+          "accept": "application/vnd.fhws-scannedcard.scannedcardview+json"
         }
       })
     }).as("postCard")
@@ -122,11 +135,17 @@ it('No exam in room and showing next exam ', () => {
 
     cy.intercept("GET", "/examgroups?room=H.1.1", {
       statusCode: 200,
+      headers: {
+        "content-type": "application/vnd.fhws-examgroup.examroomdisplayview+json"
+      },
       body: body
     }).as("getRoom")
 
     cy.intercept("GET", "/examgroups/4000/scannedcards/8000", {
       statusCode: 200,
+      headers: {
+        'content-type': 'application/vnd.fhws-scannedcard.scannedcardview+json',
+      },
       body: {
         returnCode: text.isRegisteredCode,
         returnText: text.isRegistered
@@ -135,6 +154,9 @@ it('No exam in room and showing next exam ', () => {
 
     cy.intercept("GET", "/examgroups/4000/scannedcards/6000", {
       statusCode: 200,
+      headers: {
+        'content-type': 'application/vnd.fhws-scannedcard.scannedcardview+json',
+      },
       body: {
         returnCode: 300,
         returnText: "Prof"
@@ -143,6 +165,9 @@ it('No exam in room and showing next exam ', () => {
 
     cy.intercept("GET", "/examgroups/4000/scannedcards/1000", {
       statusCode: 200,
+      headers: {
+        'content-type': 'application/vnd.fhws-scannedcard.scannedcardview+json',
+      },
       body: {
         returnCode: 400,
         returnText: "xxx"
@@ -151,6 +176,9 @@ it('No exam in room and showing next exam ', () => {
 
     cy.intercept("GET", "/examgroups/4000/scannedcards/2000", {
       statusCode: 200,
+      headers: {
+        'content-type': 'application/vnd.fhws-scannedcard.scannedcardview+json',
+      },
       body: {
         returnCode: text.isNotRegisteredCode,
         returnText: text.isNotRegistered
@@ -159,6 +187,9 @@ it('No exam in room and showing next exam ', () => {
 
     cy.intercept("GET", "/examgroups/4000/examrooms", {
       statusCode: 200,
+      headers: {
+        'content-type': 'application/vnd.fhws-scannedcard.scannedcardview+json',
+      },
       body: {
         numberOfStudentsPlannedInRoom: 20,
         numberOfStudentsPresentInRoom: 10
@@ -170,7 +201,8 @@ it('No exam in room and showing next exam ', () => {
       if(req.body.idcardnumber == "19" && !req.body.parameter) {
         req.reply({
           headers: {
-            "location": "/4000/scannedcards/6000"
+            "location": "/4000/scannedcards/6000",
+            "accept": 'application/vnd.fhws-scannedcard.scannedcardview+json'
           }
         })
         req.alias = "postProfCard"
@@ -178,7 +210,8 @@ it('No exam in room and showing next exam ', () => {
       if(req.body.idcardnumber == "18") {
         req.reply({
           headers: {
-            "location": "/4000/scannedcards/8000"
+            "location": "/4000/scannedcards/8000",
+            "accept": 'application/vnd.fhws-scannedcard.scannedcardview+json'
           }
         })
         req.alias = "postStudentCard"
@@ -186,7 +219,8 @@ it('No exam in room and showing next exam ', () => {
       if(req.body.idcardnumber == "20") {
         req.reply({
           headers: {
-            "location": "/4000/scannedcards/2000"
+            "location": "/4000/scannedcards/2000",
+            "accept": 'application/vnd.fhws-scannedcard.scannedcardview+json'
           }
         })
         req.alias = "postNotRegisteredCard"
@@ -194,7 +228,8 @@ it('No exam in room and showing next exam ', () => {
       if(req.body.parameter == 1) {
         req.reply({
           headers: {
-            "location": "/4000/scannedcards/1000"
+            "location": "/4000/scannedcards/1000",
+            "accept": 'application/vnd.fhws-scannedcard.scannedcardview+json'
           }
         })
         req.alias = "postProfStartCard"

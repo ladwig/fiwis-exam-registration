@@ -81,7 +81,7 @@ export const actions = {
         cardnumber: cardnumber //36104139103212548
       },
       headers: {
-     //   "Accept": process.env.NEXT_EXAM_ACCEPT_HEADER
+     // "Accept": process.env.NEXT_EXAM_ACCEPT_HEADER
       }
     })
       .then((response)  => {
@@ -128,7 +128,7 @@ export const actions = {
       }
    this.$axios.post(`${context.rootState.exam.examID}/scannedcards`, body, {
       headers: {
-       // "Content-Type": process.env.SCANNED_CARD_CONTENT_TYPE_HEADER
+     // "Content-Type":"application/vnd.fhws-scannedcard.scannedcardview+json"
       }
     })
       .then((response) => {
@@ -136,7 +136,7 @@ export const actions = {
         console.log(response.headers)
         this.$axios.get(resURL, {
           headers: {
-          //  "Accept": process.env.SCANNED_CARD_ACCEPT_HEADER
+      //      "Accept": "application/vnd.fhws-scannedcard.scannedcardview+json"
           }
         })
           .then((response) => {
@@ -191,24 +191,23 @@ export const actions = {
 
   requestModeChange(context, action) {
     let body = null
-    alert("ok")
       if(action === "start") {
         body = {
-          idcardnumber: context.state.cardNumber, //33
+          idcardnumber:  33, //context.state.cardNumber //33
           room: context.rootState.roomName,
           parameter: 1,
         }
       }
     else if(action === "stop") {
       body = {
-        idcardnumber: 33,  // change to !!!! -> context.state.cardNumber
+        idcardnumber: context.state.cardNumber, //33
         room: context.rootState.roomName,
         parameter: 1, //stop code? 2?
       }
     }
     this.$axios.post(`${context.rootState.exam.examID}/scannedcards`, body, {
       headers: {
-        // "Content-Type": process.env.SCANNED_CARD_CONTENT_TYPE_HEADER
+    //  "Content-Type": process.env.SCANNED_CARD_CONTENT_TYPE_HEADER
       }
     })
       .then((response) => {
@@ -216,7 +215,7 @@ export const actions = {
         console.log(response.headers)
         this.$axios.get(resURL, {
           headers: {
-            //  "Accept": process.env.SCANNED_CARD_ACCEPT_HEADER
+       //     "Accept": process.env.SCANNED_CARD_ACCEPT_HEADER
           }
         })
           .then((response) => {
