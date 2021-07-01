@@ -8,7 +8,7 @@
     <settings-alert v-if="this.isExaminer" :mode-exam-register="modeExamRegister"></settings-alert>
 
     <!-- Popup when there is an error -->
-    <error-message-alert v-if="errorMessage.error"></error-message-alert>
+    <error-message-alert v-if="errorMessage"></error-message-alert>
 
     <v-row v-if="roomName!=null" no-gutters class="top-row flex-grow-1 flex-shrink-1">
 
@@ -103,7 +103,6 @@ export default {
 
 .grid-item-bottom {
   background-color: var(--v-secondary-base);
-
 }
 
 .fill-parent-height {

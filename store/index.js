@@ -2,13 +2,9 @@ export const state = () => ({
     roomName: null,
     modeJustCheck: true, // No exam found
     modeExamInProgress: null, // Exam time + X time before and after -> X = exam/timeBeforeAfterExam
-    modeExamRegister: false, // Registermode active
-    errorMessage: {
-      error: false,
-      msgNmbr: null,
-      response: null
-    },
-    cardIsLoading: false // True when API calls are made and returns displayed
+    modeExamRegister: false, 
+    errorMessage: null,
+    cardIsLoading: false // True when API calls are made
   }
 )
 
@@ -25,10 +21,8 @@ export const mutations = {
     state.modeExamRegister = modeExamRegister
   },
 
-  setErrorMessage(state, data) {
-    state.errorMessage.error = data[0]
-    state.errorMessage.msgNmbr = data[1]
-    state.errorMessage.response = data[2]
+  setErrorMessage(state, msg) {
+    state.errorMessage = msg
   },
 
   setCardIsLoading(state, cardIsLoading) {

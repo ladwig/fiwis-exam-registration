@@ -12,8 +12,9 @@
         max-width="150"
         contain
       ></v-img> -->
-      <v-toolbar-title class="font-weight-bold display-1 pl-10 darker--text">{{ roomName }}</v-toolbar-title>
+      <v-toolbar-title @click="reloadPage()" class="font-weight-bold display-1 pl-10 darker--text">{{ roomName }}</v-toolbar-title>
       <v-icon v-if="$nuxt.isOffline" color="primary">mdi-wifi-strength-alert-outline</v-icon>
+      <v-button @click="changeMode()">Mode</v-button>
       <v-spacer></v-spacer>
       <display-clock></display-clock>
     </v-app-bar>
@@ -24,7 +25,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import {mapActions, mapState} from "vuex";
 
 export default {
   computed: {
@@ -33,22 +34,13 @@ export default {
     ])
   },
   methods: {
-    axiosTestFunction() {
-      this.$axios.get('', {
-        params: {
-          room: 'H.1.1'
-        }
-      })
-        .then(function (response) {
-          console.log(response.data);
-        })
-        .catch(function (error) {
-          console.log(error);
-        })
-        .then(function () {
-          // always executed
-        });
+    ...mapActions(['currentCard/checkCardForThisExam']),
+    reloadPage() {
+      window.location.reload(true)
     },
+    changeMode() {
+      this['currentCard/checkCardForThisExam'](1234)
+    }
   },
   created() {
 

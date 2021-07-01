@@ -80,16 +80,7 @@ export const actions = {
           )
       })
       .catch(err => {
-        if(err.response) {
-          console.error(err.response)
-        }
-        else if(err.request) {
-          context.commit("setErrorMessage", [true, 0], {root: true})
-          console.error("Can't get a response, maybe the connection to the API failed!")
-        }
-        else {
-          console.error(err.message);
-        }
+          context.commit("setErrorMessage", err, {root: true})
       })
   },
 
@@ -137,16 +128,7 @@ export const actions = {
           })
       })
       .catch(err => {
-        if(err.response) {
-          console.error(err.response)
-        }
-        else if(err.request) {
-          context.commit("setErrorMessage", [true, 0], {root: true})
-          console.error("Can't get a response, maybe the connection to the API failed!")
-        }
-        else {
-          console.error(err.message);
-        }
+        context.commit("setErrorMessage", err, {root: true})
       })
   },
 
@@ -206,16 +188,7 @@ export const actions = {
           })
       })
       .catch(err => {
-        if(err.response) {
-          console.error(err.response)
-        }
-        else if(err.request) {
-          context.commit("setErrorMessage", [true, 0], {root: true})
-          console.error("Can't get a response, maybe the connection to the API failed!")
-        }
-        else {
-          console.error(err.message);
-        }
+        context.commit("setErrorMessage", err, {root: true})
       })
   },
 

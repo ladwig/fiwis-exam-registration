@@ -6,11 +6,12 @@
     >
       <v-card>
         <v-card-title class="headline">
-          {{ $t('errorMessageAlert.itsAError') }}
+          {{ $t('errorMessageAlert.errorHeadline') }}
         </v-card-title>
         <v-card-text>
-          {{messages[errorMessage.msgNmbr]}}
-          {{errorMessage.response}}
+          {{ $t('errorMessageAlert.errorMore') }}
+          <br>
+         <b class="red--text">{{errorMessage.response}} {{errorMessage.message}}</b>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -34,10 +35,6 @@ export default {
   data() {
     return {
       dialog: true,
-      messages: [
-      "Keine Verbindung zur FIWIS API möglich. Bitte nochmals probieren. Falls der Fehler weiterhin auftritt, überprüfen Sie die Internetverbindung oder kontaktieren Sie einen Administrator.",
-        "Fehlermeldung vom Server:",
-      ]
     }
   },
   computed: {
@@ -53,7 +50,7 @@ export default {
     ),
     closePopup() {
       this.dialog = false
-      this.setErrorMessage([false, null, null])
+      this.setErrorMessage(null)
       this.setCardIsLoading(false)
     }
   }

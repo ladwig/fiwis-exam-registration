@@ -102,15 +102,7 @@ export const actions = {
         context.dispatch("processRoomForExam", response.data)
       })
       .catch(err => {
-        if (err.response) {
-          context.commit("setErrorMessage", [true, 1, err.response], {root: true})
-          console.error(err.response)
-        } else if (err.request) {
-          context.commit("setErrorMessage", [true, 0], {root: true})
-          console.log(context.rootState.errorMessage)
-        } else {
-          console.error(err.message);
-        }
+        context.commit("setErrorMessage", err, {root: true})
       })
   },
 
@@ -172,14 +164,7 @@ export const actions = {
           context.commit("setNumberOfStudentsPresentInRoom", response[0].numberOfStudentsPresentInRoom)
         }
       } catch(err) {
-        if (err.response) {
-          console.error(err.response)
-        } else if (err.request) {
-          context.commit("setErrorMessage", [true, 0], {root: true})
-          console.log(context.rootState.errorMessage)
-        } else {
-          console.error(err.message);
-        }
+        context.commit("setErrorMessage", err, {root: true})
       }
     }
   },

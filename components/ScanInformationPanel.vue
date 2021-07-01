@@ -1,12 +1,17 @@
+<!-- "generic" component, used for CurrentExamInfo and NextExamInfo -->
 <template>
-  <!-- "generic" component, used for CurrentExamInfo and NextExamInfo -->
-  <div>
+  <v-container>
     <h2 class="display-3 darker--text font-weight-regular"> {{ headline }} </h2>
-    <div class="mt-2">
-      <v-icon color="darker" size="24" class="middle"> {{ icon }} </v-icon>
-      <div class="d-inline-block headline font-weight-regular darker--text middle"> {{ returnText ? returnText : more }} </div>
-    </div>
-  </div>
+    <v-row no-gutters class="mt-2" >
+      <v-col align="center"
+             justify="center" cols="auto" class="ma-0 pa-0 mr-3">
+        <v-icon color="darker" size="36"> {{ icon }} </v-icon>
+      </v-col>
+      <v-col  class="ma-0 pa-0">
+        <div class="headline font-weight-regular darker--text "> {{ returnText ? returnText : more }} </div>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -24,8 +29,5 @@ export default {
 </script>
 
 <style scoped>
-.middle {
-  vertical-align: middle
-}
 
 </style>

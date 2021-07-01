@@ -15,7 +15,8 @@
     "suffix": "Uhr"
   },
   "errorMessageAlert": {
-    "itsAError": "Fehler aufgetreten"
+    "errorHeadline": "Fehler aufgetreten",
+    "errorMore": "Versuchen Sie, die vorherige Aktion nochmals auszuführen oder starten Sie das Gerät neu. Andernfalls wenden Sie sich bitte an einen technischen Mitarbeiter. Fehlermeldung:"
   },
   "settingsAlert": {
     "settingsAlertHeadline": "Einstellungen",
