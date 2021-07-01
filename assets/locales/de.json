@@ -22,8 +22,7 @@
     "settingsAlertMore": "Starten Sie die Prüfungsregistierung, sodass Studierende ihre Anwesenheit ab sofort bestätigen können oder legen Sie einen neuen Raum fest. Zum Beenden des Registrierungsmodus, scannen sie ihren Ausweis nochmals ein.",
     "restart": "Neu starten",
     "cancel": "Abbrechen",
-    "start": "Registierung",
-    "stop": "Stop"
+    "start": "Registierung"
   },
   "studentsInRoom": {
     "noSeats": "Keine Plätze mehr frei, bitte nutzen Sie alternativ:",

@@ -111,7 +111,7 @@ export const actions = {
 
   checkCardForThisExam(context, cardnumber) {
     const body = {
-      idcardnumber: "1234", //cardnumber
+      idcardnumber: cardnumber,
       room: context.rootState.roomName,
     }
     this.$axios.post(`${context.rootState.exam.examID}/scannedcards`, body, {
@@ -165,7 +165,7 @@ export const actions = {
 
       switch (data.returnCode) {
         case 300:
-          context.commit("setCardNumber", 1234) //evtl [cardnumber]
+          context.commit("setCardNumber", cardnumber) //evtl [cardnumber]
           context.commit("setIsExaminer", true)
           break
         case 500:
