@@ -5,6 +5,9 @@ export const body = [ {
   totalNumberOfParticipants: 50,
   startTime: new Date(2020, 6, 24, 20, 0, 0),
   stopTime: new Date(2020, 6, 24, 21, 0, 0),
+  examroomUrl: {
+    href: "/4000/examrooms"
+  }
 }]
 
 export const text = {
@@ -17,7 +20,7 @@ export const text = {
   nextExamRoom: "VCC",
   noNextExam:  "Keine weitere Prüfung gefunden",
   startButton: "registierung",
-  registerNow: "Prüfung anmelden",
+  registerNow: "Anwesenheit bestätigen",
   popupHeadline: "registrierung",
   cancelButton: "abbrechen",
   restartButton: "neu starten",

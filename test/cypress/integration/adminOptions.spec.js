@@ -16,6 +16,19 @@ describe('Checking all admin / examiner options', () => {
       },
     }).as("getProfCard")
 
+    cy.intercept("GET", "/examgroups/4000/examrooms", {
+      statusCode: 200,
+      body: [
+        {
+          roomName: "H.1.2",
+          examRegistrationState: 1
+        },
+        {
+        roomName: "H.1.1",
+        examRegistrationState: 0
+        }
+      ]
+    })
 
     cy.visit('/')
     cy.contains('H.1.1').click()
