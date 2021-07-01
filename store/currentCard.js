@@ -111,7 +111,7 @@ export const actions = {
 
   checkCardForThisExam(context, cardnumber) {
     const body = {
-      idcardnumber: "36128986163148548", //cardnumber
+      idcardnumber: "1234", //cardnumber
       room: context.rootState.roomName,
     }
     this.$axios.post(`${context.rootState.exam.examID}/scannedcards`, body, {
@@ -153,45 +153,41 @@ export const actions = {
   processCardForThisExam(context, [data, cardnumber]) {
     console.log(data)
     return new Promise( resolve => {
-      if(data.returnText) {
+      if(data.returnText && data.returnCode != 300) {
         context.commit("setReturnText", data.returnText)
-      } else {
-        context.commit("setReturnText", "Fehler: Kein returnText verfübar")
       }
-      if([300, 500, 600].indexOf(data.returnCode) >= 0) {
+      if([300, 500, 600, 800].indexOf(data.returnCode) >= 0) {
         context.dispatch("returnDecision", true)
       }
       else {
         context.dispatch("returnDecision", false)
       }
 
-      if (data.returnCode === 300) {
-        context.commit("setCardNumber", cardnumber) //evtl [cardnumber]
-        context.commit("setIsExaminer", true)
+      switch (data.returnCode) {
+        case 300:
+          context.commit("setCardNumber", 1234) //evtl [cardnumber]
+          context.commit("setIsExaminer", true)
+          break
+        case 500:
+          context.commit("setIsRegisteredStudent")
+          break
+        case 800:
+          context.commit("setModeExamRegister", false, {root: true})
+          break
+        default:
+          break
       }
-      else if (data.returnCode === 500) {
-        context.commit("setIsRegisteredStudent")
-      }
-
       resolve()
     })
   },
 
-  requestModeChange(context, action) {
-    let body = null
-    if(action === "start") {
-      body = {
-        idcardnumber:  context.state.cardNumber,
-        room: context.rootState.roomName,
-        parameter: 1,
-      }
-    }
-    else if(action === "stop") {
-      body = {
-        idcardnumber: context.state.cardNumber,
-        room: context.rootState.roomName,
-      }
-    }
+  startModeExamRegister(context) {
+     const body = {
+       idcardnumber: context.state.cardNumber,
+       room: context.rootState.roomName,
+       parameter: 1
+     }
+
     this.$axios.post(`${context.rootState.exam.examID}/scannedcards`, body, {
       headers: {
           "Content-Type": process.env.SCANNED_CARD_CONTENT_TYPE_HEADER
@@ -227,9 +223,6 @@ export const actions = {
     context.commit("setCardNumber", null)
     if(data.returnCode == 400) {
       context.commit("setModeExamRegister", true, {root: true})
-    }
-    else if(data.returnCode == 800) {
-      context.commit("setModeExamRegister", false, {root: true})
     }
   },
 

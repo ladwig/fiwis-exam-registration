@@ -127,7 +127,7 @@ export const actions = {
       context.commit("setModeExamInProgress", true, {root: true})
       context.dispatch("checkExamModeStatus", e.examroomUrl.href)
         .then((status) => {
-          context.commit("setExamModeStatus", status)
+          context.commit("setModeExamRegister", status, {root: true})
         })
 
 /*      const now = new Date();
@@ -147,7 +147,13 @@ export const actions = {
       }
     })
    const roomDataIndex = res.data.findIndex(a => a.roomName == context.rootState.roomName)
-   return res.data[roomDataIndex].examRegistrationState
+   const state = res.data[roomDataIndex].examRegistrationState
+   if(state == 0) {
+     return false
+   }
+   else if (state == 1) {
+     return true
+   }
   },
 
   //Checks how many students are in the room
