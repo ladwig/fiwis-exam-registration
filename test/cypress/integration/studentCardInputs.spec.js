@@ -248,6 +248,7 @@ it('No exam in room and showing next exam ', () => {
     expect(cy.contains(text.registerNow))
     cy.get("input").type("12")
     cy.wait("@postStudentCard")
+    cy.wait("@updateStudentsInRoom")
     expect(cy.contains(text.isRegistered))
     cy.wait(4000)
     expect(cy.contains(text.registerNow))

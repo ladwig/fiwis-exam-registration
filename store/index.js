@@ -2,7 +2,7 @@ export const state = () => ({
     roomName: null,
     modeJustCheck: true, // No exam found
     modeExamInProgress: null, // Exam time + X time before and after -> X = exam/timeBeforeAfterExam
-    modeExamRegister: false, 
+    modeExamRegister: false,
     errorMessage: null,
     cardIsLoading: false // True when API calls are made
   }

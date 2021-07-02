@@ -83,6 +83,10 @@ export const getters = {
       minute: 'numeric',
     })
   },
+
+  getFreeSeats(state) {
+    return (state.numberOfStudentsPlannedInRoom - state.numberOfStudentsPresentInRoom)
+  },
 }
 
 export const actions = {
@@ -95,7 +99,7 @@ export const actions = {
         room: context.rootState.roomName
       },
       headers: {
-       "Accept": process.env.EXAM_NAME_ACCEPT_HEADER
+        "Accept": process.env.EXAM_NAME_ACCEPT_HEADER
       }
     })
       .then((response) => {

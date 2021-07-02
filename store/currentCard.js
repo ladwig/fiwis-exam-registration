@@ -101,6 +101,7 @@ export const actions = {
   },
 
   checkCardForThisExam(context, cardnumber) {
+    alert(cardnumber)
     const body = {
       idcardnumber: cardnumber,
       room: context.rootState.roomName,

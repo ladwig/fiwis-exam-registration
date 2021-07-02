@@ -1,17 +1,21 @@
 <template>
-  <v-container class="pa-0 ma-0 headline">
-    <div v-if="numberOfStudentsPresentInRoom == numberOfStudentsPlannedInRoom">
+  <v-container class="pa-0 ma-0 headline font-weight-regular">
+    <div v-if="freeSeats <= 0">
       {{ $t('studentsInRoom.noSeats') }}<b> {{
         examRooms
       }}</b></div>
-    <div v-else>{{ $t('studentsInRoom.roomOccupation') }} <b>{{ numberOfStudentsPlannedInRoom - numberOfStudentsPresentInRoom }}</b> {{ $t('studentsInRoom.connective') }}
-      <b>{{ numberOfStudentsPlannedInRoom }}</b> {{ $t('studentsInRoom.freeSeats') }}
+    <div v-else>
+      {{ $t('studentsInRoom.roomOccupation') }}
+      <b>
+        {{ freeSeats }}</b> {{ $t('studentsInRoom.connective') }}
+      <b>
+        {{ numberOfStudentsPlannedInRoom }}</b> {{ $t('studentsInRoom.freeSeats') }}
     </div>
   </v-container>
 </template>
 
 <script>
-import {mapActions, mapState} from "vuex";
+import {mapActions, mapState, mapGetters} from "vuex";
 
 export default {
   name: "StudentsInRoom",
@@ -25,6 +29,9 @@ export default {
       examRooms: state => state.exam.examRooms,
       numberOfStudentsPlannedInRoom: state => state.exam.numberOfStudentsPlannedInRoom,
       numberOfStudentsPresentInRoom: state => state.exam.numberOfStudentsPresentInRoom
+    }),
+    ...mapGetters({
+      freeSeats: "exam/getFreeSeats"
     })
   },
   methods: {
