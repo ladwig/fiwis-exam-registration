@@ -4,7 +4,6 @@ export const state = () => ({
   startTime: null, // "2021-04-02T20:00:00+02:00"
   stopTime: null,
   examRooms: null, // "H.1.2, H.1.3"
-  examModeStatus: 0,
   numberOfParticipants: null,
   numberOfStudentsPlannedInRoom: null,
   numberOfStudentsPresentInRoom: null,
@@ -49,10 +48,6 @@ export const mutations = {
 
   setExamRooms(state, examRooms) {
     state.examRooms = examRooms;
-  },
-
-  setExamModeStatus(state, examModeStatus) {
-    state.examModeStatus = examModeStatus;
   },
 }
 
