@@ -51,14 +51,19 @@ export const actions = {
   },
 
   async checkCard(context, cardnumber) {
-    const cardID = await context.dispatch("cardNum2String", cardnumber)
-    // If no exam (+-1h) found -> Students can check there next exam
-    if (!context.rootState.modeExamInProgress){
-      context.dispatch("checkCardForNextExam", cardID)
+    if(cardnumber != null) {
+      const cardID = await context.dispatch("cardNum2String", cardnumber)
+      // If no exam (+-1h) found -> Students can check there next exam
+      if (!context.rootState.modeExamInProgress){
+        context.dispatch("checkCardForNextExam", cardID)
+      }
+      // If exam is in progress right now +-1h
+      else {
+        context.dispatch("checkCardForThisExam", cardID)
+      }
     }
-    // If exam is in progress right now +-1h
     else {
-      context.dispatch("checkCardForThisExam", cardID)
+      console.error("No input")
     }
   },
 
@@ -101,7 +106,6 @@ export const actions = {
   },
 
   checkCardForThisExam(context, cardnumber) {
-    alert(cardnumber)
     const body = {
       idcardnumber: cardnumber,
       room: context.rootState.roomName,
@@ -134,7 +138,6 @@ export const actions = {
   },
 
   processCardForThisExam(context, [data, cardnumber]) {
-    console.log(data)
     return new Promise( resolve => {
       if(data.returnText && data.returnCode != 300) {
         context.commit("setReturnText", data.returnText)
@@ -214,7 +217,6 @@ export const actions = {
 
   //HelperFunction: Converting the scanned card to a matchable string for FIWIS
   cardNum2String(context, cardnumber) {
-    console.log(cardnumber)
     const converter = require('hex2dec');
     return String(
       converter.hexToDec(

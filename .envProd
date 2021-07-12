@@ -1,8 +1,0 @@
-BROWSER_BASE_URL = http://192.168.178.76:8000/examgroups
-BASE_URL =  http://192.168.178.76:8000/examgroups
-
-BROWSER_BASE_URL = http://192.168.178.76:8000/examgroups
-BASE_URL =  http://192.168.178.76:8000/examgroups
-
-BROWSER_BASE_URL = https://apistaging.fiw.fhws.de/fiwis2/api/examgroups
-BASE_URL =  https://apistaging.fiw.fhws.de/fiwis2/api/examgroups

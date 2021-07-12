@@ -3,7 +3,7 @@
     <v-dialog
       v-model="dialog"
       persistent
-      max-width="400"
+      max-width="600"
     >
       <v-card>
         <v-card-title class="headline">
@@ -12,6 +12,14 @@
         <v-card-text>{{ $t('settingsAlert.settingsAlertMore') }}
         </v-card-text>
         <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-select
+            v-model="$i18n.locale"
+            :items="langs"
+            :label="$t('language')"
+            dense
+          >
+          </v-select>
           <v-spacer></v-spacer>
           <v-btn
             color="secondary darken-4"
@@ -46,7 +54,8 @@ export default {
   name: "SettingsAlert",
   data() {
     return {
-      dialog: true
+      dialog: true,
+      langs: ['en', 'de']
     }
   },
   computed: {

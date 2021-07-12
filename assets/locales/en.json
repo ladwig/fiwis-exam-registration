@@ -1,7 +1,45 @@
 {
-  "pleaseSelectRoom": "Please select a room:",
-  "login": {
-    "username": "User Name",
-    "password": "Password"
-  }
+	"currentExamInfo": {
+		"checkStatusHeadline": "Check registration",
+		"checkStatusMore": "Scan ID card to check your registration",
+		"registerForExamNowHeadline": "Confirm presence",
+		"registerForExamNowMore": "When scanning your ID card, you confirm participation in the exam!"
+	},
+	"currentExamName": {
+		"noExamInRoom": "Currently there is no exam in this room"
+	},
+	"currentExamTime": {
+		"dontDisturb": "Prüfung: Bitte nicht stören!"
+	},
+	"displayClock": {
+		"suffix": ""
+	},
+	"errorMessageAlert": {
+		"errorHeadline": "Error occurred",
+		"errorMore": "Try to perform the previous action again or restart the device. Otherwise, please contact a technical representative. Error message:"
+	},
+	"moreInformationStandardText": "Since 01.10.2019 the new APO is valid, according to this the formal and timely registration is a prerequisite for the participation in an examination.",
+  "language": "Language",
+	"nextExamInfo": {
+		"noExamToday": "You are not registered for another exam ",
+		"showNextExamHeadline": "Check your next exam",
+		"showNextExamMore": "Scan your card to check your next exam",
+		"yourNextExam": "Your next exam:"
+	},
+	"setExamRoom": {
+		"pleaseSelectRoom": "Please select a room:"
+	},
+	"settingsAlert": {
+		"cancel": "Cancel ",
+		"restart": "Restart",
+		"settingsAlertHeadline": "Settings",
+		"settingsAlertMore": "Start the exam registration so that students can confirm their attendance or set a new room. To exit registration mode, scan your card again.",
+		"start": "Registration"
+	},
+	"studentsInRoom": {
+		"connective": "out of",
+		"freeSeats": "seats free",
+		"noSeats": "No more seats available, please use room:",
+		"roomOccupation": "Room occupancy"
+	}
 }

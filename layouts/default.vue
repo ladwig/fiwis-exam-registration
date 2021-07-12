@@ -14,7 +14,8 @@
       ></v-img> -->
       <v-toolbar-title @click="reloadPage()" class="font-weight-bold display-1 pl-10 darker--text">{{ roomName }}</v-toolbar-title>
       <v-icon v-if="$nuxt.isOffline" color="primary">mdi-wifi-strength-alert-outline</v-icon>
-      <v-btn @click="changeMode()">Mode</v-btn> <v-btn @click="regist()">Regist</v-btn>
+      <v-btn @click="changeMode()">Mode</v-btn>
+      <v-btn @click="regist()">Regist</v-btn>
       <v-spacer></v-spacer>
       <display-clock></display-clock>
     </v-app-bar>
@@ -43,7 +44,7 @@ export default {
     },
     regist() {
       this['currentCard/checkCardForThisExam']("36128986026611204")
-    }
+    },
   },
   created() {
 

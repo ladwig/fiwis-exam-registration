@@ -126,13 +126,13 @@ export const actions = {
           context.commit("setModeExamRegister", status, {root: true})
         })
 
-/*      const now = new Date();
+     const now = new Date();
       if (now.getTime() >= (new Date(context.state.startTime).getTime() - context.state.timeBeforeAfterExam) && now.getTime() <= (new Date(context.state.stopTime).getTime()) + context.state.timeBeforeAfterExam) {
         context.commit("setModeExamInProgress", true, {root: true})
       }
       else {
         context.commit("setModeExamInProgress", false, {root: true})
-      }*/
+      }
     }
   },
 
@@ -156,16 +156,17 @@ export const actions = {
   async updateNumberOfStudentsInRoom(context) {
     if(context.rootState.modeExamRegister) {
       try {
-        const response = (
+        const res = (
           await this.$axios.get(`${context.state.examID}/examrooms`, {
             headers: {
               "Accept": process.env.EXAM_ROOMS_ACCEPT_HEADER
             }
           })
         ).data;
-        if(response.length > 0) {
-          context.commit("setNumberOfStudentsPlannedInRoom", response[0].numberOfStudentsPlannedInRoom)
-          context.commit("setNumberOfStudentsPresentInRoom", response[0].numberOfStudentsPresentInRoom)
+        if(res.length > 0) {
+          const roomDataIndex = res.findIndex(a => a.roomName == context.rootState.roomName)
+          context.commit("setNumberOfStudentsPlannedInRoom", res[roomDataIndex].numberOfStudentsPlannedInRoom)
+          context.commit("setNumberOfStudentsPresentInRoom", res[roomDataIndex].numberOfStudentsPresentInRoom)
         }
       } catch(err) {
         context.commit("setErrorMessage", err, {root: true})

@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid pa-0 class="d-flex flex-column flex-grow-1 fill-parent-height pa-0">
+  <v-container fluid class="d-flex flex-column flex-grow-1 fill-parent-height pa-0">
 
     <!-- Select a room, first page -->
     <set-exam-room v-if="roomName===null"></set-exam-room>

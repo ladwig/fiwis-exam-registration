@@ -7,7 +7,7 @@
              justify="center" cols="auto" class="ma-0 pa-0 mr-3">
         <v-icon color="darker" size="36"> {{ icon }} </v-icon>
       </v-col>
-      <v-col  class="ma-0 pa-0">
+      <v-col  cols="10" class="ma-0 pa-0">
         <div class="headline font-weight-regular darker--text "> {{ returnText ? returnText : more }} </div>
       </v-col>
     </v-row>
