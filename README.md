@@ -19,4 +19,4 @@ $ npm run generate
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
 
-[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-black.svg)](https://sonarcloud.io/dashboard?id=ladwig_fiwis-exam-registration)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ladwig_fiwis-exam-registration&metric=alert_status)](https://sonarcloud.io/dashboard?id=ladwig_fiwis-exam-registration)
