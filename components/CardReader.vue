@@ -59,7 +59,6 @@ export default {
     typeNFC(event) {
       if (event.target.value == "") {
         setTimeout(() => {
-        console.log(event.target.value)
           this['currentCard/checkCard'](event.target.value)
         }, 420)
         this.setCardIsLoading(true)

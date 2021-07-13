@@ -9,7 +9,7 @@
     >
       {{ getStartTimeWithoutDate }} – {{ getStopTimeWithoutDate }} Uhr
     </v-chip>
-    <v-chip v-if="new Date(startTime) < new Date()"
+    <v-chip v-if="new Date(startTime) < now"
       color="secondary"
       label
       outlined
@@ -25,6 +25,11 @@ import {mapState} from "vuex";
 
 export default {
   name: "CurrentExamTime",
+  data() {
+    return {
+      now: new Date()
+    }
+  },
   computed: {
     ...mapState({
       startTime: state => state.exam.startTime
@@ -38,13 +43,17 @@ export default {
     getStartTimeWithoutDate(state) {
       return this.$store.getters["exam/getStartTimeWithoutDate"]
     }
+  },
+
+  updated() {
+    this.now = new Date()
   }
 }
 </script>
 
 <style scoped>
 .blink {
-  animation: blinker 1.5s step-start infinite;
+ /* animation: blinker 1.5s step-start infinite; */
 }
 
 @keyframes blinker {

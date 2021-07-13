@@ -21,10 +21,10 @@
         <current-exam-time v-if="modeExamInProgress" class="mt-5"></current-exam-time>
 
         <!-- Current number of studends in room and room full warning -->
-        <students-in-room v-if="modeExamRegister" class="mt-5"></students-in-room>
+        <students-in-room v-if="modeExamRegister && modeExamInProgress" class="mt-5"></students-in-room>
       </v-col>
     </v-row>
-    <v-row v-if="roomName!=null" no-gutters class="bottom-row flex-grow-0 flex-shrink-0 grid-item-bottom">
+    <v-row v-if="roomName!=null" no-gutters class="bottom-row flex-grow-0 flex-shrink-0 pb-3 grid-item-bottom">
       <v-col cols="12">
 
         <!-- Shows loading status when card is scanned -->

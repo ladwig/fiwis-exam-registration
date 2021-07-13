@@ -51,7 +51,7 @@ export const actions = {
   },
 
   async checkCard(context, cardnumber) {
-    if(cardnumber != null) {
+    console.log(cardnumber)
       const cardID = await context.dispatch("cardNum2String", cardnumber)
       // If no exam (+-1h) found -> Students can check there next exam
       if (!context.rootState.modeExamInProgress){
@@ -61,17 +61,13 @@ export const actions = {
       else {
         context.dispatch("checkCardForThisExam", cardID)
       }
-    }
-    else {
-      console.error("No input")
-    }
   },
 
   //Gets called when there is no exam atm and card gets scanned
   checkCardForNextExam(context, cardnumber) {
     this.$axios.get('', {
       params: {
-        cardnumber: "36104139103212548", //cardnumber
+        cardnumber: cardnumber, //cardnumber "36104139103212548",
       },
       headers: {
         "Accept": process.env.NEXT_EXAM_ACCEPT_HEADER
@@ -94,11 +90,9 @@ export const actions = {
       if (data.length > 0) {
         context.commit("setIsThereNextExam", true)
         const e = data[0]
-        context.commit("exam/setExamName", e.names, {root: true})
-        context.commit("exam/setStartTime", e.startTime, {root: true})
-        context.commit("exam/setStopTime", e.stopTime, {root: true})
-        context.commit("exam/setExamRooms", e.roomNames, {root: true})
+        context.commit("currentCard/setReturnText", [e.names, e.startTime, e.stopTime, e.roomNames], {root: true}) // TODO: Own state for this type of data, not returnText
       } else {
+        context.commit(this.$i18n.t())
         context.commit("setIsThereNextExam", false)
       }
       resolve()
@@ -217,15 +211,20 @@ export const actions = {
 
   //HelperFunction: Converting the scanned card to a matchable string for FIWIS
   cardNum2String(context, cardnumber) {
-    const converter = require('hex2dec');
-    return String(
-      converter.hexToDec(
-        cardnumber
-          .match(/.{1,2}/g)
-          .reverse()
-          .join(""),
-        16
+    try {
+      const converter = require('hex2dec');
+      return String(
+        converter.hexToDec(
+          cardnumber
+            .match(/.{1,2}/g)
+            .reverse()
+            .join(""),
+          16
+        )
       )
-    )
+    } catch (err) {
+      context.commit("setErrorMessage", err, {root: true})
+    }
+
   },
 }
