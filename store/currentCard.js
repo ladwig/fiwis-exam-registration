@@ -67,7 +67,7 @@ export const actions = {
   checkCardForNextExam(context, cardnumber) {
     this.$axios.get('', {
       params: {
-        cardnumber: cardnumber, //cardnumber "36104139103212548",
+        cardnumber: "36104139103212548", //cardnumber
       },
       headers: {
         "Accept": process.env.NEXT_EXAM_ACCEPT_HEADER
@@ -90,9 +90,11 @@ export const actions = {
       if (data.length > 0) {
         context.commit("setIsThereNextExam", true)
         const e = data[0]
-        context.commit("currentCard/setReturnText", [e.names, e.startTime, e.stopTime, e.roomNames], {root: true}) // TODO: Own state for this type of data, not returnText
+        context.commit("exam/setExamName", e.names, {root: true})
+        context.commit("exam/setStartTime", e.startTime, {root: true})
+        context.commit("exam/setStopTime", e.stopTime, {root: true})
+        context.commit("exam/setExamRooms", e.roomNames, {root: true})
       } else {
-        context.commit(this.$i18n.t())
         context.commit("setIsThereNextExam", false)
       }
       resolve()
