@@ -17,7 +17,7 @@
       </li>
     </div>
     <div v-if="isThereNextExam == false">
-      Keine weitere Prüfung gefunden
+      {{ $t('nextExamInfo.noExamToday') }}
     </div>
   </div>
 

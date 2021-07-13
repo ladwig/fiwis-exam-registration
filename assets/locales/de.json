@@ -1,45 +1,45 @@
 {
-	"currentExamInfo": {
-		"checkStatusHeadline": "Anmeldung prüfen",
-		"checkStatusMore": "Ausweis scannen, um zu prüfen ob Sie angemeldet sind.",
-		"registerForExamNowHeadline": "Anwesenheit bestätigen",
-		"registerForExamNowMore": "Beim Scannen Ihres Ausweises bestätigen Sie die Teilnahme an der Prüfung!"
-	},
-	"currentExamName": {
-		"noExamInRoom": "Derzeit findet keine Prüfung in diesem Raum statt"
-	},
-	"currentExamTime": {
-		"dontDisturb": "Prüfung: Bitte nicht stören!"
-	},
-	"displayClock": {
-		"suffix": "Uhr"
-	},
-	"errorMessageAlert": {
-		"errorHeadline": "Fehler aufgetreten",
-		"errorMore": "Versuchen Sie, die vorherige Aktion nochmals auszuführen oder starten Sie das Gerät neu. Andernfalls wenden Sie sich bitte an einen technischen Mitarbeiter. Fehlermeldung:"
-	},
-	"moreInformationStandardText": "Seit 01.10.2019 gilt die neue APO, hiernach ist für die Teilnahme an einer Prüfung die form- und fristgerechten Anmeldung Voraussetzung.",
+  "currentExamInfo": {
+    "checkStatusHeadline": "Anmeldung prüfen",
+    "checkStatusMore": "Ausweis scannen, um zu prüfen ob Sie angemeldet sind.",
+    "registerForExamNowHeadline": "Anwesenheit bestätigen",
+    "registerForExamNowMore": "Beim Scannen Ihres Ausweises bestätigen Sie die Teilnahme an der Prüfung!"
+  },
+  "currentExamName": {
+    "noExamInRoom": "Derzeit findet keine Prüfung in diesem Raum statt"
+  },
+  "currentExamTime": {
+    "dontDisturb": "Prüfung: Bitte nicht stören!"
+  },
+  "displayClock": {
+    "suffix": "Uhr"
+  },
+  "errorMessageAlert": {
+    "errorHeadline": "Fehler aufgetreten",
+    "errorMore": "Versuchen Sie, die vorherige Aktion nochmals auszuführen oder starten Sie das Gerät neu. Andernfalls wenden Sie sich bitte an einen technischen Mitarbeiter. Fehlermeldung:"
+  },
   "language": "Sprache",
+  "moreInformationStandardText": "Seit 01.10.2019 gilt die neue APO, hiernach ist für die Teilnahme an einer Prüfung die form- und fristgerechten Anmeldung Voraussetzung.",
   "nextExamInfo": {
-		"noExamToday": "Sie sind für keine weitere Prüfung angemeldet",
-		"showNextExamHeadline": "Ihre nächste Prüfung anzeigen",
-		"showNextExamMore": "Scannen Sie Ihren Ausweis, um Ihre nächste Prüfung anzuzeigen",
-		"yourNextExam": "Ihre nächste Prüfung:"
-	},
-	"setExamRoom": {
-		"pleaseSelectRoom": "Bitte wählen Sie einen Raum:"
-	},
-	"settingsAlert": {
-		"cancel": "Abbrechen",
-		"restart": "Neu starten",
-		"settingsAlertHeadline": "Einstellungen",
-		"settingsAlertMore": "Starten Sie die Prüfungsregistierung, sodass Studierende ihre Anwesenheit ab sofort bestätigen können oder legen Sie einen neuen Raum fest. ",
-		"start": "Registierung"
-	},
-	"studentsInRoom": {
-		"connective": "von",
-		"freeSeats": "Plätzen frei",
-		"noSeats": "Keine Plätze mehr frei, bitte nutzen Sie alternativ:",
-		"roomOccupation": "Raumbelegung"
-	}
+    "noExamToday": "Sie sind für keine weitere Prüfung angemeldet",
+    "showNextExamHeadline": "Ihre nächste Prüfung anzeigen",
+    "showNextExamMore": "Scannen Sie Ihren Ausweis, um Ihre nächste Prüfung anzuzeigen",
+    "yourNextExam": "Ihre nächste Prüfung:"
+  },
+  "setExamRoom": {
+    "pleaseSelectRoom": "Bitte wählen Sie einen Raum:"
+  },
+  "settingsAlert": {
+    "cancel": "Abbrechen",
+    "restart": "Neu starten",
+    "settingsAlertHeadline": "Einstellungen",
+    "settingsAlertMore": "Starten Sie die Prüfungsregistierung, sodass Studierende ihre Anwesenheit ab sofort bestätigen können oder legen Sie einen neuen Raum fest. ",
+    "start": "Registierung"
+  },
+  "studentsInRoom": {
+    "connective": "von",
+    "freeSeats": "Plätzen frei",
+    "noSeats": "Keine Plätze mehr frei, bitte nutzen Sie alternativ:",
+    "roomOccupation": "Raumbelegung"
+  }
 }
