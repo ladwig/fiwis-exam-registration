@@ -67,7 +67,7 @@ export const actions = {
   checkCardForNextExam(context, cardnumber) {
     this.$axios.get('', {
       params: {
-        cardnumber: "36104139103212548", //cardnumber
+        cardnumber: (process.env.NODE_ENV === 'production') ? cardnumber : "36104139103212548",
       },
       headers: {
         "Accept": process.env.NEXT_EXAM_ACCEPT_HEADER
@@ -147,7 +147,7 @@ export const actions = {
 
       switch (data.returnCode) {
         case 300:
-          context.commit("setCardNumber", cardnumber) //evtl [cardnumber]
+          context.commit("setCardNumber", cardnumber)
           context.commit("setIsExaminer", true)
           break
         case 500:
