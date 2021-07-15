@@ -108,7 +108,6 @@ export const actions = {
   processRoomForExam(context, data) {
     if (data.length > 0) { // TODO: If  data[1].startTime < data[0].endTime + timeBeforeAfterExam (1h) AND date.now > data[0].endTime -> switch from displaying [0] to [1]
       const e = data[0]
-      const followExam = data[1]
       context.commit("setExamID", e.id)
       context.commit("setExamName", e.names)
       context.commit("setStartTime", e.startTime)

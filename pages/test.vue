@@ -7,7 +7,7 @@
 
 <script>
 import SetExamRoom from "../components/SetExamRoom";
-import {mapState} from "vuex";
+import {mapActions} from "vuex";
 import CurrentExamName from "../components/CurrentExamName";
 import NextExamInfo from "../components/NextExamInfo";
 import CurrentExamTime from "../components/CurrentExamTime";
@@ -31,53 +31,23 @@ export default {
     DisplayClock, MoreInformation, CurrentExamTime, NextExamInfo, CurrentExamName, SetExamRoom
   },
   computed: {
-    ...mapState([
 
-    ])
   },
-mounted() {
-    //this.test()
-},
-/*  methods: {
-
-    colorTest() {
-      const colors = ["#00ff00","#0000ff","#ff000f", "#ff0fff", "#ffff0f","#0fffff"]
-      const color = colors[Math.floor(Math.random() * colors.length)]
-      var access = new function() {
-        this.ip = 'localhost';
-        //this.ip = '192.168.1.162';
-        this.api_base = 'http://' + this.ip + ':8080/v2';
-
-        this.token = '';
-      }
-        changeLedColor(color)
-        function changeLedColor(hex) {
-          var xhr = new XMLHttpRequest(),
-            data = {
-              id: 0,
-              name: 'frame',
-              brightness: 1.0,
-              color: hex
-            },
-            data_string = '';
-          for (var key in data) {
-            data_string += '&'+key+(data[key] ?'='+data[key] :'');
-          }
-          xhr.open('POST', access.api_base+'/hardware/light?access_token='+access.token, true);
-          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-          xhr.onreadystatechange = function() {
-            if (this.readyState == 4) {
-              if (this.status != 200) {
-                alert('some errors color');
-              }
-            }
-          }
-          xhr.send(data_string);
-        }
-    },
-
-
-  }*/
+  methods: {
+    cardNum2String(cardnumber) {
+      const converter = require('hex2dec');
+      const test = cardnumber
+        .match(/.{1,2}/g)
+        .reverse()
+        .join("")
+      return String(
+        converter.hexToDec(test, 16)
+      )
+    }
+  },
+  created() {
+    console.log(this.cardNum2String("0477591a1f5b80"))
+  }
 }
 </script>
 <style>
@@ -87,3 +57,10 @@ input {
 
 
 </style>
+converter.hexToDec(
+cardnumber
+.match(/.{1,2}/g)
+.reverse()
+.join(""),
+16
+)

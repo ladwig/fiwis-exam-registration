@@ -1,20 +1,13 @@
-import {body, text} from "../helper"
+import { body, text, reuseFunctions } from "../helper"
 
 describe('All possible studentcard inputs and responses', () => {
 
   beforeEach(() => {
-    cy.clock(new Date(2020, 6, 24, 20, 10, 0), ['Date'])
-
+    reuseFunctions.setTimeDate()
   })
 
 it('No exam in room and showing next exam ', () => {
-    cy.intercept("GET", "/examgroups?room=H.1.1", {
-      statusCode: 200,
-      body: [{}]
-    }).as("getRoom")
-    cy.visit('/')
-    cy.contains('H.1.1').click()
-    cy.wait("@getRoom")
+reuseFunctions.chooseRoomInterception(true)
     cy.get("input").type("12")
     cy.intercept("GET", "/examgroups?cardnumber=18", {
       statusCode: 200,
@@ -39,13 +32,7 @@ it('No exam in room and showing next exam ', () => {
   })
 
   it('No exam in room and no next exam ', () => {
-    cy.intercept("GET", "/examgroups?room=H.1.1", {
-      statusCode: 200,
-      body: [{}]
-    }).as("getRoom")
-    cy.visit('/')
-    cy.contains('H.1.1').click()
-    cy.wait("@getRoom")
+    reuseFunctions.chooseRoomInterception(true)
     cy.get("input").type("12")
     cy.intercept("GET", "/examgroups?cardnumber=18", {
       statusCode: 200,

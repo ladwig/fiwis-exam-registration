@@ -41,7 +41,7 @@ export const reuseFunctions = {
   chooseRoomInterception(emptybody) {
     let data = body
     if(emptybody) {
-      data = [{}]
+      data = []
     }
     cy.intercept("GET", "/examgroups?room=H.1.1", {
       statusCode: 200,

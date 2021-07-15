@@ -52,7 +52,7 @@ export const actions = {
 
   async checkCard(context, cardnumber) {
     console.log(cardnumber)
-      const cardID = await context.dispatch("cardNum2String", cardnumber)
+      const cardID = await context.dispatch("cardNum2String", cardnumber.toString())
       // If no exam (+-1h) found -> Students can check there next exam
       if (!context.rootState.modeExamInProgress){
         context.dispatch("checkCardForNextExam", cardID)
@@ -67,7 +67,7 @@ export const actions = {
   checkCardForNextExam(context, cardnumber) {
     this.$axios.get('', {
       params: {
-        cardnumber: (process.env.NODE_ENV === 'production') ? cardnumber : "36104139103212548",
+        cardnumber:  cardnumber, //"36104139103212548",
       },
       headers: {
         "Accept": process.env.NEXT_EXAM_ACCEPT_HEADER
