@@ -22,4 +22,4 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ladwig_fiwis-exam-registration&metric=alert_status)](https://sonarcloud.io/dashboard?id=ladwig_fiwis-exam-registration)
 [![DeepScan grade](https://deepscan.io/api/teams/14763/projects/17844/branches/422890/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=14763&pid=17844&bid=422890)
-[![DeepSource](https://deepsource.io/gh/ladwig/fiwis-exam-registration.svg/?label=active+issues)](https://deepsource.io/gh/ladwig/fiwis-exam-registration/?ref=repository-badge)
+[![DeepSource](https://deepsource.io/gh/ladwig/fiwis-exam-registration.svg/?label=active+issues&show_trend=true)](https://deepsource.io/gh/ladwig/fiwis-exam-registration/?ref=repository-badge)
