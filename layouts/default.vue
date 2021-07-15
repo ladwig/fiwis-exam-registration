@@ -39,9 +39,11 @@ export default {
     reloadPage() {
       window.location.reload(true)
     },
+    // Only in dev
     changeMode() {
       this['currentCard/checkCardForThisExam']("1234")
     },
+    // Only in dev
     regist() {
       this['currentCard/checkCardForThisExam']("36128986026611204")
     },
