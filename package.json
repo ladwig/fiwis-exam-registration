@@ -10,8 +10,9 @@
     "jest": "jest",
     "test-start": "nuxt --dotenv .env.test",
     "cypress": "cypress open --browser chrome",
-    "cypress:silent": "cypress run",
-    "uitest": "start-server-and-test test-start http://localhost:80 cypress"
+    "cypress:silent": "cypress run --record --key '429fa5c6-4d25-4926-83d7-5239907e81d4'",
+    "uitest": "start-server-and-test test-start http://localhost:80 cypress",
+    "uitest:online": "start-server-and-test test-start http://localhost:80 cypress:silent"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.1",
