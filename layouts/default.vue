@@ -43,7 +43,7 @@ export default {
     changeMode() {
       this['currentCard/checkCardForThisExam']("1234")
     },
-    // Only in dev
+    // Only in dev TEST
     regist() {
       this['currentCard/checkCardForThisExam']("36128986026611204")
     },
