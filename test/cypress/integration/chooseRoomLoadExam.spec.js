@@ -1,17 +1,12 @@
-import {body, text} from "../fixtures/helper"
+import { body, text, reuseFunctions } from "../helper"
 
 describe('Choosing room and load exam', () => {
-
+  beforeEach( () => {
+    reuseFunctions.getExamRegistrationStateInterception()
+  })
   it('Switch from no exam to exam ', () => {
-
     cy.clock(new Date(2020, 6, 24, 18, 59, 0),['Date'])
-    cy.intercept("GET", "/examgroups?room=H.1.1", {
-      statusCode: 200,
-      body: body
-    }).as("get")
-    cy.visit('/')
-    cy.contains('H.1.1').click()
-    cy.wait("@get")
+    reuseFunctions.chooseRoomInterception()
     expect(cy.contains(text.noExam))
     expect(cy.contains(text.nextExam))
     cy.tick(240000)
@@ -20,20 +15,13 @@ describe('Choosing room and load exam', () => {
   })
 
   it('Display the choosen room', () => {
-    cy.visit('/')
-    cy.contains('H.1.1').click()
-    expect(cy.contains("H.1.1"))
+    reuseFunctions.chooseRoomInterception()
+    expect(cy.contains(body[0].names))
   })
 
   it('Exam takes place right now', () => {
-    cy.clock(new Date(2020, 6, 24, 20, 10, 0), ['Date'])
-    cy.intercept("GET", "/examgroups?room=H.1.1", {
-      statusCode: 200,
-      body: body,
-    }).as("get")
-    cy.visit('/')
-    cy.contains('H.1.1').click()
-    cy.wait("@get")
+    reuseFunctions.setTimeDate()
+    reuseFunctions.chooseRoomInterception()
     expect(cy.contains(body[0].names))
     expect(cy.contains(text.checkRegist))
     expect(cy.contains(text.noDisturb))

@@ -5,5 +5,8 @@
   "screenshotsFolder": "test/cypress/screenshots",
   "supportFile": "test/cypress/support/index.js",
   "videosFolder": "test/cypress/videos",
-  "baseUrl": "http://localhost"
+  "baseUrl": "http://localhost",
+  "projectId": "em9425",
+  "video": false,
+  "requestTimeout": 6000
 }

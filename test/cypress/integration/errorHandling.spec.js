@@ -1,4 +1,4 @@
-import {body, text} from "../fixtures/helper"
+import {body, text} from "../helper"
 
 describe('Checking error handling', () => {
 
