@@ -38,10 +38,14 @@ export const reuseFunctions = {
     cy.clock(new Date(2020, 6, 24, 20, 10, 0), ['Date'])
   },
 
-  chooseRoomInterception() {
+  chooseRoomInterception(emptybody) {
+    let data = body
+    if(emptybody) {
+      data = [{}]
+    }
     cy.intercept("GET", "/examgroups?room=H.1.1", {
       statusCode: 200,
-      body: body,
+      body: data,
     })
     cy.visit('/')
     cy.contains(body[0].roomNames).click()
