@@ -18,6 +18,6 @@ describe('Checking screen clock', () => {
     cy.visit('/')
     expect(cy.contains(date))
   })
-  //Testing over time
+  // TODO: Testing over longer period of time
 })
 
