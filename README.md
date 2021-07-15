@@ -1,5 +1,5 @@
 <h1 align="center">Exam Registration Display</h1>
-<p align="center"><i>Bachelor thesis - Daniel Ladwig</i></p>
+<p align="center">Bachelor thesis - <i>Daniel Ladwig</i></p>
 
 
 ## Build Setup

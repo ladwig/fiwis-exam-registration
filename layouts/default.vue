@@ -5,17 +5,12 @@
       flat
       app
     >
-  <!--    <v-img
-        class="mx-3"
-        src="../logo.png"
-        max-height="150"
-        max-width="150"
-        contain
-      ></v-img> -->
       <v-toolbar-title @click="reloadPage()" class="font-weight-bold display-1 pl-10 darker--text">{{ roomName }}</v-toolbar-title>
       <v-icon v-if="$nuxt.isOffline" color="primary">mdi-wifi-strength-alert-outline</v-icon>
-      <v-btn @click="changeMode()">Send admin id</v-btn>
-      <v-btn @click="regist()">Send student id</v-btn>
+      <div v-if="dev">
+        <v-btn @click="changeMode()">Send admin id</v-btn>
+        <v-btn @click="regist()">Send student id</v-btn>
+      </div>
       <v-spacer></v-spacer>
       <display-clock></display-clock>
     </v-app-bar>
@@ -32,12 +27,22 @@ export default {
   computed: {
     ...mapState([
       "roomName"
-    ])
+    ]),
+    dev() {
+      if(process.env.NODE_ENV !== 'production') {
+        return true
+      }
+      else {
+        return false
+      }
+    }
   },
   methods: {
     ...mapActions(['currentCard/checkCardForThisExam']),
     reloadPage() {
-      window.location.reload(true)
+      if(this.dev) {
+        window.location.reload(true)
+      }
     },
     // Only in dev
     changeMode() {
