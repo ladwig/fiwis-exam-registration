@@ -129,6 +129,9 @@ export const actions = {
         context.commit("setModeExamInProgress", false, {root: true})
       }
     }
+    else {
+      context.commit("setModeExamInProgress", false, {root: true})
+    }
   },
 
  async checkExamModeStatus(context, url) {

@@ -92,3 +92,5 @@ sw.*
 # Cypress videos and screenshots
 test/cypress/screenshots
 test/cypress/videos
+
+.vercel
