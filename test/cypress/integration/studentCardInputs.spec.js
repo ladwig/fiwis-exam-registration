@@ -6,11 +6,11 @@ describe('All possible studentcard inputs and responses', () => {
     reuseFunctions.setTimeDate()
   })
 
-it('No exam in room and showing next exam ', () => {
-reuseFunctions.chooseRoomInterception(true)
-    cy.get("input").type(text.studentCardIDRaw)
-    cy.intercept("GET", `/examgroups?cardnumber=${text.studentCardIDConvert}`, {
-      statusCode: 200,
+  it('No exam in room and showing next exam ', () => {
+  reuseFunctions.chooseRoomInterception(true)
+  reuseFunctions.scanAStudentCard()
+  cy.intercept("GET", `/examgroups?cardnumber=${text.studentCardIDConvert}`, {
+    statusCode: 200,
       headers: {
         'content-type': 'application/vnd.fhws-examgroup.exambycardnumberview+json',
       },
@@ -33,7 +33,7 @@ reuseFunctions.chooseRoomInterception(true)
 
   it('No exam in room and no next exam ', () => {
     reuseFunctions.chooseRoomInterception(true)
-    cy.get("input").type(text.studentCardIDRaw)
+    reuseFunctions.scanAStudentCard()
     cy.intercept("GET", `/examgroups?cardnumber=${text.studentCardIDConvert}`, {
       statusCode: 200,
       headers: {
@@ -48,129 +48,56 @@ reuseFunctions.chooseRoomInterception(true)
   })
 
   it('Exam in room right now and student is registered', () => {
-
-
-    cy.intercept("GET", "/examgroups/4000/scannedcards/8000", {
-      statusCode: 200,
-      body: {
-        returnCode: text.isRegisteredCode,
-        returnText: text.isRegistered
-      },
-    }).as("getCard")
-
-    cy.intercept("POST", '/examgroups/4000/scannedcards', (req) => {
-      req.reply({
-        headers: {
-          "location": "/4000/scannedcards/8000"
-        }
-      })
-    }).as("postCard")
     reuseFunctions.chooseRoomInterception()
     reuseFunctions.getExamRegistrationStateInterception()
-    cy.get("input").type(text.studentCardIDRaw)
-    expect(cy.contains(text.isRegistered))
+    reuseFunctions.getStudentCardIsRegistInterception()
+    reuseFunctions.postScannedCardInterception()
+
+
+    reuseFunctions.scanAStudentCard()
+    expect(cy.contains(text.StudentCardIsRegist))
     cy.tick(4000)
-    cy.contains(text.isRegistered).should("not.exist")
+    cy.contains(text.StudentCardIsRegist).should("not.exist")
   })
 
   it('Exam in room right now and student is not registered', () => {
     reuseFunctions.chooseRoomInterception()
     reuseFunctions.getExamRegistrationStateInterception()
-    cy.get("input").type(text.studentCardIDRaw)
-    reuseFunctions.postStudentCardNotRegistInterception()
+    expect(cy.contains(body[0].names))
     reuseFunctions.getStudentCardNotRegistInterception()
-    expect(cy.contains(text.isNotRegistered))
+    reuseFunctions.postScannedCardInterception()
+    cy.get("input").type(text.notStudentCardIDRaw)
+
+    expect(cy.contains(text.StudentCardIsNotRegist))
     cy.tick(4000)
-    cy.contains(text.isNotRegistered).should("not.exist")
+    cy.contains(text.StudentCardIsNotRegist).should("not.exist")
   })
 
   it('Exam registration mode active and 1x registered, 1x not registered card', () => {
-    reuseFunctions.chooseRoomInterception()
-    reuseFunctions.getExamRegistrationStateInterception()
-    expect(cy.contains(body[0].names))
-    reuseFunctions.postProfCardInterception()
     reuseFunctions.getProfCardInterception()
+    reuseFunctions.getExamRegistrationStateInterception()
+    reuseFunctions.chooseRoomInterception()
+    expect(cy.contains(body[0].names))
+    reuseFunctions.scanAdminCard()
+    reuseFunctions.postScannedCardInterception()
     reuseFunctions.getProfCardStartExamInterception()
+    reuseFunctions.updateNumberOfStudentsInRoomInRoomInterception()
+    reuseFunctions.getStudentCardIsCheckedInInterception()
+    reuseFunctions.getStudentCardIsNotCheckedInInterception()
 
-    cy.intercept("GET", "/examgroups/4000/scannedcards/8000", {
-      statusCode: 200,
-      headers: {
-        'content-type': 'application/vnd.fhws-scannedcard.scannedcardview+json',
-      },
-      body: {
-        returnCode: text.isRegisteredCode,
-        returnText: text.isRegistered
-      },
-    }).as("getStudentCard")
-
-
-    cy.intercept("GET", "/examgroups/4000/scannedcards/2000", {
-      statusCode: 200,
-      headers: {
-        'content-type': 'application/vnd.fhws-scannedcard.scannedcardview+json',
-      },
-      body: {
-        returnCode: text.isNotRegisteredCode,
-        returnText: text.isNotRegistered
-      },
-    }).as("getNotRegisteredCard")
-
-    cy.intercept("GET", "/examgroups/4000/examrooms", {
-      statusCode: 200,
-      headers: {
-        'content-type': 'application/vnd.fhws-scannedcard.scannedcardview+json',
-      },
-      body: {
-        numberOfStudentsPlannedInRoom: 20,
-        numberOfStudentsPresentInRoom: 10
-      },
-    }).as("updateStudentsInRoom")
-
-
-    cy.intercept("POST", '/examgroups/4000/scannedcards', (req) => {
-      if(req.body.idcardnumber == "18") {
-        req.reply({
-          headers: {
-            "location": "/4000/scannedcards/8000",
-            "accept": 'application/vnd.fhws-scannedcard.scannedcardview+json'
-          }
-        })
-        req.alias = "postStudentCard"
-      }
-      if(req.body.idcardnumber == "20") {
-        req.reply({
-          headers: {
-            "location": "/4000/scannedcards/2000",
-            "accept": 'application/vnd.fhws-scannedcard.scannedcardview+json'
-          }
-        })
-        req.alias = "postNotRegisteredCard"
-      }
-      if(req.body.parameter == 1) {
-        req.reply({
-          headers: {
-            "location": "/4000/scannedcards/1000",
-            "accept": 'application/vnd.fhws-scannedcard.scannedcardview+json'
-          }
-        })
-        req.alias = "postProfStartCard"
-      }
-    })
-
-    cy.get("input").type(text.profCardIDRaw)
+    expect(cy.contains(text.popupHeadline, { matchCase: false }))
     cy.get("button").contains(text.startButton, { matchCase: false }).click()
-    cy.wait("@postProfStartCard")
     cy.wait(4000)
     expect(cy.contains(text.registerNow))
-    cy.get("input").type("12")
-    cy.wait("@postStudentCard")
-    cy.wait("@updateStudentsInRoom")
-    expect(cy.contains(text.isRegistered))
+
+    cy.get("input").type(text.studentCardIDRaw)
+
+    expect(cy.contains(text.StudentCardIsCheckedIn))
     cy.wait(4000)
     expect(cy.contains(text.registerNow))
-    cy.get("input").type("14")
-    cy.wait("@postNotRegisteredCard")
-    expect(cy.contains(text.isNotRegistered))
+
+    cy.get("input").type(text.notStudentCardIDRaw)
+    expect(cy.contains(text.StudentCardIsNotCheckedIn))
     cy.wait(4000)
     expect(cy.contains(text.registerNow))
   })

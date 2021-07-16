@@ -42,7 +42,7 @@ export const text = {
 
   error: "fehler",
 
-  StudentCardIsRegist: "Student ist nur Prüfung angemeldet",
+  StudentCardIsRegist: "Student ist zur Prüfung angemeldet",
   StudentCardIsRegistCode: 500,
 
   StudentCardIsNotRegist: "Student ist nicht zur Prüfung angemeldet",
@@ -81,7 +81,12 @@ export const reuseFunctions = {
     cy.get("input").type(text.profCardIDRaw)
   },
 
+  scanAStudentCard() {
+    cy.get("input").type(text.studentCardIDRaw)
+  },
+
   getExamRegistrationStateInterception() {
+
     cy.intercept("GET", "/examgroups/4000/examrooms", {
       statusCode: 200,
       body: [
@@ -95,7 +100,28 @@ export const reuseFunctions = {
         }
       ]
     })
-  }
+  },
+
+  updateNumberOfStudentsInRoomInRoomInterception() {
+    cy.intercept("GET", "/examgroups/4000/examrooms", {
+      statusCode: 200,
+      headers: {
+        'content-type': 'application/vnd.fhws-scannedcard.scannedcardview+json',
+      },
+      body: [
+        {
+          roomName: "H.1.2",
+          numberOfStudentsPlannedInRoom: 1000,
+          numberOfStudentsPresentInRoom: 10
+        },
+        {
+          roomName: "H.1.1",
+          numberOfStudentsPlannedInRoom: 20,
+          numberOfStudentsPresentInRoom: 10
+        }
+      ]
+    }).as("updateStudentsInRoom")
+  },
 
   //postProfCardInterception
   postScannedCardInterception() {
@@ -123,7 +149,8 @@ export const reuseFunctions = {
         req.alias = "postProfCardStartExam"
       }
 
-      else if(req.body.idcardnumber == text.studentCardIDConvert) {
+      else if(req.body.idcardnumber == text.studentCardIDConvert && !examRegistMode) {
+        console.log(examRegistMode)
         req.reply({
           headers: {
             "location": "/4000/scannedcards/8000",
@@ -133,7 +160,7 @@ export const reuseFunctions = {
         req.alias = "postStudentCardIsRegist"
       }
 
-      else if(req.body.idcardnumber == text.notStudentCardIDConvert) {
+      else if(req.body.idcardnumber == text.notStudentCardIDConvert && !examRegistMode) {
         req.reply({
           headers: {
             "location": "/4000/scannedcards/8100",
@@ -193,8 +220,8 @@ export const reuseFunctions = {
         'content-type': 'application/vnd.fhws-scannedcard.scannedcardview+json',
       },
       body: {
-        returnCode: text.StudentCardIsNotRegistCode,
-        returnText: text.StudentCardIsNotRegist
+        returnCode: text.StudentCardIsRegistCode,
+        returnText: text.StudentCardIsRegist
       },
     }).as("getStudentCardIsRegist")
   },

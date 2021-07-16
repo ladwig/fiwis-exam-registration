@@ -9,7 +9,7 @@ describe('Checking all admin / examiner options', () => {
     reuseFunctions.chooseRoomInterception()
     expect(cy.contains(body[0].names))
     reuseFunctions.scanAdminCard()
-    reuseFunctions.postProfCardInterception()
+    reuseFunctions.postScannedCardInterception()
   })
 
   it('Open admin popup and show all buttons', () => {
@@ -32,11 +32,10 @@ describe('Checking all admin / examiner options', () => {
     expect(cy.contains(text.chooseRoom))
   })
 
-
   it('Start register mode', () => {
     reuseFunctions.getProfCardStartExamInterception()
+    expect(cy.contains(text.popupHeadline, { matchCase: false }))
     cy.get("button").contains(text.startButton, { matchCase: false }).click()
-    cy.wait("@postProfCardStartExam")
     cy.wait(4000)
     expect(cy.contains(text.registerNow))
   })
