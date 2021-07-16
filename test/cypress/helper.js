@@ -12,24 +12,47 @@ export const body = [ {
 
 export const text = {
   chooseRoom: "einen Raum",
-  isRegistered: "Der Student ist zur Prüfung angemeldet",
-  isRegisteredCode: 500,
-  isNotRegistered: "Der Student ist nicht Prüfung angemeldet",
-  isNotRegisteredCode: 200,
+
+  studentCardIDRaw: "0477591a1f5b80",
+  studentCardIDConvert: "36128986163148548",
+
+  notStudentCardIDRaw: "0177591a1f5b10",
+  notStudentCardIDConvert: "4603788771555073",
+
+  profCardIDRaw: "0577591a1f5b00",
+  profCardIDConvert: "100189144184581",
+
   nextExamTitle: "Wirtschaft- und IT-Recht",
   nextExamRoom: "VCC",
-  noNextExam:  "Keine weitere Prüfung gefunden",
+  noDisturb: "nicht stören",
+
+  noNextExam:  "keine weitere Prüfung angemeldet",
+
   startButton: "registierung",
-  registerNow: "Anwesenheit bestätigen",
-  popupHeadline: "einstellungen",
   cancelButton: "abbrechen",
   restartButton: "neu starten",
+  okayButton: "okay",
+
+  registerNow: "Anwesenheit bestätigen",
   checkRegist: "Anmeldung prüfen",
-  noDisturb: "nicht stören",
   noExam: "keine Prüfung",
   nextExam: "nächste Prüfung",
-  okayButton: "okay",
+
+  popupHeadline: "einstellungen",
+
   error: "fehler",
+
+  StudentCardIsRegist: "Student ist nur Prüfung angemeldet",
+  StudentCardIsRegistCode: 500,
+
+  StudentCardIsNotRegist: "Student ist nicht zur Prüfung angemeldet",
+  StudentCardIsNotRegistCode: 200,
+
+  StudentCardIsCheckedIn: "Student erfolgreich bestätigt",
+  StudentCardIsCheckedInCode: 600,
+
+  StudentCardIsNotCheckedIn: "Student kann nicht bestätigt werden",
+  StudentCardIsNotCheckedInCode: 200,
 }
 
 
@@ -45,6 +68,9 @@ export const reuseFunctions = {
     }
     cy.intercept("GET", "/examgroups?room=H.1.1", {
       statusCode: 200,
+      headers: {
+        "content-type": "application/vnd.fhws-examgroup.examroomdisplayview+json"
+      },
       body: data,
     })
     cy.visit('/')
@@ -52,7 +78,92 @@ export const reuseFunctions = {
   },
 
   scanAdminCard() {
-    cy.get("input").type("13")
+    cy.get("input").type(text.profCardIDRaw)
+  },
+
+  getExamRegistrationStateInterception() {
+    cy.intercept("GET", "/examgroups/4000/examrooms", {
+      statusCode: 200,
+      body: [
+        {
+          roomName: "H.1.2",
+          examRegistrationState: 1
+        },
+        {
+          roomName: "H.1.1",
+          examRegistrationState: 0
+        }
+      ]
+    })
+  }
+
+  //postProfCardInterception
+  postScannedCardInterception() {
+    let examRegistMode = false
+
+    cy.intercept("POST", '/examgroups/4000/scannedcards', (req) => {
+
+      if(req.body.idcardnumber == text.profCardIDConvert && !req.body.parameter) {
+        req.reply({
+          headers: {
+            "location": "/4000/scannedcards/6000"
+          }
+        })
+        req.alias = "postProfCard"
+      }
+
+      else if(req.body.parameter == 1) {
+        examRegistMode = true
+        req.reply({
+          headers: {
+            "location": "/4000/scannedcards/1000",
+            "accept": 'application/vnd.fhws-scannedcard.scannedcardview+json'
+          }
+        })
+        req.alias = "postProfCardStartExam"
+      }
+
+      else if(req.body.idcardnumber == text.studentCardIDConvert) {
+        req.reply({
+          headers: {
+            "location": "/4000/scannedcards/8000",
+            "accept": 'application/vnd.fhws-scannedcard.scannedcardview+json'
+          }
+        })
+        req.alias = "postStudentCardIsRegist"
+      }
+
+      else if(req.body.idcardnumber == text.notStudentCardIDConvert) {
+        req.reply({
+          headers: {
+            "location": "/4000/scannedcards/8100",
+            "accept": 'application/vnd.fhws-scannedcard.scannedcardview+json'
+          }
+        })
+        req.alias = "postStudentCardIsNotRegist"
+      }
+
+      else if(req.body.idcardnumber == text.studentCardIDConvert && examRegistMode) {
+        req.reply({
+          headers: {
+            "location": "/4000/scannedcards/3000",
+            "accept": 'application/vnd.fhws-scannedcard.scannedcardview+json'
+          }
+        })
+        req.alias = "postStudentCardIsCheckedIn"
+      }
+
+      else if(req.body.idcardnumber == text.notStudentCardIDConvert && examRegistMode) {
+        req.reply({
+          headers: {
+            "location": "/4000/scannedcards/3100",
+            "accept": 'application/vnd.fhws-scannedcard.scannedcardview+json'
+          }
+        })
+        req.alias = "postStudentCardIsNotCheckedIn"
+      }
+
+    })
   },
 
   getProfCardInterception() {
@@ -75,41 +186,56 @@ export const reuseFunctions = {
     }).as("getProfCardStartExam")
   },
 
-  postProfCardInterception() {
-    cy.intercept("POST", '/examgroups/4000/scannedcards', (req) => {
-      if(req.body.idcardnumber == "19" && !req.body.parameter) {
-        req.reply({
-          headers: {
-            "location": "/4000/scannedcards/6000"
-          }
-        })
-        req.alias = "postProfCard"
-      }
-      if(req.body.parameter == 1) {
-        req.reply({
-          headers: {
-            "location": "/4000/scannedcards/1000"
-          }
-        })
-        req.alias = "postProfCardStartExam"
-      }
-    })
-    cy.wait("@postProfCard")
+  getStudentCardIsRegistInterception () {
+    cy.intercept("GET", "/examgroups/4000/scannedcards/8000", {
+      statusCode: 200,
+      headers: {
+        'content-type': 'application/vnd.fhws-scannedcard.scannedcardview+json',
+      },
+      body: {
+        returnCode: text.StudentCardIsNotRegistCode,
+        returnText: text.StudentCardIsNotRegist
+      },
+    }).as("getStudentCardIsRegist")
   },
 
-  getExamRegistrationStateInterception() {
-    cy.intercept("GET", "/examgroups/4000/examrooms", {
+  getStudentCardNotRegistInterception () {
+    cy.intercept("GET", "/examgroups/4000/scannedcards/8100", {
       statusCode: 200,
-      body: [
-        {
-          roomName: "H.1.2",
-          examRegistrationState: 1
-        },
-        {
-          roomName: "H.1.1",
-          examRegistrationState: 0
-        }
-      ]
-    })
-  }
+      headers: {
+        'content-type': 'application/vnd.fhws-scannedcard.scannedcardview+json',
+      },
+      body: {
+        returnCode: text.StudentCardIsNotRegistCode,
+        returnText: text.StudentCardIsNotRegist
+      },
+    }).as("getStudentCardNotRegist")
+  },
+
+  getStudentCardIsCheckedInInterception () {
+    cy.intercept("GET", "/examgroups/4000/scannedcards/3000", {
+      statusCode: 200,
+      headers: {
+        'content-type': 'application/vnd.fhws-scannedcard.scannedcardview+json',
+      },
+      body: {
+        returnCode: text.StudentCardIsCheckedInCode,
+        returnText: text.StudentCardIsCheckedIn
+      },
+    }).as("getStudentCardIsCheckedIn")
+  },
+
+  getStudentCardIsNotCheckedInInterception () {
+    cy.intercept("GET", "/examgroups/4000/scannedcards/3100", {
+      statusCode: 200,
+      headers: {
+        'content-type': 'application/vnd.fhws-scannedcard.scannedcardview+json',
+      },
+      body: {
+        returnCode: text.StudentCardIsNotCheckedInCode,
+        returnText: text.StudentCardIsNotCheckedIn
+      },
+    }).as("getStudentCardIsNotCheckedIn")
+  },
+
 }

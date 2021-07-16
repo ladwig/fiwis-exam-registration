@@ -46,7 +46,7 @@ export default {
     }
   },
   created() {
-    console.log(this.cardNum2String("0477591a1f5b80"))
+    console.log(this.cardNum2String("0177591a1f5b10"))
   }
 }
 </script>
