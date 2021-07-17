@@ -18,7 +18,6 @@ export default {
       "modeJustCheck",
     ]),
   },
-
   methods: {
     ...mapActions(['exam/checkRoomForExam'])
   },
@@ -31,8 +30,10 @@ export default {
     window.setInterval(() => {
       this['exam/checkRoomForExam']()
     }, 60000)
-  }
-
+  },
+  beforeDestroy() {
+    clearInterval(this.interval)
+  },
 
 
 }
