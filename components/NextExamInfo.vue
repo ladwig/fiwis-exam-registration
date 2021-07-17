@@ -5,17 +5,17 @@
       icon="mdi-information-outline"
       :more="$t('nextExamInfo.showNextExamMore')"
     />
-    <div v-if="isThereNextExam">
-     <li>
-       {{examName}}
-     </li>
-      <li>
-        {{examRooms}}
-      </li>
-      <li>
-        {{getStartTimeWithDate}} -- {{getStopTimeWithoutDate}}
-      </li>
-    </div>
+      <ul v-if="isThereNextExam">
+        <li>
+          {{examName}}
+        </li>
+        <li>
+          {{examRooms}}
+        </li>
+        <li>
+          {{getStartTimeWithDate}} -- {{getStopTimeWithoutDate}}
+        </li>
+      </ul>
     <div v-if="isThereNextExam == false">
       {{ $t('nextExamInfo.noExamToday') }}
     </div>

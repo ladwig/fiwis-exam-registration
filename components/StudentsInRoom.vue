@@ -1,15 +1,19 @@
 <template>
   <v-container class="pa-0 ma-0 headline font-weight-regular">
     <div v-if="freeSeats <= 0">
-      {{ $t('studentsInRoom.noSeats') }}<b> {{
-        examRooms
-      }}</b></div>
+      {{ $t('studentsInRoom.noSeats') }}
+      <strong>
+        {{ examRooms }}
+      </strong>
+    </div>
     <div v-else>
       {{ $t('studentsInRoom.roomOccupation') }}
-      <b>
-        {{ freeSeats }}</b> {{ $t('studentsInRoom.connective') }}
-      <b>
-        {{ numberOfStudentsPlannedInRoom }}</b> {{ $t('studentsInRoom.freeSeats') }}
+      <strong>
+        {{ freeSeats }}
+      </strong> {{ $t('studentsInRoom.connective') }}
+      <strong>
+        {{ numberOfStudentsPlannedInRoom }}
+      </strong> {{ $t('studentsInRoom.freeSeats') }}
     </div>
   </v-container>
 </template>
