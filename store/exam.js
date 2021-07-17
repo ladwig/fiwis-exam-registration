@@ -140,13 +140,15 @@ export const actions = {
         "Accept": process.env.EXAM_STATUS_ACCEPT_HEADER
       }
     })
-   const roomDataIndex = res.data.findIndex(a => a.roomName == context.rootState.roomName)
-   const state = res.data[roomDataIndex].examRegistrationState
-   if(state == 0) {
-     return false
-   }
-   else if (state == 1) {
-     return true
+   if(res.data.length > 0) {
+     const roomDataIndex = res.data.findIndex(a => a.roomName == context.rootState.roomName)
+     const state = res.data[roomDataIndex].examRegistrationState
+     if(state == 0) {
+       return false
+     }
+     else if (state == 1) {
+       return true
+     }
    }
   },
 
