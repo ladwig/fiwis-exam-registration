@@ -6,7 +6,7 @@
         max-width="200"
         class="mt-2"
       > </v-img>
-      <input v-on:keydown="typeNFC($event)" id="NFC_CARDNUMBER" type="text" autocomplete="off"/>
+      <input @keydown="typeNFC" id="NFC_CARDNUMBER" type="text" autocomplete="off"/>
   </div>
 </template>
 

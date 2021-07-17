@@ -73,7 +73,11 @@ export default {
     CardReader,
     CurrentExamInfo,
     StudentsInRoom,
-    DisplayClock, MoreInformation, CurrentExamTime, NextExamInfo, CurrentExamName, SetExamRoom
+    MoreInformation,
+    CurrentExamTime,
+    NextExamInfo,
+    CurrentExamName,
+    SetExamRoom
   },
   computed: {
     ...mapState([
