@@ -26,8 +26,7 @@ export default {
   },
   created() {
     // Scans every minute for exam in room
-
-    window.setInterval(() => {
+    this.interval = setInterval(() => {
       this['exam/checkRoomForExam']()
     }, 60000)
   },

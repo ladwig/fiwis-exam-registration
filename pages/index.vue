@@ -40,7 +40,6 @@
         <!-- Shows next exam for scanned card -->
         <next-exam-info v-if="!modeExamInProgress" class="mt-2 ml-10"></next-exam-info>
 
-
         <!-- Shows return text for scanned card -->
         <current-exam-info v-if="modeExamInProgress" :registModeActive="modeExamRegister" class="mt-2 ml-10"></current-exam-info>
       </v-col>
@@ -55,8 +54,6 @@ import {mapState} from "vuex";
 import CurrentExamName from "../components/CurrentExamName";
 import NextExamInfo from "../components/NextExamInfo";
 import CurrentExamTime from "../components/CurrentExamTime";
-import MoreInformation from "../components/MoreInformation";
-import DisplayClock from "../components/DisplayClock";
 import StudentsInRoom from "../components/StudentsInRoom";
 import CurrentExamInfo from "../components/CurrentExamInfo";
 import CardReader from "../components/CardReader";
@@ -73,7 +70,6 @@ export default {
     CardReader,
     CurrentExamInfo,
     StudentsInRoom,
-    MoreInformation,
     CurrentExamTime,
     NextExamInfo,
     CurrentExamName,
