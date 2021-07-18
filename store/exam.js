@@ -173,4 +173,3 @@ export const actions = {
     }
   },
 }
-/* eslint no-shadow: ["error", { "allow": ["state"] }]*/

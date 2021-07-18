@@ -10,6 +10,9 @@
     <!-- Popup when there is an error -->
     <error-message-alert v-if="errorMessage"></error-message-alert>
 
+    <!-- Popup test -->
+    <t-e-s-t-next-exam-info v-if="status" :status="status"></t-e-s-t-next-exam-info>
+
     <v-row v-if="roomName!=null" no-gutters class="top-row flex-grow-1 flex-shrink-1">
 
       <v-col cols="11" class="grid-item-mid fill-parent-height pa-0 pl-10 pt-15">
@@ -61,9 +64,13 @@ import SettingsAlert from "../components/SettingsAlert";
 import ErrorMessageAlert from "../components/ErrorMessageAlert";
 import ProgressBar from "../components/ProgressBar";
 import { changeColor } from "../ledAPI";
+import BaseExamInfoAlert from "../components/BaseExamInfoAlert";
+import TESTNextExamInfo from "../components/TESTNextExamInfo";
 
 export default {
   components: {
+    TESTNextExamInfo,
+    BaseExamInfoAlert,
     ProgressBar,
     ErrorMessageAlert,
     SettingsAlert,

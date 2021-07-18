@@ -10,6 +10,7 @@
       <div v-if="dev">
         <v-btn @click="changeMode()">Send admin id</v-btn>
         <v-btn @click="regist()">Send student id</v-btn>
+        <v-btn @click="check()">Check student id</v-btn>
       </div>
       <v-spacer></v-spacer>
       <display-clock></display-clock>
@@ -36,7 +37,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['currentCard/checkCardForThisExam']),
+    ...mapActions([
+      'currentCard/checkCardForThisExam',
+      'currentCard/checkCardForNextExam'
+      ]),
     reloadPage() {
       if(this.dev) {
         window.location.reload()
@@ -49,6 +53,9 @@ export default {
     // Only in dev
     regist() {
       this['currentCard/checkCardForThisExam']("36128986026611204")
+    },
+    check() {
+      this['currentCard/checkCardForNextExam']("36128986026611204")
     },
   },
 }

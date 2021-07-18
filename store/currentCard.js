@@ -94,8 +94,10 @@ export const actions = {
         context.commit("exam/setStartTime", e.startTime, {root: true})
         context.commit("exam/setStopTime", e.stopTime, {root: true})
         context.commit("exam/setExamRooms", e.roomNames, {root: true})
+        context.dispatch("returnDecision", true)
       } else {
         context.commit("setIsThereNextExam", false)
+        context.dispatch("returnDecision", false)
       }
       resolve()
     })
@@ -229,4 +231,3 @@ export const actions = {
     }
   },
 }
-/* eslint no-shadow: ["error", { "allow": ["state"] }]*/

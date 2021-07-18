@@ -8,8 +8,6 @@ export const state = () => ({
   }
 )
 
-/* eslint no-shadow: ["error", { "allow": ["state"] }]*/
-
 export const mutations = {
   setRoomName(state, roomName) {
     state.roomName = roomName;
