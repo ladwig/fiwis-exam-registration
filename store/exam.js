@@ -53,14 +53,13 @@ export const mutations = {
 
 export const getters = {
   getStartTimeWithDate(state) {
-    const time = new Date(state.startTime).toLocaleDateString('de-DE', {
+   return new Date(state.startTime).toLocaleDateString('de-DE', {
       year: 'numeric',
       month: 'short',
       day: 'numeric',
       hour: 'numeric',
       minute: 'numeric',
     })
-    return time
   },
 
   getStopTimeWithoutDate(state) {
@@ -174,3 +173,4 @@ export const actions = {
     }
   },
 }
+/* eslint no-shadow: ["error", { "allow": ["state"] }]*/

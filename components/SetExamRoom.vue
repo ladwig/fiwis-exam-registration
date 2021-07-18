@@ -35,12 +35,5 @@ export default {
   methods: {
     ...mapMutations(["setRoomName"]),
   },
-
-  mounted() {
-  },
 }
 </script>
-
-<style scoped>
-
-</style>

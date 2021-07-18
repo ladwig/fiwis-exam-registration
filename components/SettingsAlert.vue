@@ -82,7 +82,7 @@ export default {
         this['currentCard/startModeExamRegister']()
       }
       else if(action === 2) {
-        window.location.reload(true)
+        window.location.reload()
       }
       this["currentCard/setIsExaminer"](false)
       this.dialog = false
@@ -91,7 +91,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

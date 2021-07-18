@@ -29,4 +29,5 @@ export const mutations = {
     state.cardIsLoading = cardIsLoading;
   },
 }
+/* eslint no-shadow: ["error", { "allow": ["state"] }]*/
 

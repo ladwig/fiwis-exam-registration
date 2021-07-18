@@ -32,16 +32,14 @@ export default {
       if(process.env.NODE_ENV !== 'production') {
         return true
       }
-      else {
-        return false
-      }
+      return false
     }
   },
   methods: {
     ...mapActions(['currentCard/checkCardForThisExam']),
     reloadPage() {
       if(this.dev) {
-        window.location.reload(true)
+        window.location.reload()
       }
     },
     // Only in dev
@@ -53,11 +51,5 @@ export default {
       this['currentCard/checkCardForThisExam']("36128986026611204")
     },
   },
-  created() {
-
-  }
 }
 </script>
-<style>
-
-</style>

@@ -55,7 +55,6 @@ export default {
 .blink {
  /* animation: blinker 1.5s step-start infinite; */
 }
-
 @keyframes blinker {
   50% {
     opacity: 0;

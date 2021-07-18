@@ -25,9 +25,4 @@ export default {
     returnText: String,
   }
 }
-
 </script>
-
-<style scoped>
-
-</style>

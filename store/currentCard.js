@@ -119,8 +119,8 @@ export const actions = {
             "Accept": process.env.SCANNED_CARD_ACCEPT_HEADER
           }
         })
-          .then((response) => {
-            context.dispatch("processCardForThisExam", [response.data,cardnumber])
+          .then((res) => {
+            context.dispatch("processCardForThisExam", [res.data,cardnumber])
               .then(() => {
                   context.dispatch("resetStates")
                   context.dispatch("exam/updateNumberOfStudentsInRoom", '',{root: true})
@@ -183,8 +183,8 @@ export const actions = {
             "Accept": process.env.SCANNED_CARD_ACCEPT_HEADER
           }
         })
-          .then((response) => {
-            context.dispatch("processModeChange", response.data)
+          .then((res) => {
+            context.dispatch("processModeChange", res.data)
           })
       })
       .catch(err => {
@@ -227,6 +227,6 @@ export const actions = {
     } catch (err) {
       context.commit("setErrorMessage", err, {root: true})
     }
-
   },
 }
+/* eslint no-shadow: ["error", { "allow": ["state"] }]*/
