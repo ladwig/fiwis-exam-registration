@@ -120,7 +120,7 @@ export const actions = {
           context.commit("setModeExamRegister", status, {root: true})
         })
 
-     const now = new Date();
+   /*  const now = new Date();
       if (now.getTime() >= (new Date(context.state.startTime).getTime() - context.state.timeBeforeAfterExam) && now.getTime() <= (new Date(context.state.stopTime).getTime()) + context.state.timeBeforeAfterExam) {
         context.commit("setModeExamInProgress", true, {root: true})
       }
@@ -129,7 +129,7 @@ export const actions = {
       }
     }
     else {
-      context.commit("setModeExamInProgress", false, {root: true})
+      context.commit("setModeExamInProgress", false, {root: true}) */
     }
   },
 

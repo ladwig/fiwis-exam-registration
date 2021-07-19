@@ -5,9 +5,7 @@
       persistent
       transition="dialog-bottom-transition"
     >
-      <v-card
-        :color="status"
-      >
+      <v-card>
         <v-card-text>
           <slot></slot>
         </v-card-text>
@@ -31,7 +29,14 @@ export default {
   computed: {
     ...mapState([
       "errorMessage"
-    ])
+    ]),
+    dialogs() {
+      console.log(this.status)
+      if(this.status) {
+        return true
+      }
+      return false
+    }
   },
   methods: {
     ...mapMutations([

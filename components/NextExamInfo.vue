@@ -2,7 +2,7 @@
   <div>
     <scan-information-panel
       :headline="$t('nextExamInfo.showNextExamHeadline')"
-      icon="mdi-information-outline"
+      icon="mdi-information"
       :more="$t('nextExamInfo.showNextExamMore')"
     />
       <ul v-if="isThereNextExam">

@@ -5,13 +5,14 @@
     <set-exam-room v-if="roomName===null"></set-exam-room>
 
     <!-- Popup to ask for exam start and settings -->
-    <settings-alert v-if="this.isExaminer" :mode-exam-register="modeExamRegister"></settings-alert>
+    <settings-alert v-if="isExaminer" :mode-exam-register="modeExamRegister"></settings-alert>
 
     <!-- Popup when there is an error -->
     <error-message-alert v-if="errorMessage"></error-message-alert>
 
     <!-- Popup test -->
-    <t-e-s-t-next-exam-info v-if="status" :status="status"></t-e-s-t-next-exam-info>
+    <t-e-s-t-next-exam-info v-if="status && !modeExamInProgress && !isExaminer" :status="status"></t-e-s-t-next-exam-info>
+    <t-e-s-t-current-exam-info v-if="status && modeExamInProgress && !isExaminer" :status="status"></t-e-s-t-current-exam-info>
 
     <v-row v-if="roomName!=null" no-gutters class="top-row flex-grow-1 flex-shrink-1">
 
@@ -66,9 +67,11 @@ import ProgressBar from "../components/ProgressBar";
 import { changeColor } from "../ledAPI";
 import BaseExamInfoAlert from "../components/BaseExamInfoAlert";
 import TESTNextExamInfo from "../components/TESTNextExamInfo";
+import TESTCurrentExamInfo from "../components/TESTCurrentExamInfo";
 
 export default {
   components: {
+    TESTCurrentExamInfo,
     TESTNextExamInfo,
     BaseExamInfoAlert,
     ProgressBar,

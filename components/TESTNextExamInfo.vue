@@ -1,9 +1,12 @@
 <template>
-  <base-exam-info-alert :status="status">
+  <base-exam-info-alert
+    :status="status"
+  >
       <v-list
         v-if="isThereNextExam"
         class="test"
       >
+        <v-subheader>  {{ $t('nextExamInfo.yourNextExam') }}</v-subheader>
           <v-list-item
             v-for="(item, i) in items"
             :key="i"
@@ -23,6 +26,7 @@
       </v-list>
     <div
       v-if="isThereNextExam == false"
+      class="headline"
     >
       {{ $t('nextExamInfo.noExamToday') }}
     </div>

@@ -3,7 +3,7 @@
     <scan-information-panel
       v-if="registModeActive"
       :headline="$t('currentExamInfo.registerForExamNowHeadline')"
-      icon="mdi-information-outline"
+      icon="mdi-information"
       :return-text="this.returnText"
       :more="$t('currentExamInfo.registerForExamNowMore')"
     />
@@ -11,7 +11,7 @@
   <scan-information-panel
     v-else
     :headline="$t('currentExamInfo.checkStatusHeadline')"
-    icon="mdi-information-outline"
+    icon="mdi-information"
     :return-text="this.returnText"
     :more="$t('currentExamInfo.checkStatusMore')"
   />

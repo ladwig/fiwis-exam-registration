@@ -1,4 +1,3 @@
-<!-- "generic" component, used for CurrentExamInfo and NextExamInfo -->
 <template>
   <v-container>
     <h2 class="display-3 darker--text font-weight-regular"> {{ headline }} </h2>
