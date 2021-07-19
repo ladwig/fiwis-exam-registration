@@ -1,6 +1,6 @@
 {
   "env": {
-    "test": {
+    "development": {
       "presets": [
         [
           "@babel/preset-env",
@@ -9,6 +9,15 @@
               "node": "current"
             }
           }
+        ]
+      ],
+      "plugins": [
+        ["istanbul", {
+          "exclude": [
+            "**/*.spec.js"
+          ],
+          "extension": [".js', '.vue"]
+        }
         ]
       ]
     }

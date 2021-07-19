@@ -91,6 +91,7 @@ export default {
   },
   created() {
     changeColor("#ffffff")
+    console.log(process.env.BABEL_ENV)
   }
 
 }

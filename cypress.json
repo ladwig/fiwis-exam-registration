@@ -8,5 +8,8 @@
   "baseUrl": "http://localhost",
   "projectId": "em9425",
   "video": false,
-  "requestTimeout": 6000
+  "requestTimeout": 6000,
+  "env": {
+    "NODE_ENV": "test"
+  }
 }
