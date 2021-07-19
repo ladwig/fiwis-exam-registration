@@ -1,6 +1,7 @@
 <template>
   <div>
       <v-img
+        :src="require('~/static/read_card.png')"
         src="../read_card.png"
         max-height="200"
         max-width="200"
