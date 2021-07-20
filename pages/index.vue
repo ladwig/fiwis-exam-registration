@@ -125,7 +125,7 @@ export default {
   bottom: 0px;
   left: 0px;
   opacity: 0.06;
-  background: url("/logo.png");
+  background: url("~assets/images/logo.png");
 }
 
 
