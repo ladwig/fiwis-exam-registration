@@ -127,9 +127,13 @@ export const actions = {
       else {
         context.commit("setModeExamInProgress", false, {root: true})
       }
+      if(now.getTime() >= new Date(context.state.startTime).getTime()) {
+        context.commit("setAttentionSign", true, {root: true})
+      }
     }
     else {
       context.commit("setModeExamInProgress", false, {root: true})
+      context.commit("setAttentionSign", false, {root: true})
     }
   },
 

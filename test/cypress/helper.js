@@ -22,7 +22,7 @@ export const text = {
   profCardIDRaw: "0577591a1f5b00",
   profCardIDConvert: "100189144184581",
 
-  nextExamTitle: "Wirtschaft- und IT-Recht",
+  nextExamTitle: "Wirtschaft",
   nextExamRoom: "VCC",
   noDisturb: "nicht stören",
 

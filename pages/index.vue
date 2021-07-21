@@ -105,6 +105,7 @@ export default {
   },
   created() {
     changeColor("#ffffff")
+    console.log(process.env.BABEL_ENV)
   }
 
 }
@@ -117,6 +118,7 @@ export default {
 
 .grid-item-bottom {
   background-color: var(--v-secondary-base);
+  z-index: 10;
 }
 
 .fill-parent-height {
@@ -126,6 +128,18 @@ export default {
 .top-row {
   min-height: 0;
   background-color: var(--v-primary-lighten2);
+}
+
+.top-row:before{
+  content: "";
+  background-size: auto;
+  position: absolute;
+  top: 0px;
+  right: 0;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.06;
+  background: url("~assets/images/logo.png");
 }
 
 

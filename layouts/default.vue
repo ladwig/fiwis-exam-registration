@@ -41,6 +41,7 @@ export default {
       'currentCard/checkCardForThisExam',
       'currentCard/checkCardForNextExam'
       ]),
+
     reloadPage() {
       if(this.dev) {
         window.location.reload()

@@ -15,7 +15,7 @@ describe('Checking error handling', () => {
     expect(cy.contains(text.error, { matchCase: false }))
   })
 
-  it('No connection after card input when exam', () => {
+  it('No connection after card input when exam and close error dialog', () => {
     reuseFunctions.setTimeDate()
     reuseFunctions.chooseRoomInterception()
     reuseFunctions.getExamRegistrationStateInterception()

@@ -1,9 +1,9 @@
 <template>
   <div>
       <v-img
-        src="../read_card.png"
-        max-height="200"
-        max-width="200"
+        :src="require('@/assets/images/read_card.png')"
+        max-height="210"
+        max-width="210"
         class="mt-2"
       > </v-img>
       <input @keydown="typeNFC" id="NFC_CARDNUMBER" type="text" autocomplete="off"/>

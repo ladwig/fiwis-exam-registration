@@ -55,7 +55,7 @@ export const actions = {
   },
 
   async checkCard(context, cardnumber) {
-    console.log(cardnumber)
+    
       const cardID = await context.dispatch("cardNum2String", cardnumber.toString())
       // If no exam (+-1h) found -> Students can check there next exam
       if (!context.rootState.modeExamInProgress){
@@ -119,7 +119,7 @@ export const actions = {
     })
       .then((response) => {
         const resURL = response.headers.location
-        console.log(response.headers)
+        
         this.$axios.get(resURL, {
           headers: {
             "Accept": process.env.SCANNED_CARD_ACCEPT_HEADER
@@ -183,7 +183,7 @@ export const actions = {
     })
       .then((response) => {
         const resURL = response.headers.location
-        console.log(response.headers)
+        
         this.$axios.get(resURL, {
           headers: {
             "Accept": process.env.SCANNED_CARD_ACCEPT_HEADER

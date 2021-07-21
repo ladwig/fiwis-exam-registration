@@ -19,7 +19,7 @@ describe('Checking all admin / examiner options', () => {
     expect(cy.get("button").contains(text.startButton, { matchCase: false }))
   })
 
-  it('Just close popup', () => {
+  it('Close popup', () => {
     expect(cy.contains(text.popupHeadline, { matchCase: false }))
     cy.get("button").contains(text.cancelButton, { matchCase: false }).click()
     cy.contains(text.cancelButton, {matchCase: false}).should("not.exist")
