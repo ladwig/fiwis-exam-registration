@@ -1,5 +1,5 @@
 <template>
-  <base-exam-info-alert
+  <base-response-dialog
     :dialog="dialog"
   >
     <v-row class="ma-0 pa-0">
@@ -18,20 +18,21 @@
         {{ returnText }}
       </v-col>
     </v-row>
-  </base-exam-info-alert>
+  </base-response-dialog>
 </template>
 
 <script>
 import {mapState} from "vuex";
-import BaseExamInfoAlert from "./BaseExamInfoAlert";
+import BaseExamInfoAlert from "./BaseResponseDialog";
+import BaseResponseDialog from "./BaseResponseDialog";
 
 export default {
-  name: "TESTCurrentExamInfo",
+  name: "CurrentExamResponseDialog",
   props: {
     dialog: Boolean,
     status: String,
     returnText: String,
   },
-  components: {BaseExamInfoAlert},
+  components: {BaseResponseDialog},
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <base-exam-info-alert
+  <base-response-dialog
     :dialog="dialog"
   >
       <v-list
@@ -31,19 +31,19 @@
     >
       {{ $t('nextExamInfo.noExamToday') }}
     </div>
-  </base-exam-info-alert>
+  </base-response-dialog>
 </template>
 
 <script>
 import {mapState, mapGetters } from "vuex";
-import BaseExamInfoAlert from "./BaseExamInfoAlert";
+import BaseResponseDialog from "./BaseResponseDialog";
 
 export default {
-  name: "TESTNextExamInfo",
+  name: "NextExamResponseDialog",
   props: {
     dialog: Boolean
   },
-  components: {BaseExamInfoAlert},
+  components: {BaseResponseDialog},
   computed: {
     ...mapState([
       "infoDialogStatus"

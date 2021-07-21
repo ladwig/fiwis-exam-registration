@@ -17,7 +17,7 @@
 <script>
 
 export default {
-  name: "BaseExamInfoAlert",
+  name: "BaseResponseDialog",
   props: {
     dialog: {
       default: false
