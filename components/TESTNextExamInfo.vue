@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import {mapState} from "vuex";
+import {mapState, mapGetters } from "vuex";
 import BaseExamInfoAlert from "./BaseExamInfoAlert";
 
 export default {
@@ -45,16 +45,23 @@ export default {
   },
   components: {BaseExamInfoAlert},
   computed: {
+    ...mapState([
+      "infoDialogStatus"
+    ]),
     ...mapState({
       isThereNextExam: state => state.currentCard.isThereNextExam,
       examName: state => state.exam.examName,
       examRooms: state => state.exam.examRooms,
     }),
+    ...mapGetters([
+      "exam/getStartTimeWithDate",
+      "exam/getStopTimeWithoutDate"
+    ]),
     getTimeRange() {
       return String(
-        this.$store.getters["exam/getStartTimeWithDate"]
+        this["exam/getStartTimeWithDate"]
         + ' - ' +
-        this.$store.getters["exam/getStopTimeWithoutDate"]
+        this["exam/getStopTimeWithoutDate"]
         + ' ' +
         this.$i18n.t('displayClock.suffix')
       )

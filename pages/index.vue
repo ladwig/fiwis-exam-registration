@@ -11,9 +11,9 @@
     <error-message-alert v-if="errorMessage"></error-message-alert>
 
     <!-- Popup test -->
-    <t-e-s-t-next-exam-info :dialog="infoDialogStatus" :status="status"></t-e-s-t-next-exam-info>
-    <t-e-s-t-current-exam-info v-if="status && modeExamInProgress && !isExaminer" :status="status"></t-e-s-t-current-exam-info>
 
+    <t-e-s-t-current-exam-info :dialog="currentExamDialog" :status="status" :return-text="returnText"></t-e-s-t-current-exam-info>
+    <t-e-s-t-next-exam-info :dialog="nextExamDialog" :status="status"></t-e-s-t-next-exam-info>
     <v-row v-if="roomName!=null" no-gutters class="top-row flex-grow-1 flex-shrink-1">
 
       <v-col cols="11" class="grid-item-mid fill-parent-height pa-0 pl-10 pt-15">
@@ -88,7 +88,20 @@ export default {
     ...mapState({
       isExaminer: state => state.currentCard.isExaminer,
       status: state => state.currentCard.status,
+      returnText: state => state.currentCard.returnText,
     }),
+    currentExamDialog() {
+      if(this.infoDialogStatus && !this.isExaminer && this.returnText && this.modeExamInProgress) {
+        return true
+      }
+      return false
+    },
+    nextExamDialog() {
+     if(this.infoDialogStatus && !this.isExaminer && !this.modeExamInProgress){
+        return true
+      }
+     return false
+    }
   },
   created() {
     changeColor("#ffffff")

@@ -1,5 +1,7 @@
 <template>
-  <base-exam-info-alert>
+  <base-exam-info-alert
+    :dialog="dialog"
+  >
     <v-row class="ma-0 pa-0">
       <v-col
         cols="1"
@@ -26,16 +28,10 @@ import BaseExamInfoAlert from "./BaseExamInfoAlert";
 export default {
   name: "TESTCurrentExamInfo",
   props: {
+    dialog: Boolean,
     status: String,
+    returnText: String,
   },
   components: {BaseExamInfoAlert},
-  computed: {
-    ...mapState({
-      returnText: state => state.currentCard.returnText
-    }),
-    ...mapState([
-      "modeExamRegister",
-    ]),
-  },
 }
 </script>
