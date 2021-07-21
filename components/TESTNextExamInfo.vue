@@ -1,12 +1,13 @@
 <template>
   <base-exam-info-alert
-    :status="status"
+    :dialog="dialog"
   >
       <v-list
         v-if="isThereNextExam"
-        class="test"
       >
-        <v-subheader>  {{ $t('nextExamInfo.yourNextExam') }}</v-subheader>
+        <v-subheader class="headline">
+          {{ $t('nextExamInfo.yourNextExam') }}
+        </v-subheader>
           <v-list-item
             v-for="(item, i) in items"
             :key="i"
@@ -25,8 +26,8 @@
           </v-list-item>
       </v-list>
     <div
-      v-if="isThereNextExam == false"
-      class="headline"
+      v-if="isThereNextExam === false"
+      class="display-1 pa-5"
     >
       {{ $t('nextExamInfo.noExamToday') }}
     </div>
@@ -40,17 +41,23 @@ import BaseExamInfoAlert from "./BaseExamInfoAlert";
 export default {
   name: "TESTNextExamInfo",
   props: {
-    status: String
+    dialog: Boolean
   },
   components: {BaseExamInfoAlert},
   computed: {
     ...mapState({
       isThereNextExam: state => state.currentCard.isThereNextExam,
       examName: state => state.exam.examName,
-      examRooms: state => state.exam.examRooms
+      examRooms: state => state.exam.examRooms,
     }),
     getTimeRange() {
-      return String(this.$store.getters["exam/getStartTimeWithDate"] + ' - ' + this.$store.getters["exam/getStopTimeWithoutDate"])
+      return String(
+        this.$store.getters["exam/getStartTimeWithDate"]
+        + ' - ' +
+        this.$store.getters["exam/getStopTimeWithoutDate"]
+        + ' ' +
+        this.$i18n.t('displayClock.suffix')
+      )
     },
     items() {
       return [
@@ -59,12 +66,6 @@ export default {
         { text: this.examRooms, icon: 'mdi-map-marker' },
       ]
     }
-
   },
 }
 </script>
-<style scoped>
-.test {
- background: transparent;
-}
-</style>

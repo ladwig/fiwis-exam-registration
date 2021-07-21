@@ -5,50 +5,23 @@
       persistent
       transition="dialog-bottom-transition"
     >
-      <v-card>
-        <v-card-text>
-          <slot></slot>
-        </v-card-text>
-      </v-card>
+        <v-card>
+          <v-card-text
+            class="ma-0 pa-0 pl-3"
+          >
+            <slot></slot>
+          </v-card-text>
+        </v-card>
     </v-dialog>
 </template>
-
 <script>
-import {mapMutations, mapState} from "vuex";
 
 export default {
   name: "BaseExamInfoAlert",
   props: {
-    status: String
-  },
-  data() {
-    return {
-      dialog: true,
+    dialog: {
+      default: false
     }
   },
-  computed: {
-    ...mapState([
-      "errorMessage"
-    ]),
-    dialogs() {
-      console.log(this.status)
-      if(this.status) {
-        return true
-      }
-      return false
-    }
-  },
-  methods: {
-    ...mapMutations([
-      "setErrorMessage",
-      "setCardIsLoading"
-      ]
-    ),
-    closePopup() {
-      this.dialog = false
-      this.setErrorMessage(null)
-      this.setCardIsLoading(false)
-    }
-  }
 }
 </script>

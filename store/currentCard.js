@@ -6,7 +6,7 @@ export const state = () => ({
     isRegisteredStudent: null, // Not used rn, maybe for displaying icons ?
     cardNumber: null,
     returnText: null,
-    status: null
+    status: null,
   }
 )
 
@@ -34,12 +34,16 @@ export const mutations = {
 
   setStatus(state, status) {
     state.status = status
-  }
+  },
+
 }
 
 export const actions = {
   // Resets all states that are connected to specific user/card
   resetStates(context) {
+    setTimeout( () => {
+      context.commit("setInfoDialogStatus", false, {root: true})
+    }, 4000)
     setTimeout(() => {
       context.commit("setCardIsLoading", false , {root: true})
       context.commit("setReturnText")
@@ -47,7 +51,7 @@ export const actions = {
       context.commit("setIsThereNextExam")
       changeColor("#ffffff")
       context.commit("setStatus", null)
-    }, 4000);
+    }, 4400)
   },
 
   async checkCard(context, cardnumber) {
@@ -205,10 +209,12 @@ export const actions = {
   returnDecision(context, decision) {
     if(decision) {
       context.commit("setStatus", "#00ff00")
+      context.commit("setInfoDialogStatus", true, {root: true})
       changeColor("#00ff00")
     }
     else {
       context.commit("setStatus", "#ff0000")
+      context.commit("setInfoDialogStatus", true, {root: true})
       changeColor("#ff0000")
     }
   },

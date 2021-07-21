@@ -4,7 +4,8 @@ export const state = () => ({
     modeExamInProgress: null, // Exam time + X time before and after -> X = exam/timeBeforeAfterExam
     modeExamRegister: false,
     errorMessage: null,
-    cardIsLoading: false // True when API calls are made
+    cardIsLoading: false, // True when API calls are made
+    infoDialogStatus: false,
   }
 )
 
@@ -28,6 +29,10 @@ export const mutations = {
   setCardIsLoading(state, cardIsLoading) {
     state.cardIsLoading = cardIsLoading;
   },
+
+  setInfoDialogStatus(state, infoDialogStatus) {
+    state.infoDialogStatus = infoDialogStatus
+  }
 }
 
 
