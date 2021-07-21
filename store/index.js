@@ -27,10 +27,14 @@ export const mutations = {
     state.errorMessage = msg
   },
 
+  setAttentionSign(state, attentionSign) {
+    state.attentionSign = attentionSign
+  },
+
   setCardIsLoading(state, cardIsLoading) {
     state.cardIsLoading = cardIsLoading;
   },
-  
+
   setInfoDialogStatus(state, infoDialogStatus) {
     state.infoDialogStatus = infoDialogStatus
   }
