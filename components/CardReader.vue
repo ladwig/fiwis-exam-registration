@@ -1,7 +1,7 @@
 <template>
   <div>
       <v-img
-        src=""
+        src="https://raw.githubusercontent.com/ladwig/fiwis-exam-registration/master/static/read_card.png"
         max-height="210"
         max-width="210"
         class="mt-2"

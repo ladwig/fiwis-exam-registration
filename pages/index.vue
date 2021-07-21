@@ -139,7 +139,7 @@ export default {
   bottom: 0px;
   left: 0px;
   opacity: 0.06;
-  background: url();
+  background: url("https://raw.githubusercontent.com/ladwig/fiwis-exam-registration/master/static/logo.png");
 }
 
 
