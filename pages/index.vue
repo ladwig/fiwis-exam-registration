@@ -117,6 +117,7 @@ export default {
 }
 
 .grid-item-bottom {
+  min-height: 20vh;
   background-color: var(--v-secondary-base);
   z-index: 10;
 }
