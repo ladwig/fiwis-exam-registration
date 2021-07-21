@@ -5,11 +5,10 @@ export const state = () => ({
     attentionSign: false,
     modeExamRegister: false,
     errorMessage: null,
-    cardIsLoading: false // True when API calls are made
+    cardIsLoading: false, // True when API calls are made
+    infoDialogStatus: false,
   }
 )
-
-/* eslint no-shadow: ["error", { "allow": ["state"] }]*/
 
 export const mutations = {
   setRoomName(state, roomName) {
@@ -31,10 +30,11 @@ export const mutations = {
   setCardIsLoading(state, cardIsLoading) {
     state.cardIsLoading = cardIsLoading;
   },
+  
+  setInfoDialogStatus(state, infoDialogStatus) {
+    state.infoDialogStatus = infoDialogStatus
+  }
 
-  setAttentionSign(state, attentionSign) {
-    state.attentionSign = attentionSign;
-  },
 }
 
 

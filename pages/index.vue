@@ -5,11 +5,15 @@
     <set-exam-room v-if="roomName===null"></set-exam-room>
 
     <!-- Popup to ask for exam start and settings -->
-    <settings-alert v-if="this.isExaminer" :mode-exam-register="modeExamRegister"></settings-alert>
+    <settings-alert v-if="isExaminer" :mode-exam-register="modeExamRegister"></settings-alert>
 
     <!-- Popup when there is an error -->
     <error-message-alert v-if="errorMessage"></error-message-alert>
 
+    <!-- Popup test -->
+
+    <current-exam-response-dialog :dialog="currentExamDialog" :status="status" :return-text="returnText"></current-exam-response-dialog>
+    <next-exam-response-dialog :dialog="nextExamDialog" :status="status"></next-exam-response-dialog>
     <v-row v-if="roomName!=null" no-gutters class="top-row flex-grow-1 flex-shrink-1">
 
       <v-col cols="11" class="grid-item-mid fill-parent-height pa-0 pl-10 pt-15">
@@ -37,11 +41,7 @@
       </v-col>
       <v-col cols="9">
 
-        <!-- Shows next exam for scanned card -->
-        <next-exam-info v-if="!modeExamInProgress" class="mt-2 ml-10"></next-exam-info>
-
-        <!-- Shows return text for scanned card -->
-        <current-exam-info v-if="modeExamInProgress" :registModeActive="modeExamRegister" class="mt-2 ml-10"></current-exam-info>
+        <information-panel :exam-in-progress-mode="modeExamInProgress" :regist-mode-active="modeExamRegister" class="mt-2 ml-10"></information-panel>
       </v-col>
     </v-row>
   </v-container>
@@ -49,29 +49,30 @@
 </template>
 
 <script>
-import SetExamRoom from "../components/SetExamRoom";
 import {mapState} from "vuex";
+import { changeColor } from "../ledAPI";
+import SetExamRoom from "../components/SetExamRoom";
 import CurrentExamName from "../components/CurrentExamName";
-import NextExamInfo from "../components/NextExamInfo";
 import CurrentExamTime from "../components/CurrentExamTime";
 import StudentsInRoom from "../components/StudentsInRoom";
-import CurrentExamInfo from "../components/CurrentExamInfo";
 import CardReader from "../components/CardReader";
 import SettingsAlert from "../components/SettingsAlert";
 import ErrorMessageAlert from "../components/ErrorMessageAlert";
 import ProgressBar from "../components/ProgressBar";
-import { changeColor } from "../ledAPI";
-
+import InformationPanel from "../components/InformationPanel";
+import NextExamResponseDialog from "../components/NextExamResponseDialog";
+import CurrentExamResponseDialog from "../components/CurrentExamResponseDialog";
 export default {
   components: {
+    CurrentExamResponseDialog,
+    NextExamResponseDialog,
+    InformationPanel,
     ProgressBar,
     ErrorMessageAlert,
     SettingsAlert,
     CardReader,
-    CurrentExamInfo,
     StudentsInRoom,
     CurrentExamTime,
-    NextExamInfo,
     CurrentExamName,
     SetExamRoom
   },
@@ -79,15 +80,28 @@ export default {
     ...mapState([
       "roomName",
       "modeExamInProgress",
-      "modeExamRegister",
       "errorMessage",
       "modeExamRegister",
       "cardIsLoading",
+      "infoDialogStatus"
     ]),
     ...mapState({
       isExaminer: state => state.currentCard.isExaminer,
-      status: state => state.currentCard.status
+      status: state => state.currentCard.status,
+      returnText: state => state.currentCard.returnText,
     }),
+    currentExamDialog() {
+      if(this.infoDialogStatus && !this.isExaminer && this.returnText && this.modeExamInProgress) {
+        return true
+      }
+      return false
+    },
+    nextExamDialog() {
+     if(this.infoDialogStatus && !this.isExaminer && !this.modeExamInProgress){
+        return true
+      }
+     return false
+    }
   },
   created() {
     changeColor("#ffffff")
