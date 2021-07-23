@@ -1,4 +1,4 @@
-import { changeColor } from "../ledAPI";
+import { changeLEDColor } from "../ledAPI";
 
 export const state = () => ({
     isThereNextExam: null,
@@ -40,22 +40,25 @@ export const mutations = {
 
 export const actions = {
   // Resets all states that are connected to specific user/card
-  resetStates(context) {
-    setTimeout( () => {
-      context.commit("setInfoDialogStatus", false, {root: true})
-    }, 4000)
-    setTimeout(() => {
+  resetStates(context, timeout) {
+    let dialogTimer;
+    let stateTimer;
+      dialogTimer = setTimeout( () => {
+        context.commit("setInfoDialogStatus", false, {root: true})
+      }, timeout)
+
+   stateTimer = setTimeout(() => {
       context.commit("setCardIsLoading", false , {root: true})
       context.commit("setReturnText")
       context.commit("setIsRegisteredStudent")
       context.commit("setIsThereNextExam")
-      changeColor("#ffffff")
+      changeLEDColor("#ffffff")
       context.commit("setStatus", null)
-    }, 4400)
+    }, timeout+400)
   },
 
   async checkCard(context, cardnumber) {
-    
+
       const cardID = await context.dispatch("cardNum2String", cardnumber.toString())
       // If no exam (+-1h) found -> Students can check there next exam
       if (!context.rootState.modeExamInProgress){
@@ -80,7 +83,7 @@ export const actions = {
       .then((response)  => {
         context.dispatch("processCardForNextExam", response.data)
           .then(() => {
-              context.dispatch("resetStates")
+              context.dispatch("resetStates", context.rootState.infoDialogDisplayTime)
             }
           )
       })
@@ -119,7 +122,7 @@ export const actions = {
     })
       .then((response) => {
         const resURL = response.headers.location
-        
+
         this.$axios.get(resURL, {
           headers: {
             "Accept": process.env.SCANNED_CARD_ACCEPT_HEADER
@@ -128,7 +131,7 @@ export const actions = {
           .then((res) => {
             context.dispatch("processCardForThisExam", [res.data,cardnumber])
               .then(() => {
-                  context.dispatch("resetStates")
+                  context.dispatch("resetStates", context.rootState.infoDialogDisplayTime)
                   context.dispatch("exam/updateNumberOfStudentsInRoom", '',{root: true})
                 }
               )
@@ -183,7 +186,7 @@ export const actions = {
     })
       .then((response) => {
         const resURL = response.headers.location
-        
+
         this.$axios.get(resURL, {
           headers: {
             "Accept": process.env.SCANNED_CARD_ACCEPT_HEADER
@@ -209,14 +212,13 @@ export const actions = {
   returnDecision(context, decision) {
     if(decision) {
       context.commit("setStatus", "#00ff00")
-      context.commit("setInfoDialogStatus", true, {root: true})
-      changeColor("#00ff00")
+      changeLEDColor("#00ff00")
     }
     else {
       context.commit("setStatus", "#ff0000")
-      context.commit("setInfoDialogStatus", true, {root: true})
-      changeColor("#ff0000")
+      changeLEDColor("#ff0000")
     }
+    context.commit("setInfoDialogStatus", true, {root: true})
   },
 
   //HelperFunction: Converting the scanned card to a matchable string for FIWIS

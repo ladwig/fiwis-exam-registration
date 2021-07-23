@@ -11,21 +11,12 @@
 </template>
 
 <script>
-import {mapActions, mapMutations, mapState} from "vuex";
+import {mapActions, mapMutations} from "vuex";
 
 export default {
   name: "CardReader",
-  computed: {
-    ...mapState([
-      "currentCard/cardNumber",
-      "modeExamInProgress",
-      "modeExamRegister",
-      "currentCard/returnText"
-    ])
-  },
   methods: {
     ...mapMutations([
-        "currentCard/setCardNumber",
         "setCardIsLoading"
       ]
     ),

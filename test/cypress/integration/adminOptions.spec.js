@@ -2,7 +2,6 @@ import {body, text, reuseFunctions } from "../helper"
 
 describe('Checking all admin / examiner options', () => {
   beforeEach(() => {
-
     reuseFunctions.setTimeDate()
     reuseFunctions.getProfCardInterception()
     reuseFunctions.getExamRegistrationStateInterception()

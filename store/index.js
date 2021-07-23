@@ -7,6 +7,7 @@ export const state = () => ({
     errorMessage: null,
     cardIsLoading: false, // True when API calls are made
     infoDialogStatus: false,
+    infoDialogDisplayTime: 4000
   }
 )
 

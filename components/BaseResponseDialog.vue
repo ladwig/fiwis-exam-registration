@@ -1,8 +1,8 @@
 <template>
     <v-dialog
-      v-model="dialog"
+      v-model="open"
       max-width="500"
-      persistent
+persistent
       transition="dialog-bottom-transition"
     >
         <v-card>
@@ -16,12 +16,35 @@
 </template>
 <script>
 
+import {mapActions} from "vuex";
+
 export default {
   name: "BaseResponseDialog",
   props: {
-    dialog: {
-      default: false
+    dialog: Boolean
+  },
+  computed: {
+    open: {
+      get() {
+        return this.dialog
+      },
+      set() {
+        // resetStates, but cant fix it rn
+      }
     }
   },
+  methods: {
+    ...mapActions([
+      "currentCard/resetStates"
+    ]),
+  },
+/* watch: {
+    dialog:function(newValue, old) {
+      console.log(old)
+      if(!newValue) {
+        this['currentCard/resetStatesWithDialogClick']()
+      }
+    }
+  } */
 }
 </script>

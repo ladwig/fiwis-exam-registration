@@ -11,7 +11,6 @@
     <error-message-alert v-if="errorMessage"></error-message-alert>
 
     <!-- Popup test -->
-
     <current-exam-response-dialog :dialog="currentExamDialog" :status="status" :return-text="returnText"></current-exam-response-dialog>
     <next-exam-response-dialog :dialog="nextExamDialog" :status="status"></next-exam-response-dialog>
     <v-row v-if="roomName!=null" no-gutters class="top-row flex-grow-1 flex-shrink-1">
@@ -30,17 +29,14 @@
     </v-row>
     <v-row v-if="roomName!=null" no-gutters class="bottom-row flex-grow-0 flex-shrink-0 pb-3 grid-item-bottom">
       <v-col cols="12">
-
         <!-- Shows loading status when card is scanned -->
         <progress-bar :loading="cardIsLoading" :status="status"></progress-bar>
       </v-col>
       <v-col cols="3" class="pl-10">
-
         <!-- Manages card scans and shows card image -->
         <card-reader></card-reader>
       </v-col>
       <v-col cols="9">
-
         <information-panel :exam-in-progress-mode="modeExamInProgress" :regist-mode-active="modeExamRegister" class="mt-2 ml-10"></information-panel>
       </v-col>
     </v-row>
@@ -50,7 +46,7 @@
 
 <script>
 import {mapState} from "vuex";
-import { changeColor } from "../ledAPI";
+import { changeLEDColor } from "../ledAPI";
 import SetExamRoom from "../components/SetExamRoom";
 import CurrentExamName from "../components/CurrentExamName";
 import CurrentExamTime from "../components/CurrentExamTime";
@@ -104,8 +100,7 @@ export default {
     }
   },
   created() {
-    changeColor("#ffffff")
-    console.log(process.env.BABEL_ENV)
+    changeLEDColor("#ffffff")
   }
 
 }

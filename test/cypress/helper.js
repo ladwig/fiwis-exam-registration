@@ -150,7 +150,6 @@ export const reuseFunctions = {
       }
 
       else if(req.body.idcardnumber == text.studentCardIDConvert && !examRegistMode) {
-        console.log(examRegistMode)
         req.reply({
           headers: {
             "location": "/4000/scannedcards/8000",

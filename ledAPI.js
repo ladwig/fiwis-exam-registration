@@ -1,6 +1,6 @@
 // Using the XDS-1008-A device API to change it's LED color. Used to give feedback / status of scanned card
 // #000000 to turn LEDs off
-export function changeColor(hex) {
+export function changeLEDColor(hex) {
   if(/Android|webOS/i.test(navigator.userAgent)) {
     const access = {
       base: 'http://localhost:8080/v2',
