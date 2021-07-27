@@ -12,7 +12,7 @@
         <v-card-text>
           {{ $t('errorMessageAlert.errorMore') }}
           <br>
-         <strong class="red--text">{{errorMessage.response.status}} {{errorMessage.message}}</strong>
+         <strong class="red--text">{{errorMessage.response}} {{errorMessage.message}}</strong>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>

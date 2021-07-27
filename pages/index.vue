@@ -89,13 +89,13 @@ export default {
       returnText: state => state.currentCard.returnText,
     }),
     currentExamDialog() {
-      if(this.infoDialogStatus && !this.isExaminer && this.returnText && this.modeExamInProgress) {
+      if(this.infoDialogStatus && !this.isExaminer && this.returnText && this.modeExamInProgress && !this.errorMessage) {
         return true
       }
       return false
     },
     nextExamDialog() {
-      if(this.infoDialogStatus && !this.isExaminer && !this.modeExamInProgress){
+      if(this.infoDialogStatus && !this.isExaminer && !this.modeExamInProgress && !this.errorMessage){
         return true
       }
       return false
