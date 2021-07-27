@@ -1,3 +1,4 @@
+<!-- Display of the returnText for checking a scanned card. -->
 <template>
   <base-response-dialog
     :dialog="dialog"

@@ -55,6 +55,9 @@ export const text = {
   StudentCardIsNotCheckedInCode: 200,
 }
 
+export const otherValues = {
+  tickTime: 4000
+}
 
 export const reuseFunctions = {
   setTimeDate() {
@@ -180,6 +183,7 @@ export const reuseFunctions = {
       }
 
       else if(req.body.idcardnumber == text.notStudentCardIDConvert && examRegistMode) {
+        console.log("ok")
         req.reply({
           headers: {
             "location": "/4000/scannedcards/3100",

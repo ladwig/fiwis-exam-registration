@@ -1,9 +1,10 @@
+/* Currently serves as a hardcoded list of room names.
+Could be extended in the future by a suitable api query. */
 export const state = () => ({
   rooms: [
     { name: 'H.1.1'  },
     { name: 'H.1.2' },
     { name: 'H.1.3' },
-    { name: 'H.1.4' },
     { name: 'H.1.5' },
     { name: 'H.1.6' },
     { name: 'H.1.7' },

@@ -1,3 +1,5 @@
+<!-- Central component that implements the input field for the card reader. img src static src as a workaround
+for 404 in fiwis production env" -->
 <template>
   <div>
       <v-img

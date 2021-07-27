@@ -1,5 +1,5 @@
+<!-- Display of the start and end time of current exam, also a do not disturb warning when currentTime > startTime -->
 <template>
-
   <v-container class="pa-0 ma-0">
     <v-chip
       color="secondary"

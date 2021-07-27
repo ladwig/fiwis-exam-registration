@@ -1,5 +1,5 @@
+<!-- Admin / Examiner option panel for changing application mode or language -->
 <template>
-
     <v-dialog
       v-model="dialog"
       persistent
@@ -74,19 +74,20 @@ export default {
     ),
     ...mapActions([
       "currentCard/startModeExamRegister",
+      "currentCard/resetStates"
     ]),
 
     //Always close the modal and removes examiner data. Case 1 -> Starts exam register mode
     closePopup(action) {
+      this.dialog = false
+      this["currentCard/setIsExaminer"](false)
+      this["currentCard/resetStates"]()
       if (action === 1) {
         this['currentCard/startModeExamRegister']()
       }
       else if(action === 2) {
         window.location.reload()
       }
-      this["currentCard/setIsExaminer"](false)
-      this.dialog = false
-
     }
   }
 }

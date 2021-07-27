@@ -1,3 +1,4 @@
+<!-- Shows loading state and positive/negative response color -->
 <template>
       <v-progress-linear
         indeterminate

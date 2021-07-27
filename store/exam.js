@@ -1,3 +1,4 @@
+// Saves and processes all relevant data for the current exam.
 export const state = () => ({
   examID: null,
   examName: null,
@@ -9,7 +10,7 @@ export const state = () => ({
   numberOfStudentsPresentInRoom: null,
   examDuration: null,
   moreInformationMsg: null,
-  timeBeforeAfterExam: 3600000, //1h before, 1h after exam -> modeExamInProgress
+  timeBeforeAfterExam: 3600000, // 1h before, 1h after exam -> modeExamInProgress
 })
 
 export const mutations = {
@@ -85,8 +86,7 @@ export const getters = {
 
 export const actions = {
 
-  // Runs after room selection and at set interval (every minute)
-  // Gets all relevant exam information, sets/commits them with it's process function
+  // Executed after room selection and at set interval (every minute). Queries all relevant exam data.
   checkRoomForExam(context) {
     this.$axios.get('', {
       params: {
@@ -104,6 +104,7 @@ export const actions = {
       })
   },
 
+  // Called by checkRoomForExam() and sets all exam states. Checks if exam time is in range for displaying it
   processRoomForExam(context, data) {
     if (data.length > 0) { // TODO: If  data[1].startTime < data[0].endTime + timeBeforeAfterExam (1h) AND date.now > data[0].endTime -> switch from displaying [0] to [1]
       const e = data[0]
@@ -137,6 +138,7 @@ export const actions = {
     }
   },
 
+  // Gets called by processRoomForExam() to verify the current exam mode (registration or just check)
  async checkExamModeStatus(context, url) {
     const res = await this.$axios.get(url, {
       headers: {
@@ -155,7 +157,7 @@ export const actions = {
    }
   },
 
-  //Checks how many students are in the room
+  // Gets called by currentCard/checkCardForThisExam(). Checks how many students are in the room after each card scan
   async updateNumberOfStudentsInRoom(context) {
     if(context.rootState.modeExamRegister) {
       try {

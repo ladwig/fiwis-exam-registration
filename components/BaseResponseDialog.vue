@@ -1,8 +1,11 @@
+<!-- Serves as a basis for the component CurrentExamResponseDialog & NextExamResponse Dialog.
+Currently, the option to close the dialog manually is still missing. This is basically done by removing
+the "persistent" attribute.Problem: Execution of currentCard/resetStates() should happen immediately. -->
 <template>
     <v-dialog
       v-model="open"
       max-width="500"
-persistent
+      persistent
       transition="dialog-bottom-transition"
     >
         <v-card>

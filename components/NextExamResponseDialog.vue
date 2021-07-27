@@ -1,3 +1,4 @@
+<!-- Displays the next exam for the scanned card (when there is no current exam) -->
 <template>
   <base-response-dialog
     :dialog="dialog"

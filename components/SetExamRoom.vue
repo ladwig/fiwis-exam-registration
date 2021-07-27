@@ -1,3 +1,4 @@
+<!-- Imports the rooms state to show a list of possible rooms at start -->
 <template>
   <v-container>
     <h3>{{ $t('setExamRoom.pleaseSelectRoom') }}</h3>

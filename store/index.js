@@ -1,3 +1,4 @@
+// Saves and processes all general application-related data and the different modes.
 export const state = () => ({
     roomName: null,
     modeJustCheck: true, // No exam found

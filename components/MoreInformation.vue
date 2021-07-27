@@ -1,3 +1,4 @@
+<!-- Can be used to display additional information about current exam -->
 <template>
   <p v-if="moreInformationMsg">
     {{moreInformationMsg}}

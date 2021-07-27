@@ -1,9 +1,39 @@
-import { body, text, reuseFunctions } from "../helper"
+import { body, text, otherValues, reuseFunctions } from "../helper"
 
 describe('All possible studentcard inputs and responses', () => {
 
   beforeEach(() => {
     reuseFunctions.setTimeDate()
+  })
+
+  it('Exam registration mode active and 1x registered, 1x not registered card', () => {
+    reuseFunctions.getProfCardInterception()
+    reuseFunctions.getExamRegistrationStateInterception()
+    reuseFunctions.chooseRoomInterception()
+    expect(cy.contains(body[0].names))
+    reuseFunctions.scanAdminCard()
+    reuseFunctions.postScannedCardInterception()
+    reuseFunctions.getProfCardStartExamInterception()
+    reuseFunctions.getStudentCardIsCheckedInInterception()
+    reuseFunctions.getStudentCardIsNotCheckedInInterception()
+    reuseFunctions.updateNumberOfStudentsInRoomInRoomInterception()
+
+    expect(cy.contains(text.popupHeadline, { matchCase: false }))
+    cy.get("button").contains(text.startButton, { matchCase: false }).click()
+      cy.wait("@getProfCardStartExam")
+      cy.contains(text.registerNow).should("be.visible")
+
+    cy.get("input").type(text.studentCardIDRaw)
+   // cy.wait("@postStudentCardIsCheckedIn")
+
+   /*
+    expect(cy.contains(text.StudentCardIsCheckedIn))
+
+
+    cy.contains(text.StudentCardIsCheckedIn).should("not.be.visible")
+    cy.get("input").type(text.notStudentCardIDRaw)
+    expect(cy.contains(text.StudentCardIsNotCheckedIn))
+    expect(cy.contains(text.registerNow)) */
   })
 
   it('No exam in room and showing next exam ', () => {
@@ -25,9 +55,10 @@ describe('All possible studentcard inputs and responses', () => {
     cy.wait("@getCard")
     expect(cy.contains(text.nextExamTitle))
     expect(cy.contains(text.nextExamRoom))
-    cy.tick(4000)
-    cy.contains(text.nextExamTitle).should("not.exist")
-    cy.contains(text.nextExamRoom).should("not.exist")
+    //Auto retry .should() until not visible (10sec max)
+    cy.contains(text.nextExamTitle).should("not.be.visible")
+    cy.contains(text.nextExamTitle).should("not.be.visible")
+    cy.contains(text.nextExamRoom).should("not.be.visible")
 
   })
 
@@ -43,8 +74,7 @@ describe('All possible studentcard inputs and responses', () => {
     }).as("getCard")
     cy.wait("@getCard")
     expect(cy.contains(text.noNextExam))
-    cy.tick(4000)
-    cy.contains(text.noNextExam).should("not.exist")
+    cy.contains(text.noNextExam).should("not.be.visible")
   })
 
   it('Exam in room right now and student is registered', () => {
@@ -52,12 +82,9 @@ describe('All possible studentcard inputs and responses', () => {
     reuseFunctions.getExamRegistrationStateInterception()
     reuseFunctions.getStudentCardIsRegistInterception()
     reuseFunctions.postScannedCardInterception()
-
-
     reuseFunctions.scanAStudentCard()
     expect(cy.contains(text.StudentCardIsRegist))
-    cy.tick(4000)
-    cy.contains(text.StudentCardIsRegist).should("not.exist")
+    cy.contains(text.StudentCardIsRegist).should("not.be.visible")
   })
 
   it('Exam in room right now and student is not registered', () => {
@@ -67,39 +94,8 @@ describe('All possible studentcard inputs and responses', () => {
     reuseFunctions.getStudentCardNotRegistInterception()
     reuseFunctions.postScannedCardInterception()
     cy.get("input").type(text.notStudentCardIDRaw)
-
     expect(cy.contains(text.StudentCardIsNotRegist))
-    cy.tick(4000)
-    cy.contains(text.StudentCardIsNotRegist).should("not.exist")
-  })
-
-  it('Exam registration mode active and 1x registered, 1x not registered card', () => {
-    reuseFunctions.getProfCardInterception()
-    reuseFunctions.getExamRegistrationStateInterception()
-    reuseFunctions.chooseRoomInterception()
-    expect(cy.contains(body[0].names))
-    reuseFunctions.scanAdminCard()
-    reuseFunctions.postScannedCardInterception()
-    reuseFunctions.getProfCardStartExamInterception()
-    reuseFunctions.updateNumberOfStudentsInRoomInRoomInterception()
-    reuseFunctions.getStudentCardIsCheckedInInterception()
-    reuseFunctions.getStudentCardIsNotCheckedInInterception()
-
-    expect(cy.contains(text.popupHeadline, { matchCase: false }))
-    cy.get("button").contains(text.startButton, { matchCase: false }).click()
-    cy.wait(4000)
-    expect(cy.contains(text.registerNow))
-
-    cy.get("input").type(text.studentCardIDRaw)
-
-    expect(cy.contains(text.StudentCardIsCheckedIn))
-    cy.wait(4000)
-    expect(cy.contains(text.registerNow))
-
-    cy.get("input").type(text.notStudentCardIDRaw)
-    expect(cy.contains(text.StudentCardIsNotCheckedIn))
-    cy.wait(4000)
-    expect(cy.contains(text.registerNow))
+    cy.contains(text.StudentCardIsNotRegist).should("not.be.visible")
   })
 
 })

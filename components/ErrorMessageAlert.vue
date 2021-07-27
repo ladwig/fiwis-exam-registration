@@ -1,3 +1,4 @@
+<!-- Is opened when the error state is set to true. An error state is set when a store function throws an error. -->
 <template>
     <v-dialog
       v-model="dialog"
@@ -11,7 +12,7 @@
         <v-card-text>
           {{ $t('errorMessageAlert.errorMore') }}
           <br>
-         <strong class="red--text">{{errorMessage.response}} {{errorMessage.message}}</strong>
+         <strong class="red--text">{{errorMessage.response.status}} {{errorMessage.message}}</strong>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>

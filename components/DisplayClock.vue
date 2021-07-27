@@ -1,3 +1,4 @@
+<!-- Shows the current time, used in layouts/default.vue  -->
 <template>
   <v-container fluid class="clock-container">
     <div class="clock">

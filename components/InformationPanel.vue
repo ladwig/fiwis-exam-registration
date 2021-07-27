@@ -1,3 +1,4 @@
+<!-- Displays the current application mode (regist or just check) and possible user actiosn -->
 <template>
 <div v-if="examInProgressMode">
   <base-information-panel

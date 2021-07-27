@@ -1,3 +1,4 @@
+<!-- Displays the current exam name and checks for a new exam every minute. -->
 <template>
   <h1 v-if="modeExamInProgress" class="display-3 font-weight-regular">{{ examName }}</h1>
   <h1 v-else class="display-3 font-weight-regular">{{ $t('currentExamName.noExamInRoom') }}</h1>
@@ -15,7 +16,6 @@ export default {
     }),
     ...mapState([
       "modeExamInProgress",
-      "modeJustCheck",
     ]),
   },
   methods: {

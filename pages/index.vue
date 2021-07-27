@@ -4,18 +4,18 @@
     <!-- Select a room, first page -->
     <set-exam-room v-if="roomName===null"></set-exam-room>
 
-    <!-- Popup to ask for exam start and settings -->
+    <!-- Dialog to ask for exam start and settings -->
     <settings-alert v-if="isExaminer" :mode-exam-register="modeExamRegister"></settings-alert>
 
-    <!-- Popup when there is an error -->
+    <!-- Dialog when there is an error -->
     <error-message-alert v-if="errorMessage"></error-message-alert>
 
-    <!-- Popup test -->
+    <!-- Dialogs for displaying next exam / current exam information -->
     <current-exam-response-dialog :dialog="currentExamDialog" :status="status" :return-text="returnText"></current-exam-response-dialog>
     <next-exam-response-dialog :dialog="nextExamDialog" :status="status"></next-exam-response-dialog>
-    <v-row v-if="roomName!=null" no-gutters class="top-row flex-grow-1 flex-shrink-1">
+    <v-row v-if="roomName!=null" no-gutters class="top-row primary flex-grow-1 flex-shrink-1">
 
-      <v-col cols="11" class="grid-item-mid fill-parent-height pa-0 pl-10 pt-15">
+      <v-col cols="11" class="light--text fill-parent-height pa-0 pl-10 pt-15">
 
         <!-- Name of exam or no exam text -->
         <current-exam-name></current-exam-name>
@@ -27,12 +27,14 @@
         <students-in-room v-if="modeExamRegister && modeExamInProgress" class="mt-5"></students-in-room>
       </v-col>
     </v-row>
-    <v-row v-if="roomName!=null" no-gutters class="bottom-row flex-grow-0 flex-shrink-0 pb-3 grid-item-bottom">
+    <v-row v-if="roomName!=null" no-gutters class="grid-item-bottom secondary flex-grow-0 flex-shrink-0 pb-3">
       <v-col cols="12">
+
         <!-- Shows loading status when card is scanned -->
         <progress-bar :loading="cardIsLoading" :status="status"></progress-bar>
       </v-col>
       <v-col cols="3" class="pl-10">
+
         <!-- Manages card scans and shows card image -->
         <card-reader></card-reader>
       </v-col>
@@ -93,10 +95,10 @@ export default {
       return false
     },
     nextExamDialog() {
-     if(this.infoDialogStatus && !this.isExaminer && !this.modeExamInProgress){
+      if(this.infoDialogStatus && !this.isExaminer && !this.modeExamInProgress){
         return true
       }
-     return false
+      return false
     }
   },
   created() {
@@ -107,13 +109,8 @@ export default {
 
 </script>
 <style>
-.grid-item-mid {
-  color: var(--v-light-base);
-}
-
 .grid-item-bottom {
   min-height: 20vh;
-  background-color: var(--v-secondary-base);
   z-index: 10;
 }
 
@@ -123,7 +120,6 @@ export default {
 
 .top-row {
   min-height: 0;
-  background-color: var(--v-primary-lighten2);
 }
 
 .top-row:before{
@@ -137,7 +133,4 @@ export default {
   opacity: 0.06;
   background: url("https://raw.githubusercontent.com/ladwig/fiwis-exam-registration/master/static/logo.png");
 }
-
-
-
 </style>

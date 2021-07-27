@@ -11,6 +11,7 @@
         <v-btn @click="changeMode()">Send admin id</v-btn>
         <v-btn @click="regist()">Send student id</v-btn>
         <v-btn @click="check()">Check student id</v-btn>
+        <v-btn @click="test()">daniel</v-btn>
       </div>
       <v-spacer></v-spacer>
       <display-clock></display-clock>
@@ -58,6 +59,9 @@ export default {
     check() {
       this['currentCard/checkCardForNextExam']("36128986026611204")
     },
+    test() {
+      this['currentCard/checkCardForThisExam']("100189144184581")
+    }
   },
 }
 </script>

@@ -1,3 +1,4 @@
+<!-- Serves as a basis for the component InformationPanel -->
 <template>
   <v-container>
     <h2 class="display-3 darker--text font-weight-regular"> {{ headline }} </h2>

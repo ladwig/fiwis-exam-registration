@@ -1,9 +1,10 @@
+/* Saves and processes all relevant data for the currently scanned card.
+Also handles the majority of GET and POST requests to the FIWIS API. */
 import { changeLEDColor } from "../ledAPI";
 
 export const state = () => ({
     isThereNextExam: null,
     isExaminer: false,
-    isRegisteredStudent: null, // Not used rn, maybe for displaying icons ?
     cardNumber: null,
     returnText: null,
     status: null,
@@ -18,10 +19,6 @@ export const mutations = {
 
   setIsExaminer(state, isExaminer) {
     state.isExaminer = isExaminer
-  },
-
-  setIsRegisteredStudent(state, isRegisteredStudent) {
-    state.isRegisteredStudent = isRegisteredStudent
   },
 
   setIsThereNextExam(state, isThereNextExam) {
@@ -39,7 +36,7 @@ export const mutations = {
 }
 
 export const actions = {
-  // Resets all states that are connected to specific user/card
+  //Resets all states that are connected to specific user/card
   resetStates(context, timeout) {
     let dialogTimer;
     let stateTimer;
@@ -49,11 +46,11 @@ export const actions = {
 
    stateTimer = setTimeout(() => {
       context.commit("setCardIsLoading", false , {root: true})
-      context.commit("setReturnText")
-      context.commit("setIsRegisteredStudent")
-      context.commit("setIsThereNextExam")
+      context.commit("setReturnText", null)
+      context.commit("setIsThereNextExam", null)
       changeLEDColor("#ffffff")
       context.commit("setStatus", null)
+      context.commit("setCardNumber", null)
     }, timeout+400)
   },
 
@@ -70,11 +67,11 @@ export const actions = {
       }
   },
 
-  //Gets called when there is no exam atm and card gets scanned
+  // Retrieves the next exam for the scanned card
   checkCardForNextExam(context, cardnumber) {
     this.$axios.get('', {
       params: {
-        cardnumber:  cardnumber, //"36104139103212548",
+        cardnumber:  cardnumber,
       },
       headers: {
         "Accept": process.env.NEXT_EXAM_ACCEPT_HEADER
@@ -92,6 +89,7 @@ export const actions = {
       })
   },
 
+  // Called by checkCardForNextExam() and sets the queried values
   processCardForNextExam(context, data) {
     return new Promise( resolve => {
       if (data.length > 0) {
@@ -110,6 +108,8 @@ export const actions = {
     })
   },
 
+  /* Queries whether the scanned card is registered for the current exam
+  or checks the student in for the exam if the registration mode is active */
   checkCardForThisExam(context, cardnumber) {
     const body = {
       idcardnumber: cardnumber,
@@ -142,6 +142,8 @@ export const actions = {
       })
   },
 
+ /* Processes the return values of checkCardForThisExam().
+ The returnCodes 300 (opens admin menu) and 800 (disables register mode) are handled separately. */
   processCardForThisExam(context, [data, cardnumber]) {
     return new Promise( resolve => {
       if(data.returnText && data.returnCode != 300) {
@@ -153,14 +155,10 @@ export const actions = {
       else {
         context.dispatch("returnDecision", false)
       }
-
       switch (data.returnCode) {
         case 300:
           context.commit("setCardNumber", cardnumber)
           context.commit("setIsExaminer", true)
-          break
-        case 500:
-          context.commit("setIsRegisteredStudent")
           break
         case 800:
           context.commit("setModeExamRegister", false, {root: true})
@@ -172,6 +170,7 @@ export const actions = {
     })
   },
 
+  // Gets executed through the start registration button in the admin menu
   startModeExamRegister(context) {
      const body = {
        idcardnumber: context.state.cardNumber,
@@ -201,8 +200,8 @@ export const actions = {
       })
   },
 
+  // Called by startModeExamRegister()
   processModeChange(context, data) {
-    context.commit("setCardNumber", null)
     if(data.returnCode == 400) {
       context.commit("setModeExamRegister", true, {root: true})
     }

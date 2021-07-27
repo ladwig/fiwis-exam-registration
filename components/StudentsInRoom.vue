@@ -1,3 +1,4 @@
+<!-- Shows the seats still available in the current room -->
 <template>
   <v-container class="pa-0 ma-0 headline font-weight-regular">
     <div v-if="freeSeats <= 0">
