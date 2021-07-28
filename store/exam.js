@@ -154,6 +154,7 @@ export const actions = {
      else if (state === 1) {
        return true
      }
+     return
    }
   },
 
