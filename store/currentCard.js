@@ -222,7 +222,7 @@ export const actions = {
   cardNum2String(context, cardnumber) {
     try {
       const converter = require('hex2dec');
-      return String(
+      const cardString = String(
         converter.hexToDec(
           cardnumber
             .match(/.{1,2}/g)
@@ -231,6 +231,7 @@ export const actions = {
           16
         )
       )
+      return cardString
     } catch (err) {
       context.commit("setErrorMessage", err, {root: true})
     }
