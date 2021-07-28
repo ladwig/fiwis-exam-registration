@@ -57,7 +57,7 @@ export default {
         this.setCardIsLoading(true)
         setTimeout(() => {
           event.target.value = "";
-        }, 3000);
+        }, 430);
       }
     },
 

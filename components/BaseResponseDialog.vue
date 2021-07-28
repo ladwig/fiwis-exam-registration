@@ -5,7 +5,7 @@ the "persistent" attribute.Problem: Execution of currentCard/resetStates() shoul
     <v-dialog
       v-model="open"
       max-width="500"
-      persistent
+
       transition="dialog-bottom-transition"
     >
         <v-card>
@@ -19,7 +19,6 @@ the "persistent" attribute.Problem: Execution of currentCard/resetStates() shoul
 </template>
 <script>
 
-import {mapActions} from "vuex";
 
 export default {
   name: "BaseResponseDialog",
@@ -32,22 +31,10 @@ export default {
         return this.dialog
       },
       set() {
-        // resetStates, but cant fix it rn
+        this.$emit("directClose")
       }
+
     }
   },
-  methods: {
-    ...mapActions([
-      "currentCard/resetStates"
-    ]),
-  },
-/* watch: {
-    dialog:function(newValue, old) {
-      console.log(old)
-      if(!newValue) {
-        this['currentCard/resetStatesWithDialogClick']()
-      }
-    }
-  } */
 }
 </script>

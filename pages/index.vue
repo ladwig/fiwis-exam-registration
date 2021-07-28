@@ -124,7 +124,6 @@ export default {
 
 .top-row:before{
   content: "";
-  background-size: auto;
   position: absolute;
   top: 0px;
   right: 0;
@@ -132,5 +131,6 @@ export default {
   left: 0px;
   opacity: 0.06;
   background: url("https://raw.githubusercontent.com/ladwig/fiwis-exam-registration/master/static/logo.png");
+  background-size: auto;
 }
 </style>

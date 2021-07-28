@@ -2,6 +2,7 @@
 <template>
   <base-response-dialog
     :dialog="dialog"
+    @directClose="onDirectClose"
   >
       <v-list
         v-if="isThereNextExam"
@@ -36,7 +37,7 @@
 </template>
 
 <script>
-import {mapState, mapGetters } from "vuex";
+import {mapState, mapGetters, mapActions, mapMutations} from "vuex";
 import BaseResponseDialog from "./BaseResponseDialog";
 
 export default {
@@ -46,9 +47,6 @@ export default {
   },
   components: {BaseResponseDialog},
   computed: {
-    ...mapState([
-      "infoDialogStatus"
-    ]),
     ...mapState({
       isThereNextExam: state => state.currentCard.isThereNextExam,
       examName: state => state.exam.examName,
@@ -73,6 +71,21 @@ export default {
         { text: this.getTimeRange, icon: 'mdi-clock' },
         { text: this.examRooms, icon: 'mdi-map-marker' },
       ]
+    }
+  },
+  methods: {
+    ...mapMutations([
+        "setInfoDialogStatus"
+      ]
+    ),
+    ...mapActions([
+      "currentCard/resetWithTimeout"
+    ]),
+
+    // When dialog is closed manually with a tap (Temporary solution)
+    onDirectClose() {
+      this.setInfoDialogStatus(false)
+      this["currentCard/resetWithTimeout"](false)
     }
   },
 }

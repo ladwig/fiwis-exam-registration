@@ -35,21 +35,40 @@ export const mutations = {
 }
 
 export const actions = {
-  //Resets all states that are connected to specific user/card
-  resetStates(context, timeout) {
 
-   setTimeout( () => {
-        context.commit("setInfoDialogStatus", false, {root: true})
-      }, timeout)
-
-   setTimeout(() => {
+  // Resets all states that are connected to specific user/card (Called by resetWithTimeout())
+  resetStates(context) {
       context.commit("setCardIsLoading", false , {root: true})
       context.commit("setReturnText", null)
       context.commit("setIsThereNextExam", null)
       changeLEDColor("#ffffff")
       context.commit("setStatus", null)
       context.commit("setCardNumber", null)
-    }, timeout+400)
+  },
+
+  // Closes the info dialog for current/next exam when card is scanned (Called by resetWithTimeout())
+  resetInfoDialog(context) {
+    context.commit("setInfoDialogStatus", false, {root: true})
+  },
+
+  /* Calls functions to reset all card related states and close info dialog.
+  Normally executed after a waiting time. Manual closing of the dialog before
+  waiting time is also enabled by this function (Temporary solution) */
+  resetWithTimeout(context, answer) {
+    if(answer) {
+      this.dialogReset = setTimeout( () => {
+        context.dispatch("resetInfoDialog")
+      }, 4000)
+      this.stateReset = setTimeout(() => {
+        context.dispatch("resetStates")
+        console.log(1)
+      },4100)
+    }
+    else {
+      clearTimeout(this.dialogReset)
+      clearTimeout(this.stateReset)
+      context.dispatch("resetStates")
+    }
   },
 
   async checkCard(context, cardnumber) {
@@ -78,7 +97,7 @@ export const actions = {
       .then((response)  => {
         context.dispatch("processCardForNextExam", response.data)
           .then(() => {
-              context.dispatch("resetStates", context.rootState.infoDialogDisplayTime)
+              context.dispatch("resetWithTimeout", true)
             }
           )
       })
@@ -129,7 +148,7 @@ export const actions = {
           .then((res) => {
             context.dispatch("processCardForThisExam", [res.data,cardnumber])
               .then(() => {
-                  context.dispatch("resetStates", context.rootState.infoDialogDisplayTime)
+                  context.dispatch("resetWithTimeout",true)
                   context.dispatch("exam/updateNumberOfStudentsInRoom", '',{root: true})
                 }
               )

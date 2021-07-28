@@ -2,6 +2,7 @@
 <template>
   <base-response-dialog
     :dialog="dialog"
+    @directClose="onDirectClose"
   >
     <v-row class="ma-0 pa-0">
       <v-col
@@ -24,6 +25,7 @@
 
 <script>
 import BaseResponseDialog from "./BaseResponseDialog";
+import {mapActions, mapMutations} from "vuex";
 
 export default {
   name: "CurrentExamResponseDialog",
@@ -33,5 +35,20 @@ export default {
     returnText: String,
   },
   components: {BaseResponseDialog},
+  methods: {
+    ...mapMutations([
+        "setInfoDialogStatus"
+      ]
+    ),
+    ...mapActions([
+      "currentCard/resetWithTimeout"
+    ]),
+
+    // When dialog is closed manually with a tap (Temporary solution)
+    onDirectClose() {
+      this.setInfoDialogStatus(false)
+      this["currentCard/resetWithTimeout"](false)
+    }
+  },
 }
 </script>
