@@ -55,10 +55,6 @@ export const text = {
   StudentCardIsNotCheckedInCode: 200,
 }
 
-export const otherValues = {
-  tickTime: 4000
-}
-
 export const reuseFunctions = {
   setTimeDate() {
     cy.clock(new Date(2020, 6, 24, 20, 10, 0), ['Date'])

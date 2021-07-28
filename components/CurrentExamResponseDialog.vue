@@ -23,8 +23,6 @@
 </template>
 
 <script>
-import {mapState} from "vuex";
-import BaseExamInfoAlert from "./BaseResponseDialog";
 import BaseResponseDialog from "./BaseResponseDialog";
 
 export default {

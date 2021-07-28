@@ -1,4 +1,4 @@
-import { body, text, otherValues, reuseFunctions } from "../helper"
+import { body, text, reuseFunctions } from "../helper"
 
 describe('All possible studentcard inputs and responses', () => {
 
