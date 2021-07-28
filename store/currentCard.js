@@ -37,13 +37,12 @@ export const mutations = {
 export const actions = {
   //Resets all states that are connected to specific user/card
   resetStates(context, timeout) {
-    let dialogTimer;
-    let stateTimer;
-      dialogTimer = setTimeout( () => {
+
+   setTimeout( () => {
         context.commit("setInfoDialogStatus", false, {root: true})
       }, timeout)
 
-   stateTimer = setTimeout(() => {
+   setTimeout(() => {
       context.commit("setCardIsLoading", false , {root: true})
       context.commit("setReturnText", null)
       context.commit("setIsThereNextExam", null)
