@@ -5,7 +5,6 @@ the "persistent" attribute.Problem: Execution of currentCard/resetStates() shoul
     <v-dialog
       v-model="open"
       max-width="500"
-
       transition="dialog-bottom-transition"
     >
         <v-card>

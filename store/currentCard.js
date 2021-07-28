@@ -54,20 +54,20 @@ export const actions = {
   /* Calls functions to reset all card related states and close info dialog.
   Normally executed after a waiting time. Manual closing of the dialog before
   waiting time is also enabled by this function (Temporary solution) */
-  resetWithTimeout(context, answer) {
-    if(answer) {
+  resetWithTimeout(context, timeout) {
+    if(timeout) {
       this.dialogReset = setTimeout( () => {
         context.dispatch("resetInfoDialog")
       }, 4000)
       this.stateReset = setTimeout(() => {
         context.dispatch("resetStates")
-        console.log(1)
       },4100)
     }
     else {
       clearTimeout(this.dialogReset)
       clearTimeout(this.stateReset)
       context.dispatch("resetStates")
+      context.dispatch("resetInfoDialog")
     }
   },
 

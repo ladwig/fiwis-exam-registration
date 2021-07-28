@@ -74,17 +74,12 @@ export default {
     }
   },
   methods: {
-    ...mapMutations([
-        "setInfoDialogStatus"
-      ]
-    ),
     ...mapActions([
       "currentCard/resetWithTimeout"
     ]),
 
     // When dialog is closed manually with a tap (Temporary solution)
     onDirectClose() {
-      this.setInfoDialogStatus(false)
       this["currentCard/resetWithTimeout"](false)
     }
   },
