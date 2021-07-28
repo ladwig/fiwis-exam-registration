@@ -146,12 +146,12 @@ export const actions = {
       }
     })
    if(res.data.length > 0) {
-     const roomDataIndex = res.data.findIndex(a => a.roomName == context.rootState.roomName)
+     const roomDataIndex = res.data.findIndex(a => a.roomName === context.rootState.roomName)
      const state = res.data[roomDataIndex].examRegistrationState
-     if(state == 0) {
+     if(state === 0) {
        return false
      }
-     else if (state == 1) {
+     else if (state === 1) {
        return true
      }
    }
@@ -169,7 +169,7 @@ export const actions = {
           })
         ).data;
         if(res.length > 0) {
-          const roomDataIndex = res.findIndex(a => a.roomName == context.rootState.roomName)
+          const roomDataIndex = res.findIndex(a => a.roomName === context.rootState.roomName)
           context.commit("setNumberOfStudentsPlannedInRoom", res[roomDataIndex].numberOfStudentsPlannedInRoom)
           context.commit("setNumberOfStudentsPresentInRoom", res[roomDataIndex].numberOfStudentsPresentInRoom)
         }
