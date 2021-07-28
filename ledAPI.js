@@ -20,8 +20,8 @@ export function changeLEDColor(hex) {
     xhr.open('POST', access.base + '/hardware/light?access_token=' + access.token, true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
     xhr.onreadystatechange = function () {
-      if (this.readyState == 4) {
-        if (this.status != 200) {
+      if (this.readyState === 4) {
+        if (this.status !== 200) {
           alert("LED lights error (ledAPI.js): " + this.status);
         }
       }

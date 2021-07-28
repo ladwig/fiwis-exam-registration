@@ -32,7 +32,6 @@ export const mutations = {
   setStatus(state, status) {
     state.status = status
   },
-
 }
 
 export const actions = {
@@ -146,7 +145,7 @@ export const actions = {
  The returnCodes 300 (opens admin menu) and 800 (disables register mode) are handled separately. */
   processCardForThisExam(context, [data, cardnumber]) {
     return new Promise( resolve => {
-      if(data.returnText && data.returnCode != 300) {
+      if(data.returnText && data.returnCode !== 300) {
         context.commit("setReturnText", data.returnText)
       }
       if([300, 500, 600, 800].indexOf(data.returnCode) >= 0) {
@@ -202,7 +201,7 @@ export const actions = {
 
   // Called by startModeExamRegister()
   processModeChange(context, data) {
-    if(data.returnCode == 400) {
+    if(data.returnCode === 400) {
       context.commit("setModeExamRegister", true, {root: true})
     }
   },
