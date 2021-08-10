@@ -27,7 +27,7 @@
         <students-in-room v-if="modeExamRegister && modeExamInProgress" class="mt-5"></students-in-room>
       </v-col>
     </v-row>
-    <v-row v-if="roomName!=null" no-gutters class="grid-item-bottom secondary flex-grow-0 flex-shrink-0 pb-3">
+    <v-row v-if="roomName!=null" no-gutters class="grid-item-bottom secondary flex-grow-0 flex-shrink-0">
       <v-col cols="12">
 
         <!-- Shows loading status when card is scanned -->
@@ -104,10 +104,9 @@ export default {
   created() {
     changeLEDColor("#ffffff")
   }
-
 }
-
 </script>
+
 <style>
 .grid-item-bottom {
   min-height: 20vh;
@@ -130,7 +129,7 @@ export default {
   bottom: 0px;
   left: 0px;
   opacity: 0.06;
-  background: url("https://raw.githubusercontent.com/ladwig/fiwis-exam-registration/master/static/logo.png");
+  background: url("https://raw.githubusercontent.com/ladwig/fiwis-exam-registration/master/static/logo.png"); /* background: url("~assets/images/logo.png"); */
   background-size: auto;
 }
 </style>

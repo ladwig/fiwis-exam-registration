@@ -2,7 +2,9 @@
 <template>
   <v-container fluid class="clock-container">
     <div class="clock">
-      <div class="title darker--text">{{ time }} {{ $t('displayClock.suffix')}} <br></div>
+      <div class="title darker--text">
+        {{ time }} {{ $t('displayClock.suffix')}} <br>
+      </div>
       {{ date }}
     </div>
 
@@ -21,18 +23,15 @@ export default {
       date: null,
     }
   },
-
   created() {
     this.setTime()
     this.interval = setInterval(() => {
       this.setTime()
     }, 1000)
   },
-
   beforeDestroy() {
     clearInterval(this.interval)
   },
-
   methods: {
     setTime() {
       this.time = new Date() .toLocaleString('de-DE', {

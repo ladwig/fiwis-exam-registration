@@ -11,10 +11,12 @@
       {{ $t('studentsInRoom.roomOccupation') }}
       <strong>
         {{ freeSeats }}
-      </strong> {{ $t('studentsInRoom.connective') }}
+      </strong>
+      {{ $t('studentsInRoom.connective') }}
       <strong>
         {{ numberOfStudentsPlannedInRoom }}
-      </strong> {{ $t('studentsInRoom.freeSeats') }}
+      </strong>
+      {{ $t('studentsInRoom.freeSeats') }}
     </div>
   </v-container>
 </template>
@@ -39,13 +41,13 @@ export default {
       freeSeats: "exam/getFreeSeats"
     })
   },
+  created() {
+    this['exam/updateNumberOfStudentsInRoom']()
+  },
   methods: {
     ...mapActions([
       "exam/updateNumberOfStudentsInRoom",
     ]),
   },
-  created() {
-    this['exam/updateNumberOfStudentsInRoom']()
-  }
 }
 </script>

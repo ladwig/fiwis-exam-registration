@@ -9,7 +9,8 @@
         <v-card-title class="headline">
           {{ $t('settingsAlert.settingsAlertHeadline') }}
         </v-card-title>
-        <v-card-text>{{ $t('settingsAlert.settingsAlertMore') }}
+        <v-card-text>
+          {{ $t('settingsAlert.settingsAlertMore') }}
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -18,8 +19,7 @@
             :items="langs"
             :label="$t('language')"
             dense
-          >
-          </v-select>
+          ></v-select>
           <v-spacer></v-spacer>
           <v-btn
             color="secondary darken-4"
@@ -49,9 +49,11 @@
 
 <script>
 import {mapActions, mapMutations, mapState} from "vuex";
-
 export default {
   name: "SettingsAlert",
+  props: {
+    modeExamRegister: Boolean,
+  },
   data() {
     return {
       dialog: true,
@@ -63,9 +65,6 @@ export default {
         cardNumber: state => state.currentCard.cardNumber,
     }),
   },
-  props: {
-    modeExamRegister: Boolean,
-  },
   methods: {
     ...mapMutations([
         "currentCard/setIsExaminer",
@@ -76,7 +75,6 @@ export default {
       "currentCard/startModeExamRegister",
       "currentCard/resetStates"
     ]),
-
     //Always close the modal and removes examiner data. Case 1 -> Starts exam register mode
     closePopup(action) {
       this.dialog = false

@@ -25,21 +25,20 @@
 
 <script>
 import BaseResponseDialog from "./BaseResponseDialog";
-import {mapActions, mapMutations} from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "CurrentExamResponseDialog",
+  components: {BaseResponseDialog},
   props: {
     dialog: Boolean,
     status: String,
     returnText: String,
   },
-  components: {BaseResponseDialog},
   methods: {
     ...mapActions([
       "currentCard/resetWithTimeout"
     ]),
-
     // When dialog is closed manually with a tap (Temporary solution)
     onDirectClose() {
       this["currentCard/resetWithTimeout"](false)

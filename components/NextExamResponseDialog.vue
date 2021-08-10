@@ -39,13 +39,12 @@
 <script>
 import {mapState, mapGetters, mapActions, mapMutations} from "vuex";
 import BaseResponseDialog from "./BaseResponseDialog";
-
 export default {
   name: "NextExamResponseDialog",
+  components: {BaseResponseDialog},
   props: {
     dialog: Boolean
   },
-  components: {BaseResponseDialog},
   computed: {
     ...mapState({
       isThereNextExam: state => state.currentCard.isThereNextExam,
@@ -77,7 +76,6 @@ export default {
     ...mapActions([
       "currentCard/resetWithTimeout"
     ]),
-
     // When dialog is closed manually with a tap (Temporary solution)
     onDirectClose() {
       this["currentCard/resetWithTimeout"](false)

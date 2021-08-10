@@ -17,6 +17,9 @@ import {mapActions, mapMutations} from "vuex";
 
 export default {
   name: "CardReader",
+  mounted() {
+    this.focusCardInput()
+  },
   methods: {
     ...mapMutations([
         "setCardIsLoading"
@@ -48,7 +51,6 @@ export default {
         },1)
       }
     },
-
     typeNFC(event) {
       if (event.target.value == "") {
         setTimeout(() => {
@@ -61,9 +63,6 @@ export default {
       }
     },
 
-  },
-  mounted() {
-    this.focusCardInput()
   },
 }
 </script>

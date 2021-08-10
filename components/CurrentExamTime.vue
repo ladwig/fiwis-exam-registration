@@ -9,7 +9,8 @@
     >
       {{ getStartTimeWithoutDate }} – {{ getStopTimeWithoutDate }} Uhr
     </v-chip>
-    <v-chip v-if="attentionSign"
+    <v-chip
+      v-if="attentionSign"
       color="secondary"
       label
       outlined

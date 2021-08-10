@@ -18,9 +18,6 @@ export default {
       "modeExamInProgress",
     ]),
   },
-  methods: {
-    ...mapActions(['exam/checkRoomForExam'])
-  },
   beforeMount() {
     this['exam/checkRoomForExam']()
   },
@@ -32,6 +29,9 @@ export default {
   },
   beforeDestroy() {
     clearInterval(this.interval)
+  },
+  methods: {
+    ...mapActions(['exam/checkRoomForExam'])
   },
 }
 </script>
